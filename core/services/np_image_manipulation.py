@@ -7,10 +7,12 @@ import logging
 import numpy as np
 import scipy.ndimage
 
-from config import INPUT_RESOLUTION_MAX
 from numba import jit
 
 import pirt.interp
+
+INPUT_RESOLUTION_MAX = 256
+
 
 @jit
 def crop_around_centre(
@@ -43,6 +45,7 @@ def crop_around_centre(
         z_start_position:z_end_position,
     ]
 
+
 def downscale_and_conditionally_crop(
     image: np.ndarray, resolution_limit: int = INPUT_RESOLUTION_MAX
 ) -> np.ndarray:
@@ -63,7 +66,7 @@ def downscale_and_conditionally_crop(
     if max_side_res > resolution_limit:
         resize_ratio = resolution_limit / max_side_res
         image = pirt.interp.zoom(
-            image, [resize_ratio, resize_ratio, resize_ratio],order=1
+            image, [resize_ratio, resize_ratio, resize_ratio], order=1
         )
      #   logging.info("Array downscale finished")
     # else:
@@ -75,7 +78,8 @@ def downscale_and_conditionally_crop(
 
     # each dimension must be divisible by 8, code below crop the remainder after division by 8
     if (x % 8 != 0) or (y % 8 != 0) or (z % 8 != 0):
-        image = crop_around_centre(image, x - (x % 8), y - (y % 8), z - (z % 8))
+        image = crop_around_centre(
+            image, x - (x % 8), y - (y % 8), z - (z % 8))
    #     logging.info("Array not divisible by 8, image cropped")
 
     return image
