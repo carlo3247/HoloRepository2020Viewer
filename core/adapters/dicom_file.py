@@ -10,9 +10,8 @@ from typing import List
 import SimpleITK as sitk
 import numpy as np
 import pydicom
-import scipy.ndimage
 import pirt.interp
-from numba import njit,jit
+from numba import jit
 
 
 def read_dicom_dataset(input_directory_path: str) -> List[pydicom.dataset.FileDataset]:
@@ -31,11 +30,14 @@ def read_dicom_dataset(input_directory_path: str) -> List[pydicom.dataset.FileDa
     # Ensure that SliceThickness is set for all slices
     try:
         slice_thickness = np.abs(
-            slices[0].ImagePositionPatient[2] - slices[1].ImagePositionPatient[2]
+            slices[0].ImagePositionPatient[2] -
+            slices[1].ImagePositionPatient[2]
         )
     except AttributeError:
-        logging.info("ImagePositionPatient is not set, using SliceLocation instead.")
-        slice_thickness = np.abs(slices[0].SliceLocation - slices[1].SliceLocation)
+        logging.info(
+            "ImagePositionPatient is not set, using SliceLocation instead.")
+        slice_thickness = np.abs(
+            slices[0].SliceLocation - slices[1].SliceLocation)
 
     for s in slices:
         s.SliceThickness = slice_thickness
@@ -94,6 +96,7 @@ def flip_numpy_array_dimensions_y_only(array: np.ndarray) -> np.ndarray:
     array = np.flip(array, 1)
     return array
 
+
 def normalise_dicom(dicom_image_array: np.ndarray, input_file_path: str) -> np.ndarray:
     """
     Compensates the distortion caused by slice thickness, using data obtained from the DICOM header
@@ -106,7 +109,8 @@ def normalise_dicom(dicom_image_array: np.ndarray, input_file_path: str) -> np.n
     )
     dicom_sample_slice = dicom_dataset[0]
 
-    logging.info("Normalising DICOM image to compensate slice thickness distortion")
+    logging.info(
+        "Normalising DICOM image to compensate slice thickness distortion")
     logging.info(f"Shape before normalising: {dicom_image_array.shape}")
 
     # Determine current pixel spacing
@@ -152,9 +156,8 @@ def load_file(path):
     return np.squeeze(image_np)
 
 
-
 @jit
-def normalizetest( dicom_image_array, real_resize_factor):
+def normalizetest(dicom_image_array, real_resize_factor):
     return pirt.interp.zoom(
         dicom_image_array, np.ndarray.tolist(real_resize_factor), order=0
     )

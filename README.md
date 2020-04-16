@@ -224,3 +224,9 @@ This component is owned by [nbckr](https://github.com/nbckr). The first prototyp
 developed by [UdomkarnBoonyaprasert](https://github.com/UdomkarnBoonyaprasert) and
 [ansonwong9695](https://github.com/ansonwong9695). Please get in touch if you have any
 questions. For change requests and bug reports, please open a new issue.
+
+
+## Build environment
+```bash
+conda env create -f environment.yml
+```
