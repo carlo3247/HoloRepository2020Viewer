@@ -1,0 +1,14 @@
+*.dcm
+*.nii
+*.gz
+*.npy
+*.glb
+*.gltf
+*__pycache__/
+__jobs__/
+__finished_jobs__/
+__test_input__/
+__test_output__/
+__test_jobs__/
+__test_finished_jobs__/
+models/kidney_segmentation/kidney_model_miscnn
