@@ -18,7 +18,7 @@ from models.kidney_segmentation.model import kidney_model
 this_plid = os.path.basename(__file__).replace(".py", "")
 
 
-def run(input_directory: str, output_path: str) -> None:
+def run(input_directory: str, output_path: str, segment_type: list) -> None:
 
     # TODO for now take in nifti image
     nifti_image = read_nifti_image(input_directory)
@@ -32,9 +32,8 @@ def run(input_directory: str, output_path: str) -> None:
         segmented_nifti_output_file_path, normalise=False
     )
 
-    # TODO how to get segmentation dict in here
     meshes = [generate_mesh(segment, 0) for segment in seperate_segmentation(
-        segmented_array, unique_values=[1, 2])]
+        segmented_array, unique_values=segment_type)]
 
     # TODO do something for colours
     colours = [[0, 0.3, 1.0, 0.2], [1.0, 1.0, 0.0, 1.0]]

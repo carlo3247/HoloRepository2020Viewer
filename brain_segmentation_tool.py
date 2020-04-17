@@ -15,7 +15,6 @@ modelProcSegTypes = get_proc_seg_types('brain_segmentation')
 modelFileTypes = get_file_types('brain_segmentation')
 modelReqMods = get_req_modalities('brain_segmentation')
 
-print(range(0,len(modelSegTypes)))
 parser = argparse.ArgumentParser(description=pipelineDescription +
 '\n3 input scans (modalities) required of types ' + ', '.join(modelReqMods) +
 '\nInput files must be of type ' + ' or '.join(modelFileTypes) + 
@@ -30,8 +29,9 @@ parser.add_argument('ir_input', metavar='t1-i',type=str,
                     help='Specify the path to the directory containing the T1-IR input scans')
 parser.add_argument('output', metavar='o', type=str,
                     help='Specify the path of a single output file in the form of a glb file')
-parser.add_argument('-type', metavar='t', type=int, nargs='*', default=[1], choices=range(0,len(modelSegTypes)),
-    help="Specify the type of brain segmentation through an integer. Multiple integers can be supplied"+'\n'+'Segmentation types include ' + modelProcSegTypes)
+parser.add_argument('-type', metavar='t', type=int, default=[1], choices=range(0,len(modelSegTypes)),
+    help="Specify the type of brain segmentation through an integer. Multiple integers can be supplied"+
+    '\n'+'Segmentation types include ' + modelProcSegTypes)
 
 args = parser.parse_args()
 

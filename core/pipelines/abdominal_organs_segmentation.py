@@ -31,7 +31,9 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 hu_threshold = 0
 
 
-def run(dicom_directory_path: str, output_path: str) -> None:
+def run(dicom_directory_path: str, output_path: str, segment_type:list) -> None:
+
+    # TODO include segment type variable to filter segmentations
 
     dicom_image_array = read_dicom_as_np_ndarray_and_normalise(
         dicom_directory_path)

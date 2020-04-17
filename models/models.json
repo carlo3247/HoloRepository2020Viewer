@@ -17,7 +17,7 @@
         "required_modalities": ["T2-FLAIR", "T1", "T1-IR"],
         "optional_modalities": []
     },
-    "dense_vnet_abdominal_ct": {
+    "abdominal_organs_segmentation": {
         "segmentation_dict": {
             "background": 0,
             "spleen": 1,
@@ -29,7 +29,7 @@
             "pancreas": 7,
             "duodenum": 8
         },
-        "filetypes": ["NIfTI"],
+        "filetypes": ["DICOM"],
         "required_modalities": [],
         "optional_modalities": []
     },
@@ -39,7 +39,7 @@
             "kidneys": 1,
             "kidney_tumour": 2
         },
-        "filetypes": [],
+        "filetypes": ["DICOM"],
         "required_modalities": [],
         "optional_modalities": []
     },
