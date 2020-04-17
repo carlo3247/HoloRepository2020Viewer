@@ -1,9 +1,9 @@
 import os
+import shutil
 import subprocess
 
-# TODO change with local nifty root
-UPLOAD_FOLDER = "~/niftynet/data/dense_vnet_abdominal_ct/"
-OUTPUT_FOLDER = "~/niftynet/models/dense_vnet_abdominal_ct/segmentation_output/"
+UPLOAD_FOLDER = "./models/dense_vnet_abdominal_ct/input/"
+OUTPUT_FOLDER = "./models/dense_vnet_abdominal_ct/output/"
 
 
 class Abdominal_model():
@@ -11,9 +11,11 @@ class Abdominal_model():
     # put your initialization code here
     def __init__(self, saved_path):
         self.config_path = saved_path
+        os.mkdir(UPLOAD_FOLDER)
+        os.mkdir(OUTPUT_FOLDER)
         self.input_path = os.path.join(UPLOAD_FOLDER, "abdominal.nii.gz")
         self.output_path = os.path.join(
-            OUTPUT_FOLDER, "abdominal__niftynet_out.nii.gz")
+            OUTPUT_FOLDER, "window_seg_abdominal__niftynet_out.nii.gz")
 
     def get_input_path(self):
         return self.input_path
@@ -30,8 +32,8 @@ class Abdominal_model():
         return self.output_path
 
     def cleanup(self):
-        os.remove(self.input_path)
-        os.remove(self.output_path)
+        shutil.rmtree(UPLOAD_FOLDER)
+        shutil.rmtree(OUTPUT_FOLDER)
 
 
 SAVED_CONFIG_PATH = "./models/dense_vnet_abdominal_ct/config.ini"
