@@ -55,3 +55,5 @@ def run(dicom_directory_path: str, output_path: str) -> None:
 
     meshes = [generate_mesh(segmented_array, hu_threshold)]
     write_mesh_as_glb(meshes, output_path)
+
+    abdominal_model.cleanup()
