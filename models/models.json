@@ -13,7 +13,7 @@
             "infarcation": 9,
             "other": 10
         },
-        "filetypes": [".nii", "nii.gz"],
+        "filetypes": ["NIfTI", "Compressed NIfTI"],
         "required_modalities": ["T2-FLAIR", "T1", "T1-IR"],
         "optional_modalities": []
     },
@@ -29,7 +29,7 @@
             "pancreas": 7,
             "duodenum": 8
         },
-        "filetypes": [".nii.gz"],
+        "filetypes": ["NIfTI"],
         "required_modalities": [],
         "optional_modalities": []
     },
@@ -40,6 +40,24 @@
             "kidney_tumour": 2
         },
         "filetypes": [],
+        "required_modalities": [],
+        "optional_modalities": []
+    },
+    "lung_segmentation": {
+        "segmentation_dict": {
+            "background": 0,
+            "lung": 1,
+            "airway": 2
+        },
+        "filetypes": ["DICOM"],
+        "required_modalities": [],
+        "optional_modalities": []
+    },
+    "bone_segmentation": {
+        "segmentation_dict": {
+            "background": 0
+        },
+        "filetypes": ["DICOM"],
         "required_modalities": [],
         "optional_modalities": []
     }

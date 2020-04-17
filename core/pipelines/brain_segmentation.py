@@ -13,7 +13,7 @@ from models.brain_segmentation.model import brain_model
 this_plid = os.path.basename(__file__).replace(".py", "")
 
 
-def run(flair_input_directory, t1_input_directory, ir_input_directory, output_path: str):
+def run(flair_input_directory, t1_input_directory, ir_input_directory, output_path: str, segment_type: list):
 
     flair_array = read_nifti_as_np_array(flair_input_directory)
     t1_array = read_nifti_as_np_array(t1_input_directory)
@@ -21,9 +21,8 @@ def run(flair_input_directory, t1_input_directory, ir_input_directory, output_pa
 
     segmented_array = brain_model.predict(flair_array, t1_array, ir_array)
 
-    # TODO for now just use two of the segments
     meshes = [generate_mesh(segment, 0) for segment in seperate_segmentation(
-        segmented_array, unique_values=[1, 5])]
+        segmented_array, unique_values=segment_type)]
 
     # TODO do something for colours
     colours = [[0, 0.3, 1.0, 0.2], [1.0, 1.0, 0.0, 1.0]]

@@ -23,7 +23,7 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 hu_threshold = 0
 
 
-def run(input_dir: str, output_path: str) -> None:
+def run(input_dir: str, output_path: str, segment_type: int) -> None:
 
     image_data = read_dicom_as_np_ndarray_and_normalise(
         input_dir)
@@ -34,5 +34,11 @@ def run(input_dir: str, output_path: str) -> None:
         image_data
     )
 
-    meshes = [generate_mesh(segmented_lung, hu_threshold)]
+    if segment_type==1: #lung segmentation
+        meshes = [generate_mesh(segmented_lung, hu_threshold)]
+    elif segment_type==2:  #airway segmentation
+        meshes = [generate_mesh(segmented_airway, hu_threshold)]
+    else:
+        raise Exception("Sorry, segmentation type must be either 1 or 2")
+
     write_mesh_as_glb(meshes, output_path)

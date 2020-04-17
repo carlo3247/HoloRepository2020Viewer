@@ -42,3 +42,6 @@ def load_pipeline_dynamically(plid: str) -> Any:
     pl_package_name = f"core.pipelines.{plid}"
     logging.info(f"Importing pipeline package {pl_package_name}")
     return importlib.import_module(pl_package_name)
+
+def get_pipeline_description(plid: str) -> str:
+    return get_pipelines_dict()[plid]["description"]
