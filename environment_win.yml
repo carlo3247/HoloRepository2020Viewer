@@ -61,6 +61,7 @@ dependencies:
   - zipp=0.6.0=py_0
   - zlib=1.2.11=vc14h21ff451_5
   - pip:
+    - niftynet==0.6.0
     - tensorflow==1.13.1
     - click==7.0
     - colorama==0.4.1
