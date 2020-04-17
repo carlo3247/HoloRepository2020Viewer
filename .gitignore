@@ -16,3 +16,4 @@ models/kidney_segmentation/kidney_model_miscnn
 env/
 .vscode/
 samples/
+tests.txt
