@@ -1,6 +1,7 @@
 import os
 import subprocess
 
+# TODO change with local nifty root
 UPLOAD_FOLDER = "~/niftynet/data/dense_vnet_abdominal_ct/"
 OUTPUT_FOLDER = "~/niftynet/models/dense_vnet_abdominal_ct/segmentation_output/"
 
