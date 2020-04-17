@@ -10,9 +10,7 @@ multi-organ segmentation on abdominal CT with dense v-networks https://doi.org/1
 """
 
 import os
-import sys
 
-from config import MODEL_ABDOMINAL_SEGMENTATION_HOST, MODEL_ABDOMINAL_SEGMENTATION_PORT
 from core.adapters.dicom_file import (
     read_dicom_as_np_ndarray_and_normalise,
     flip_numpy_array_dimensions_y_only,
@@ -24,68 +22,36 @@ from core.adapters.nifti_file import (
     write_nifti_image,
 )
 from core.adapters.glb_file import write_mesh_as_glb
-from core.clients import http
 from core.services.marching_cubes import generate_mesh
 from core.services.np_image_manipulation import downscale_and_conditionally_crop
-from core.tasks.shared.dispatch_output import dispatch_output
-from core.tasks.shared.receive_input import fetch_and_unzip
-from jobs.jobs_io import (
-    get_input_directory_path_for_job,
-    get_logger_for_job,
-    get_result_file_path_for_job,
-    get_temp_file_path_for_job,
-)
-from jobs.jobs_state import JobState, update_job_state
+
+from models.dense_vnet_abdominal_ct.model import abdominal_model
 
 this_plid = os.path.basename(__file__).replace(".py", "")
 hu_threshold = 0
 
 
-def run(job_id: str, pipeline_metadata: dict, input_endpoint: str, medical_data: dict) -> None:
-    logger = get_logger_for_job(job_id)
-    update_job_state(job_id, JobState.STARTED.name, logger)
+def run(dicom_directory_path: str, output_path: str) -> None:
 
-    update_job_state(job_id, JobState.FETCHING_INPUT.name, logger)
-    dicom_directory_path = get_input_directory_path_for_job(job_id)
-    fetch_and_unzip(input_endpoint, dicom_directory_path)
-
-    update_job_state(job_id, JobState.READING_INPUT.name, logger)
-    dicom_image_array = read_dicom_as_np_ndarray_and_normalise(dicom_directory_path)
+    dicom_image_array = read_dicom_as_np_ndarray_and_normalise(
+        dicom_directory_path)
     # NOTE: Numpy array is flipped in the Y axis here as this is the specific image input for the NiftyNet model
-   # dicom_image_array = flip_numpy_array_dimensions_y_only(dicom_image_array)
-    crop_dicom_image_array = downscale_and_conditionally_crop(dicom_image_array)
-    crop_dicom_image_array = flip_numpy_array_dimensions_y_only(crop_dicom_image_array)
+    # dicom_image_array = flip_numpy_array_dimensions_y_only(dicom_image_array)
+    crop_dicom_image_array = downscale_and_conditionally_crop(
+        dicom_image_array)
+    crop_dicom_image_array = flip_numpy_array_dimensions_y_only(
+        crop_dicom_image_array)
 
-    update_job_state(job_id, JobState.PREPROCESSING.name, logger)
-    nifti_image = convert_dicom_np_ndarray_to_nifti_image(crop_dicom_image_array)
-    initial_nifti_output_file_path = get_temp_file_path_for_job(job_id, "temp.nii")
+    nifti_image = convert_dicom_np_ndarray_to_nifti_image(
+        crop_dicom_image_array)
+    initial_nifti_output_file_path = abdominal_model.get_input_path()
     write_nifti_image(nifti_image, initial_nifti_output_file_path)
 
-    update_job_state(job_id, JobState.PERFORMING_SEGMENTATION.name, logger)
-    segmented_nifti_output_file_path = get_temp_file_path_for_job(
-        job_id, "segmented.nii.gz"
-    )
-    http.post_file(
-        MODEL_ABDOMINAL_SEGMENTATION_HOST,
-        MODEL_ABDOMINAL_SEGMENTATION_PORT,
-        initial_nifti_output_file_path,
-        segmented_nifti_output_file_path,
-    )
+    segmented_nifti_output_file_path = abdominal_model.predict()
 
-    update_job_state(job_id, JobState.POSTPROCESSING.name, logger)
     segmented_array = read_nifti_as_np_array(
         segmented_nifti_output_file_path, normalise=False
     )
-    obj_output_path = get_result_file_path_for_job(job_id)
-    print(obj_output_path)
+
     meshes = [generate_mesh(segmented_array, hu_threshold)]
-    write_mesh_as_glb(meshes,obj_output_path)
-
-    update_job_state(job_id, JobState.DISPATCHING_OUTPUT.name, logger)
-    dispatch_output(job_id, this_plid, medical_data)
-
-    update_job_state(job_id, JobState.FINISHED.name, logger)
-
-
-if __name__ == "__main__":
-    run(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    write_mesh_as_glb(meshes, output_path)

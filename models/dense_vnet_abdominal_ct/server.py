@@ -14,10 +14,6 @@ OUTPUT_FOLDER = "/root/niftynet/models/dense_vnet_abdominal_ct/segmentation_outp
 ALLOWED_EXTENSION = "nii"
 UPLOAD_FILENAME = "seg_CT.nii"
 
-app = Flask(__name__)
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-app.config["OUTPUT_FOLDER"] = OUTPUT_FOLDER
-
 
 def file_format_is_allowed(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() == ALLOWED_EXTENSION
