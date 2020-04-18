@@ -9,41 +9,48 @@ import abdominal_segmentation_tool
 
 def main():
     parser = ArgumentParser(
-        prog="HoloPipelinesCLI", description="""
+        prog="HoloPipelinesCLI",
+        description="""
         This is a command line tool to use the local versions of the HoloPipelines.
         Please select on of the pipelines and the required arguments to create a hologram.
         Run "HoloPipelinesCLI pipeline_name -h" for more information on a specific pipeline.
-        """)
+        """,
+    )
     subparsers = parser.add_subparsers(help="pipeline_name")
 
     brain_parser = subparsers.add_parser(
         brain_segmentation_tool.plid,
         description=brain_segmentation_tool.get_description(),
-        help="brain segmentation tool")
+        help="brain segmentation tool",
+    )
     brain_segmentation_tool.add_parser_arguments(brain_parser)
 
     kidney_parser = subparsers.add_parser(
         kidney_segmentation_tool.plid,
         description=kidney_segmentation_tool.get_description(),
-        help="kidney segmentation tool")
+        help="kidney segmentation tool",
+    )
     kidney_segmentation_tool.add_parser_arguments(kidney_parser)
 
     bone_parser = subparsers.add_parser(
         bone_segmentation_tool.plid,
         description=bone_segmentation_tool.get_description(),
-        help="bone segmentation tool")
+        help="bone segmentation tool",
+    )
     bone_segmentation_tool.add_parser_arguments(bone_parser)
 
     lung_parser = subparsers.add_parser(
         lung_segmentation_tool.plid,
         description=lung_segmentation_tool.get_description(),
-        help="lung segmentation tool")
+        help="lung segmentation tool",
+    )
     lung_segmentation_tool.add_parser_arguments(lung_parser)
 
     abdominal_parser = subparsers.add_parser(
         abdominal_segmentation_tool.plid,
         description=abdominal_segmentation_tool.get_description(),
-        help="abdominal segmentation tool")
+        help="abdominal segmentation tool",
+    )
     abdominal_segmentation_tool.add_parser_arguments(abdominal_parser)
 
     args = parser.parse_args()

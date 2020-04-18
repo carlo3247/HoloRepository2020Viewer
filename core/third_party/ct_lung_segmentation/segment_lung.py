@@ -7,7 +7,6 @@ def segment_lung(params, I, I_affine):
     #####################################################
     # Intensity thresholding & Morphological operations
     #####################################################
-
     M = np.zeros(I.shape)
     M[I > params["lungMinValue"]] = 1
     M[I > params["lungMaxValue"]] = 0
