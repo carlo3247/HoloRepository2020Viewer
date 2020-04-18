@@ -17,3 +17,4 @@ env/
 .vscode/
 samples/
 tests.txt
+HoloPipelinesCLI.egg-info

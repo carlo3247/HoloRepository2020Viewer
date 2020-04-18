@@ -14,6 +14,7 @@ def add_parser_arguments(parser):
                         help="Specify the path to the directory containing the scans in the form of DICOM")
     parser.add_argument("output", metavar="o", type=str,
                         help="Specify the path of a single output file in the form of a glb file")
+    parser.set_defaults(which=plid)
 
 
 def run(args):

@@ -29,6 +29,7 @@ def add_parser_arguments(parser):
     parser.add_argument("-type", metavar="t", type=int, nargs="*", default=[1, 5, 6], choices=range(0, len(model_seg_types)),
                         help="Specify the type of abdominal segmentation through an integer. Multiple integers can be supplied"
                         + "\n"+"Segmentation types include " + model_proc_seg_types)
+    parser.set_defaults(which=plid)
 
 
 def run(args):

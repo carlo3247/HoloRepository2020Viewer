@@ -29,6 +29,7 @@ def add_parser_arguments(parser):
                         help="Specify the path of a single output file in the form of a glb file")
     parser.add_argument("-type", metavar="t", type=int, default=1, choices=range(0, len(model_seg_types)),
                         help="Specify the type of lung segmentation through an integer"+"\n"+"Segmentation types include " + model_proc_seg_types)
+    parser.set_defaults(which=plid)
 
 
 def run(args):

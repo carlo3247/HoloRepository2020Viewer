@@ -19,7 +19,7 @@ conda env create -f environment_gpu.yml
 
 After building the environment, install the local package.
 ```bash
-pip install .
+pip install -e .
 ```
 
 ## Usage
@@ -37,4 +37,28 @@ HoloKidney -h
 HoloLung -h
 HoloAbdominal -h
 HoloBone -h
+```
+
+## Example Usage
+The following example uses the `lung_segmentation` pipeline on a stack of dicom images stored in the `lung-scan` directory.
+The generated mesh is stored at `output.glb`.
+
+```bash
+HoloPipelines lung_segmentation lung-scan output.glb
+
+# or
+
+HoloLung lung-scan output.glb
+```
+
+Some pipelines need more than one scan to perform the generation. Below is an example of the `brain_segmentation` that uses
+three different MRI modalities to generate the hologram. The three modalities `flair_scan.nii.gz`, `t1_scan.nii.gz`, and
+`ir_scan.nii.gz` are stored as compressed NIfTI images.
+
+```bash
+HoloPipelines brain_segmentation flair_scan.nii.gz t1_scan.nii.gz ir_scan.nii.gz output.glb
+
+# or
+
+HoloBrain flair_scan.nii.gz t1_scan.nii.gz ir_scan.nii.gz output.glb
 ```
