@@ -4,6 +4,7 @@ import brain_segmentation_tool
 import kidney_segmentation_tool
 import bone_segmentation_tool
 import lung_segmentation_tool
+import abdominal_segmentation_tool
 
 
 def main():
@@ -35,6 +36,12 @@ def main():
         help="lung segmentation tool")
     lung_segmentation_tool.add_parser_arguments(lung_parser)
 
+    abdominal_parser = subparsers.add_parser(
+        abdominal_segmentation_tool.plid,
+        description=abdominal_segmentation_tool.get_description(),
+        help="abdominal segmentation tool")
+    abdominal_segmentation_tool.add_parser_arguments(abdominal_parser)
+
     args = parser.parse_args()
 
     try:
@@ -44,6 +51,14 @@ def main():
 
     if plid == brain_segmentation_tool.plid:
         sys.exit(brain_segmentation_tool.run(args))
+    elif plid == kidney_segmentation_tool.plid:
+        sys.exit(kidney_segmentation_tool.run(args))
+    elif plid == bone_segmentation_tool.plid:
+        sys.exit(bone_segmentation_tool.run(args))
+    elif plid == lung_segmentation_tool.plid:
+        sys.exit(lung_segmentation_tool.run(args))
+    elif plid == abdominal_segmentation_tool.plid:
+        sys.exit(abdominal_segmentation_tool.run(args))
     else:
         parser.print_help(sys.stderr)
         sys.exit(1)
