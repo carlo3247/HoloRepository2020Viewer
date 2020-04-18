@@ -16,9 +16,7 @@
         "Image resolution",
         "Any"
       ]
-    ],
-    "inputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_2_input.png",
-    "outputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_2_output.png"
+    ]
   },
   "lung_segmentation": {
     "plid": "lung_segmentation",
@@ -37,9 +35,7 @@
         "Image resolution",
         "Any"
       ]
-    ],
-    "inputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_3_input.png",
-    "outputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_3_output.png"
+    ]
   },
   "abdominal_organs_segmentation": {
     "plid": "abdominal_organs_segmentation",
@@ -58,9 +54,7 @@
         "Image resolution",
         "Any"
       ]
-    ],
-    "inputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_1_input.png",
-    "outputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_1_output.png"
+    ]
   },
   "mesh_generation_only": {
     "plid": "mesh_generation_only",
@@ -75,9 +69,7 @@
         "Imaging study type",
         "Any"
       ]
-    ],
-    "inputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_1_input.png",
-    "outputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_1_output.png"
+    ]
   },
   "kidney_segmentation": {
     "plid": "kidney_segmentation",
@@ -96,14 +88,12 @@
         "Image resolution",
         "Any"
       ]
-    ],
-    "inputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_1_input.png",
-    "outputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_1_output.png"
+    ]
   },
   "brain_segmentation": {
     "plid": "brain_segmentation",
     "title": "brain segmentation",
-    "description": "Generate 3D models of 11 different segmentations of a brain",
+    "description": "Generate 3D models of 11 different segmentations of a brain.",
     "inputConstraints": [
       [
         "Body site",
@@ -116,8 +106,6 @@
     ],
     "metadata": {
       "modelname": "brain_segmentation"
-    },
-    "inputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_1_input.png",
-    "outputExampleImageUrl": "https://holoblob.blob.core.windows.net/test/pipeline_1_output.png"
+    }
   }
 }
