@@ -103,9 +103,6 @@
         "Imaging study type",
         "MRI: T1, FLAIR, IR"
       ]
-    ],
-    "metadata": {
-      "modelname": "brain_segmentation"
-    }
+    ]
   }
 }
