@@ -2,6 +2,7 @@ import sys
 from argparse import ArgumentParser
 import brain_segmentation_tool
 import kidney_segmentation_tool
+import bone_segmentation_tool
 
 
 def main():
@@ -20,6 +21,12 @@ def main():
         description=kidney_segmentation_tool.get_description(),
         help="kidney segmentation tool")
     kidney_segmentation_tool.add_parser_arguments(kidney_parser)
+
+    bone_parser = subparsers.add_parser(
+        bone_segmentation_tool.plid,
+        description=bone_segmentation_tool.get_description(),
+        help="bone segmentation tool")
+    bone_segmentation_tool.add_parser_arguments(bone_parser)
 
     args = parser.parse_args()
 
