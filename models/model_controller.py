@@ -1,7 +1,3 @@
-"""
-This module contains helper functions to show infos about pipelines
-and load them dynamically.
-"""
 import json
 
 

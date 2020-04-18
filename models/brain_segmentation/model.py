@@ -1,11 +1,6 @@
-import os
-
 import numpy as np
-import SimpleITK as sitk
 import tensorflow as tf
 
-from .mrbrains.data import Subjects
-from .mrbrains.models import cnn_3d_segmentation_1, resnet_3d_segmentation_1
 from .mrbrains.utils import batch_norm_3d, get_dsc, get_loss, re_arrange_array
 
 
