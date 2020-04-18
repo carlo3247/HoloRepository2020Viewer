@@ -7,14 +7,21 @@
             "white_matter": 3,
             "white_matter_lesion": 4,
             "cerebrospinal_fluid_in_the_extracerebral_space": 5,
-            "ventricles" : 6,
+            "ventricles": 6,
             "cerebellum": 7,
             "brain_stem": 8,
             "infarcation": 9,
             "other": 10
         },
-        "filetypes": ["NIfTI", "Compressed NIfTI"],
-        "required_modalities": ["T2-FLAIR", "T1", "T1-IR"],
+        "filetypes": [
+            "NIfTI",
+            "Compressed NIfTI"
+        ],
+        "required_modalities": [
+            "T2-FLAIR",
+            "T1",
+            "T1-IR"
+        ],
         "optional_modalities": []
     },
     "abdominal_organs_segmentation": {
@@ -29,7 +36,9 @@
             "pancreas": 7,
             "duodenum": 8
         },
-        "filetypes": ["DICOM"],
+        "filetypes": [
+            "DICOM"
+        ],
         "required_modalities": [],
         "optional_modalities": []
     },
@@ -39,7 +48,9 @@
             "kidneys": 1,
             "kidney_tumour": 2
         },
-        "filetypes": ["DICOM"],
+        "filetypes": [
+            "DICOM"
+        ],
         "required_modalities": [],
         "optional_modalities": []
     },
@@ -49,7 +60,9 @@
             "lung": 1,
             "airway": 2
         },
-        "filetypes": ["DICOM"],
+        "filetypes": [
+            "DICOM"
+        ],
         "required_modalities": [],
         "optional_modalities": []
     },
@@ -57,7 +70,9 @@
         "segmentation_dict": {
             "background": 0
         },
-        "filetypes": ["DICOM"],
+        "filetypes": [
+            "DICOM"
+        ],
         "required_modalities": [],
         "optional_modalities": []
     }
