@@ -1,11 +1,12 @@
 """
-This module contains functionality related to writing a mesh to disk as an OBJ file.
+This module contains functionality related to writing a mesh to disk as an GLB file.
 """
 import numpy as np
 import math
 
 import trimesh
 from trimesh import visual
+from trimesh import repair
 
 
 import logging
@@ -20,6 +21,7 @@ def write_mesh_as_glb(
                                 faces=mesh[1],
                                 vertex_normals=mesh[2])
 
+        repair.fix_inversion(mesh2)
         mesh2.apply_transform(
             trimesh.transformations.rotation_matrix(90, (0, 0, 1)))
         scene.add_geometry(mesh2)
@@ -38,6 +40,7 @@ def write_mesh_as_glb_with_colour(
                                 faces=mesh[1],
                                 vertex_normals=mesh[2])
 
+        repair.fix_inversion(mesh2)
         mesh2.visual.material = trimesh.visual.material.SimpleMaterial(
             diffuse=np.asarray(colour[index]))
         mesh2.apply_transform(

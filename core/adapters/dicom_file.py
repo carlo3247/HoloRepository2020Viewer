@@ -156,7 +156,6 @@ def load_file(path):
     return np.squeeze(image_np)
 
 
-@jit
 def normalizetest(dicom_image_array, real_resize_factor):
     return pirt.interp.zoom(
         dicom_image_array, np.ndarray.tolist(real_resize_factor), order=0
