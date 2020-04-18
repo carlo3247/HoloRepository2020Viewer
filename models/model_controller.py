@@ -1,7 +1,3 @@
-"""
-This module contains helper functions to show infos about pipelines
-and load them dynamically.
-"""
 import json
 
 
@@ -37,7 +33,9 @@ def get_seg_types(modelname: str) -> dict:
 
 def get_proc_seg_types(modelname: str) -> dict:
     seg_types = get_seg_types(modelname)
-    return ", ".join("\n* {!s} = {!r}".format(key, val) for (key, val) in seg_types.items())
+    return ", ".join(
+        "\n* {!s} = {!r}".format(key, val) for (key, val) in seg_types.items()
+    )
 
 
 def get_file_types(modelname: str) -> dict:

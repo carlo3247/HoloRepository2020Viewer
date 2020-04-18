@@ -12,7 +12,7 @@ import pirt.interp
 
 
 def extract_np_array_from_nifti_image(
-    image_data: nibabel.nifti1.Nifti1Image
+    image_data: nibabel.nifti1.Nifti1Image,
 ) -> np.array:
     """
     Returns the numpy array representation of the dataobj inside a NIfTI image
@@ -23,7 +23,7 @@ def extract_np_array_from_nifti_image(
 
 
 def extract_np_array_from_nifti_image_and_normalise(
-    image_data: nibabel.nifti1.Nifti1Image
+    image_data: nibabel.nifti1.Nifti1Image,
 ) -> np.array:
     """
     After loading a NIfTI file, this function resamples it according to the file headers
@@ -49,7 +49,6 @@ def extract_np_array_from_nifti_image_and_normalise(
     spacing = np.array(list(spacing))
     spacing = np.flip(spacing)
 
-
     # calculate resize factor
     new_spacing = [1, 1, 1]
     resize_factor = spacing / new_spacing
@@ -58,7 +57,7 @@ def extract_np_array_from_nifti_image_and_normalise(
     real_resize_factor = new_shape / image_data_as_np_array.shape[:3]
 
     image_data_as_np_array = pirt.interp.zoom(
-        image_data_as_np_array,np.ndarray.tolist(real_resize_factor)
+        image_data_as_np_array, np.ndarray.tolist(real_resize_factor)
     )
 
     logging.info("Shape before resampling\t" + repr(original_shape))
@@ -113,7 +112,7 @@ def write_np_array_as_nifti_image(
 
 
 def convert_dicom_np_ndarray_to_nifti_image(
-    dicom_image: np.ndarray
+    dicom_image: np.ndarray,
 ) -> nibabel.nifti1.Nifti1Image:
     # https://stackoverflow.com/questions/28330785/creating-a-nifti-file-from-a-numpy-array
     return nibabel.Nifti1Image(dicom_image, affine=np.eye(4))

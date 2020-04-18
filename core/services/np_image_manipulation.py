@@ -2,11 +2,7 @@
 This module contains some functions to perform manipulations upon numpy data.
 """
 
-import logging
-
 import numpy as np
-import scipy.ndimage
-
 from numba import jit
 
 import pirt.interp
@@ -68,7 +64,7 @@ def downscale_and_conditionally_crop(
         image = pirt.interp.zoom(
             image, [resize_ratio, resize_ratio, resize_ratio], order=1
         )
-     #   logging.info("Array downscale finished")
+    #   logging.info("Array downscale finished")
     # else:
     #     logging.info("Array smaller than limit given, no downscale has been done")
 
@@ -78,9 +74,8 @@ def downscale_and_conditionally_crop(
 
     # each dimension must be divisible by 8, code below crop the remainder after division by 8
     if (x % 8 != 0) or (y % 8 != 0) or (z % 8 != 0):
-        image = crop_around_centre(
-            image, x - (x % 8), y - (y % 8), z - (z % 8))
-   #     logging.info("Array not divisible by 8, image cropped")
+        image = crop_around_centre(image, x - (x % 8), y - (y % 8), z - (z % 8))
+    #     logging.info("Array not divisible by 8, image cropped")
 
     return image
 
@@ -92,7 +87,7 @@ def seperate_segmentation(data: np.ndarray, unique_values: list = []) -> np.ndar
     """
     if not unique_values:
         unique_values = np.unique(data)
-    result = np.zeros((len(unique_values), ) + data.shape)
+    result = np.zeros((len(unique_values),) + data.shape)
     for i, value in enumerate(unique_values):
         temp = np.array(data)
         temp[temp != value] = 0
