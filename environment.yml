@@ -1,4 +1,4 @@
-name: idp3
+name: holopipelines
 channels:
   - anaconda
   - intel

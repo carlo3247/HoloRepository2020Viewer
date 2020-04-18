@@ -1,4 +1,4 @@
-name: intelpython3
+name: holopipelines
 channels:
   - conda-forge
   - intel
