@@ -17,8 +17,10 @@ There are four different environments based on your hardware and software:
 conda env create -f environment_gpu.yml
 ```
 
-After building the environment, install the local package.
+After building the environment, activate the environment and install the local package.
 ```bash
+conda activate holopipelines
+
 pip install -e .
 ```
 

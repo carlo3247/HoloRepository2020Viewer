@@ -2,8 +2,8 @@ import os
 import shutil
 import subprocess
 
-UPLOAD_FOLDER = "./models/dense_vnet_abdominal_ct/input/"
-OUTPUT_FOLDER = "./models/dense_vnet_abdominal_ct/output/"
+UPLOAD_FOLDER = "./models/dense_vnet_abdominal_ct/input"
+OUTPUT_FOLDER = "./models/dense_vnet_abdominal_ct/output"
 
 
 class Abdominal_model:
