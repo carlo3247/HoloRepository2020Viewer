@@ -24,5 +24,17 @@ pip install .
 
 ## Usage
 There are several ways to run the local HoloPipelines.
+The general command line interface can be invoked like this:
+```bash
+HoloPipelines -h
+```
 
-TODO
+Instead of running the tool through the main interface, a pipeline-specific interface is also provided.
+
+```bash
+HoloBrain -h
+HoloKidney -h
+HoloLung -h
+HoloAbdominal -h
+HoloBone -h
+```
