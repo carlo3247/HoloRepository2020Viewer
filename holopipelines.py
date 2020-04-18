@@ -9,8 +9,12 @@ import abdominal_segmentation_tool
 
 def main():
     parser = ArgumentParser(
-        prog="HoloPipelinesCLI", description="TODO")
-    subparsers = parser.add_subparsers(help="pipeline name")
+        prog="HoloPipelinesCLI", description="""
+        This is a command line tool to use the local versions of the HoloPipelines.
+        Please select on of the pipelines and the required arguments to create a hologram.
+        Run "HoloPipelinesCLI pipeline_name -h" for more information on a specific pipeline.
+        """)
+    subparsers = parser.add_subparsers(help="pipeline_name")
 
     brain_parser = subparsers.add_parser(
         brain_segmentation_tool.plid,
