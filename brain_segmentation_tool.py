@@ -18,12 +18,12 @@ def get_description():
     model_file_types = get_file_types(plid)
     model_req_mods = get_req_modalities(plid)
 
-    return pipeline_description
-    + "\n3 input scans (modalities) required of types "
-    + ", ".join(model_req_mods)
-    + "\nInput files must be of type "
-    + " or ".join(model_file_types)
-    + "\nDefault segmentaion: cortical_gray_matter ",
+    return pipeline_description +\
+        "\n3 input scans (modalities) required of types " +\
+        ", ".join(model_req_mods) +\
+        "\nInput files must be of type " +\
+        " or ".join(model_file_types) +\
+        "\nDefault segmentaion: cortical_gray_matter "
 
 
 def add_parser_arguments(parser):
