@@ -1,3 +1,4 @@
+import logging
 import numpy as np
 from scipy import ndimage
 from scipy.spatial import distance
@@ -132,7 +133,7 @@ def generate_initLoc(params, I, Mlung, Radius, RadiusZ, struct_trachea):
                     initLoc = [i, j, slice_no]
                     minDiff = currVal
 
-    print("initial location = " + str(initLoc))
+    logging.info("initial location = " + str(initLoc))
 
     return slice_no, initLoc
 
@@ -219,7 +220,7 @@ def close_space_dilation(
 
         totalChange = np.sum(Minit[:] > 1)
 
-        print(
+        logging.info(
             "iter = "
             + str(tempCheck)
             + " airway sum = "

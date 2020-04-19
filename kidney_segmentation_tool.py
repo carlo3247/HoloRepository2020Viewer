@@ -54,7 +54,10 @@ def add_parser_arguments(parser):
         + model_proc_seg_types,
     )
     parser.add_argument(
-        "-l", "--log", action="store_true", help="Set flag to turn on logging output",
+        "-q",
+        "--quiet",
+        action="store_true",
+        help="Set the logging level from INFO to ERROR",
     )
     parser.set_defaults(which=plid)
 
@@ -78,7 +81,7 @@ def main():
 
     args = parser.parse_args()
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.ERROR if args.quiet else logging.INFO,
         format="%(asctime)s - %(module)s:%(levelname)s - %(message)s",
         datefmt="%d-%b-%y %H:%M:%S",
     )

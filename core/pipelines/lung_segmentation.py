@@ -26,6 +26,7 @@ hu_threshold = 0
 
 
 def run(input_dir: str, output_path: str, segment_type: list) -> None:
+    logging.info("Starting lung pipeline")
     image_data = read_dicom_as_np_ndarray_and_normalise(input_dir)
 
     image_data = downscale_and_conditionally_crop(image_data)
@@ -44,3 +45,4 @@ def run(input_dir: str, output_path: str, segment_type: list) -> None:
 
     meshes = convert_meshes_trimesh(meshes)
     view_mesh(meshes, output_path)
+    logging.info("Lung pipeline finished successfully")

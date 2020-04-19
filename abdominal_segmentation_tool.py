@@ -42,7 +42,7 @@ def add_parser_arguments(parser):
         metavar="t",
         type=int,
         nargs="*",
-        default=[1, 5, 6],
+        default=[1, 2, 3, 4, 5, 6, 7, 8],
         choices=range(0, len(model_seg_types)),
         help="Specify the type of abdominal segmentation through an integer. Multiple integers can be supplied"
         + "\n"
@@ -50,7 +50,10 @@ def add_parser_arguments(parser):
         + model_proc_seg_types,
     )
     parser.add_argument(
-        "-l", "--log", action="store_true", help="Set flag to turn on logging output",
+        "-q",
+        "--quiet",
+        action="store_true",
+        help="Set the logging level from INFO to ERROR",
     )
     parser.set_defaults(which=plid)
 
@@ -72,8 +75,9 @@ def main():
     add_parser_arguments(parser)
 
     args = parser.parse_args()
+
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.ERROR if args.quiet else logging.INFO,
         format="%(asctime)s - %(module)s:%(levelname)s - %(message)s",
         datefmt="%d-%b-%y %H:%M:%S",
     )

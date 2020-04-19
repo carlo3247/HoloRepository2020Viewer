@@ -1,6 +1,7 @@
 """
 This module provides a wrapper around the existing ct_lung_segmentation implementation.
 """
+import logging
 import nibabel as nib
 import numpy as np
 
@@ -13,6 +14,7 @@ def perform_lung_segmentation(image_data: np.ndarray) -> str:
     """
     Calls the implementation of lung segmentation and returns path to the result file.
     """
+    logging.info("Performing lung segmentation...")
     params = utils.define_parameter()
     image_affine = np.eye(4)
 
@@ -26,5 +28,7 @@ def perform_lung_segmentation(image_data: np.ndarray) -> str:
     segmented_lung, segmented_airway = segment_lung_airway(
         params, image_data, image_affine, segmented_lung_and_airway
     )
+
+    logging.info("Finished lung segmentation")
 
     return segmented_lung, segmented_airway

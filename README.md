@@ -44,6 +44,8 @@ HoloBone -h
 ```
 
 ## Example Usage
+### Basic Usage
+#### Basic example
 The following example uses the `lung_segmentation` pipeline on a stack of dicom images stored in the `lung-scan` directory.
 The generated mesh is stored at `output.glb`.
 
@@ -55,22 +57,19 @@ HoloPipelines lung_segmentation lung-scan output.glb
 HoloLung lung-scan output.glb
 ```
 
+#### Multiple input files
 Some pipelines need more than one scan to perform the generation. Below is an example of the `brain_segmentation` that uses
 three different MRI modalities to generate the hologram. The three modalities `flair_scan.nii.gz`, `t1_scan.nii.gz`, and
 `ir_scan.nii.gz` are stored as compressed NIfTI images.
 
 ```bash
-HoloPipelines brain_segmentation flair_scan.nii.gz t1_scan.nii.gz ir_scan.nii.gz output.glb
-
-# or
-
 HoloBrain flair_scan.nii.gz t1_scan.nii.gz ir_scan.nii.gz output.glb
 ```
 
-Optional flags can be used when invoking a pipeline. These include the segmentation type and logging flags, as described below:
+### Other functionality
+Optional flags can be used when invoking a pipeline. These include the segmentation type and silencing logs, as described below:
 
-### Segmentation type
-
+#### Specifying Segmentation type
 A single integer or a series of integers that correspond to anatominal sub-structures can be passed to the command. Information on the integer mappings can be viewed through the help command.
 
 ```bash
@@ -78,13 +77,9 @@ holoAbdominal abdominal_scan output.glb -t 1 5 7
 ```
 Here, the invocation with the `-t` flag produces a model with the spleen, liver and pancreas.
 
-### Logging output
+#### Silencing logging
+If no output is needed. The logging level can simply be reduced to ERROR using the `--quiet` or in short `-q` flag.
 
 ```bash
-holoAbdominal abdominal_scan output.glb -l
+HoloBrain -q brain_scan output.glb
 ```
-Using the `-l` flag allows for timestamped event messages to be displayed on the console.
-
-
-
-
