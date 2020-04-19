@@ -11,8 +11,8 @@ There are four different environments based on your hardware and software:
 
 ||GPU support|CPU only|
 |-|:-:|:-:|
-|**Ubuntu**|environment_gpu.yml|envioronment.yml|
-|**Windows**|environment_win_gpu.yml|envioronment_win.yml|
+|**Ubuntu**|environment_gpu.yml|environment.yml|
+|**Windows**|environment_win_gpu.yml|environment.yml|
 
 
 ```bash
@@ -73,7 +73,7 @@ Optional flags can be used when invoking a pipeline. These include the segmentat
 A single integer or a series of integers that correspond to anatominal sub-structures can be passed to the command. Information on the integer mappings can be viewed through the help command.
 
 ```bash
-holoAbdominal abdominal_scan output.glb -t 1 5 7
+HoloAbdominal abdominal_scan output.glb -t 1 5 7
 ```
 Here, the invocation with the `-t` flag produces a model with the spleen, liver and pancreas.
 
@@ -81,5 +81,5 @@ Here, the invocation with the `-t` flag produces a model with the spleen, liver 
 If no output is needed. The logging level can simply be reduced to ERROR using the `--quiet` or in short `-q` flag.
 
 ```bash
-HoloBrain -q brain_scan output.glb
+HoloBone -q bone_scan output.glb
 ```
