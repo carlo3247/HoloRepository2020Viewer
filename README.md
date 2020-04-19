@@ -73,7 +73,7 @@ Optional flags can be used when invoking a pipeline. These include the segmentat
 A single integer or a series of integers that correspond to anatominal sub-structures can be passed to the command. Information on the integer mappings can be viewed through the help command.
 
 ```bash
-holoAbdominal abdominal_scan output.glb -t 1 5 7
+HoloAbdominal abdominal_scan output.glb -t 1 5 7
 ```
 Here, the invocation with the `-t` flag produces a model with the spleen, liver and pancreas.
 
