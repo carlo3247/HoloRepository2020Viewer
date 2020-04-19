@@ -11,8 +11,8 @@ There are four different environments based on your hardware and software:
 
 ||GPU support|CPU only|
 |-|:-:|:-:|
-|**Ubuntu**|environment_gpu.yml|envioronment.yml|
-|**Windows**|environment_win_gpu.yml|envioronment_win.yml|
+|**Ubuntu**|environment_gpu.yml|environment.yml|
+|**Windows**|environment_win_gpu.yml|environment.yml|
 
 
 ```bash
