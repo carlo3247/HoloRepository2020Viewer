@@ -55,7 +55,7 @@ def view_mesh(meshes,output_file):
     )
 
     for i in range(0,len(meshes)):
-        vmeshes.append(trimesh2vtk(meshes[0], alphaPerCell=True))
+        vmeshes.append(trimesh2vtk(meshes[i], alphaPerCell=True))
 
     vp.show(vmeshes)
 
