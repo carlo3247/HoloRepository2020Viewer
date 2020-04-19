@@ -1,5 +1,6 @@
 import logging
 import trimesh
+from trimesh.smoothing import filter_laplacian
 import numpy as np
 
 
@@ -8,14 +9,15 @@ def convert_meshes_trimesh(meshes):
     trimesh_objects = []
     index = 0
     for mesh in meshes:
-        mesh2 = trimesh.Trimesh(
+        tmp_mesh = trimesh.Trimesh(
             vertices=mesh[0],
             faces=mesh[1],
             vertex_normals=mesh[2],
             vertex_colors=get_random_rgb_colours()
             + [0.5],  # set alpha to 0.5 for all colours
         )
-        trimesh_objects.append(mesh2)
+        filter_laplacian(tmp_mesh)
+        trimesh_objects.append(tmp_mesh)
         index += 1
     return trimesh_objects
 
