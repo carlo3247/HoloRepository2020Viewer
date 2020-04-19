@@ -1,7 +1,5 @@
 <p align="center">
   <img width="400" alt="HoloPipelinesCLI logo" src="https://user-images.githubusercontent.com/23082383/79690583-0ec66180-8253-11ea-8088-0131d01beb89.png">
-
-    A system for transforming medical imaging studies such as CT or MRI scans into 3-dimensional holograms, storing data on a cloud-based platform and making it available for other systems.
 </p>
 
 A python command line tool that incorporates a barebone version of [HoloPipelines](https://github.com/nbckr/HoloRepository-Core/tree/dev/HoloPipelines), wich is part of [HoloPipelines](https://github.com/nbckr/HoloRepository-Core), to segment and generate 3D models of various anatominal stuctures. These include the lungs, brain, kidneys, abdominals and bones.
