@@ -1,5 +1,6 @@
 import sys
 from argparse import ArgumentParser
+from argparse import RawTextHelpFormatter
 import brain_segmentation_tool
 import kidney_segmentation_tool
 import bone_segmentation_tool
@@ -22,6 +23,7 @@ def main():
         brain_segmentation_tool.plid,
         description=brain_segmentation_tool.get_description(),
         help="brain segmentation tool",
+        formatter_class=RawTextHelpFormatter
     )
     brain_segmentation_tool.add_parser_arguments(brain_parser)
 
@@ -29,6 +31,7 @@ def main():
         kidney_segmentation_tool.plid,
         description=kidney_segmentation_tool.get_description(),
         help="kidney segmentation tool",
+        formatter_class=RawTextHelpFormatter
     )
     kidney_segmentation_tool.add_parser_arguments(kidney_parser)
 
@@ -36,6 +39,7 @@ def main():
         bone_segmentation_tool.plid,
         description=bone_segmentation_tool.get_description(),
         help="bone segmentation tool",
+        formatter_class=RawTextHelpFormatter
     )
     bone_segmentation_tool.add_parser_arguments(bone_parser)
 
@@ -43,6 +47,7 @@ def main():
         lung_segmentation_tool.plid,
         description=lung_segmentation_tool.get_description(),
         help="lung segmentation tool",
+        formatter_class=RawTextHelpFormatter
     )
     lung_segmentation_tool.add_parser_arguments(lung_parser)
 
@@ -50,6 +55,7 @@ def main():
         abdominal_segmentation_tool.plid,
         description=abdominal_segmentation_tool.get_description(),
         help="abdominal segmentation tool",
+        formatter_class=RawTextHelpFormatter
     )
     abdominal_segmentation_tool.add_parser_arguments(abdominal_parser)
 
