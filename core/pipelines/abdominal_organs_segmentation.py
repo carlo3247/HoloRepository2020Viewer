@@ -23,8 +23,13 @@ from core.adapters.nifti_file import (
     write_nifti_image,
 )
 from core.adapters.glb_file import write_mesh_as_glb
+from core.adapters.trimesh_converter import convert_meshes_trimesh
+from core.client.viewer import view_mesh
 from core.services.marching_cubes import generate_mesh
-from core.services.np_image_manipulation import downscale_and_conditionally_crop
+from core.services.np_image_manipulation import (
+    downscale_and_conditionally_crop,
+    seperate_segmentation,
+)
 
 from models.dense_vnet_abdominal_ct.model import abdominal_model
 
@@ -53,8 +58,13 @@ def run(dicom_directory_path: str, output_path: str, segment_type: list) -> None
         segmented_nifti_output_file_path, normalise=False
     )
 
-    meshes = [generate_mesh(segmented_array, hu_threshold)]
-    logger.info("WRITING_MESH")
-    write_mesh_as_glb(meshes, output_path)
+    meshes = [
+        generate_mesh(segment, 0)
+        for segment in seperate_segmentation(
+            segmented_array, unique_values=segment_type
+        )
+    ]
+    meshes = convert_meshes_trimesh(meshes)
+    view_mesh(meshes, output_path)
 
     abdominal_model.cleanup()

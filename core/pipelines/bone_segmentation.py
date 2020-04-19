@@ -9,8 +9,11 @@ import logging
 
 import numpy as np
 from core.adapters.dicom_file import read_dicom_as_np_ndarray_and_normalise
-from core.adapters.glb_file import write_mesh_as_glb
+
+from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.services.marching_cubes import generate_mesh
+from core.client.viewer import view_mesh
+
 from core.services.np_image_manipulation import downscale_and_conditionally_crop
 
 this_plid = os.path.basename(__file__).replace(".py", "")
@@ -25,8 +28,9 @@ def run(input_dir: str, output_path: str) -> None:
     logger.info("SEGMENTATION")
     meshes = [generate_mesh(downscaled_image, bone_hu_threshold)]
     logger.info("WRITING_MESH")
-    write_mesh_as_glb(meshes, output_path)
 
+    meshes = convert_meshes_trimesh(meshes)
+    view_mesh(meshes,output_path)
 
 if __name__ == "__main__":
     run(sys.argv[1], sys.argv[2])

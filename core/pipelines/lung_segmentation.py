@@ -12,6 +12,8 @@ import logging
 from core.adapters.dicom_file import read_dicom_as_np_ndarray_and_normalise
 
 from core.adapters.glb_file import write_mesh_as_glb
+from core.adapters.trimesh_converter import convert_meshes_trimesh
+from core.client.viewer import view_mesh
 from core.services.marching_cubes import generate_mesh
 from core.services.np_image_manipulation import downscale_and_conditionally_crop
 from core.third_party.lung_and_airway_segmentation import perform_lung_segmentation
@@ -37,5 +39,11 @@ def run(input_dir: str, output_path: str, segment_type: list) -> None:
         meshes.append(generate_mesh(segmented_lung, hu_threshold))
     if 2 in segment_type:  # airway segmentation
         meshes.append(generate_mesh(segmented_airway, hu_threshold))
-    logger.info("WRITING_MESH")
-    write_mesh_as_glb(meshes, output_path)
+
+    if len(meshes) == 0:
+        raise Exception(
+            "No valid segmentation specified, segmentation type must be either 1 or 2"
+        )
+
+    meshes = convert_meshes_trimesh(meshes)
+    view_mesh(meshes, output_path)
