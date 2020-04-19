@@ -10,6 +10,8 @@ from core.adapters.nifti_file import (
     read_nifti_image,
     write_nifti_image,
 )
+from core.adapters.trimesh_converter import convert_meshes_trimesh
+from core.client.viewer import view_mesh
 from core.services.marching_cubes import generate_mesh
 from core.services.np_image_manipulation import seperate_segmentation
 from core.adapters.glb_file import write_mesh_as_glb_with_colour
@@ -35,8 +37,7 @@ def run(input_directory: str, output_path: str, segment_type: list) -> None:
     meshes = [generate_mesh(segment, 0) for segment in seperate_segmentation(
         segmented_array, unique_values=segment_type)]
 
-    # TODO do something for colours
-    colours = [[0, 0.3, 1.0, 0.2], [1.0, 1.0, 0.0, 1.0]]
-    write_mesh_as_glb_with_colour(meshes, output_path, colours)
+    meshes = convert_meshes_trimesh(meshes)
+    view_mesh(meshes)
 
     kidney_model.cleanup()
