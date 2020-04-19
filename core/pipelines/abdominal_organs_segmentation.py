@@ -10,6 +10,7 @@ multi-organ segmentation on abdominal CT with dense v-networks https://doi.org/1
 """
 
 import os
+import logging
 
 from core.adapters.dicom_file import (
     read_dicom_as_np_ndarray_and_normalise,
@@ -37,7 +38,8 @@ hu_threshold = 0
 
 
 def run(dicom_directory_path: str, output_path: str, segment_type: list) -> None:
-
+    logger = logging.getLogger("abdominal_segmentation_tool")
+    logger.info("READING_INPUT")
     # TODO include segment type variable to filter segmentations
 
     dicom_image_array = read_dicom_as_np_ndarray_and_normalise(dicom_directory_path)
@@ -49,7 +51,7 @@ def run(dicom_directory_path: str, output_path: str, segment_type: list) -> None
     nifti_image = convert_dicom_np_ndarray_to_nifti_image(crop_dicom_image_array)
     initial_nifti_output_file_path = abdominal_model.get_input_path()
     write_nifti_image(nifti_image, initial_nifti_output_file_path)
-
+    logger.info("SEGMENTATION")
     segmented_nifti_output_file_path = abdominal_model.predict()
 
     segmented_array = read_nifti_as_np_array(
