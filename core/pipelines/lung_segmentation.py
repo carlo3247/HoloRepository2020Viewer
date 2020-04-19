@@ -26,12 +26,9 @@ hu_threshold = 0
 
 
 def run(input_dir: str, output_path: str, segment_type: list) -> None:
-    logger = logging.getLogger("lung_segmentation_tool")
-    logger.info("READING_INPUT")
     image_data = read_dicom_as_np_ndarray_and_normalise(input_dir)
 
     image_data = downscale_and_conditionally_crop(image_data)
-    logger.info("SEGMENTATION")
     segmented_lung, segmented_airway = perform_lung_segmentation(image_data)
 
     meshes = []

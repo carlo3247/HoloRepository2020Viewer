@@ -1,7 +1,7 @@
-import argparse
-from argparse import RawTextHelpFormatter
 import logging
-
+import argparse
+from sys_logger import configureLogger
+from argparse import RawTextHelpFormatter
 from core.pipelines.pipelines_controller import (
     get_pipeline_description,
     load_pipeline_dynamically,
@@ -13,8 +13,6 @@ from models.model_controller import (
     get_proc_seg_types,
 )
 
-import logging
-from sys_logger import configureLogger
 
 plid = "brain_segmentation"
 
@@ -76,23 +74,18 @@ def add_parser_arguments(parser):
         + model_proc_seg_types,
     )
     parser.add_argument(
-        "-l",
-        "--log",
-        action='store_true',
-        help="Set flag to turn on logging output",
+        "-l", "--log", action="store_true", help="Set flag to turn on logging output",
     )
     parser.set_defaults(which=plid)
 
 
 def run(args):
-    logger = logging.getLogger(__name__) 
-    logger.info("INITIALIZE PIPELINE")
+    logging.info("Loading and initializing bone pipeline dynamically.")
     flair_input_directory = args.flair_input
     t1_input_directory = args.t1_input
     ir_input_directory = args.ir_input
     output_path = args.output
     segment_type = args.type
-    logger.info("LOADING_MODEL")
     pipeline_module = load_pipeline_dynamically(plid)
     pipeline_module.run(
         flair_input_directory,
@@ -101,7 +94,7 @@ def run(args):
         output_path,
         segment_type,
     )
-    logger.info("COMPLETION")
+    logging.info("Done.")
 
 
 def main():
@@ -112,7 +105,11 @@ def main():
     add_parser_arguments(parser)
 
     args = parser.parse_args()
-    logger = configureLogger(__name__,args.log)
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(module)s:%(levelname)s - %(message)s",
+        datefmt="%d-%b-%y %H:%M:%S",
+    )
     run(args)
 
 

@@ -22,14 +22,11 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 
 
 def run(input_directory: str, output_path: str, segment_type: list) -> None:
-    logger = logging.getLogger("kidney_segmentation_tool")
-    logger.info("READING_INPUT")
     # TODO for now take in nifti image
     nifti_image = read_nifti_image(input_directory)
 
     initial_nifti_output_file_path = kidney_model.get_input_path()
     write_nifti_image(nifti_image, initial_nifti_output_file_path)
-    logger.info("SEGMENTATION")
     segmented_nifti_output_file_path = kidney_model.predict()
 
     segmented_array = read_nifti_as_np_array(
@@ -44,6 +41,6 @@ def run(input_directory: str, output_path: str, segment_type: list) -> None:
     ]
 
     meshes = convert_meshes_trimesh(meshes)
-    view_mesh(meshes,output_path)
+    view_mesh(meshes, output_path)
 
     kidney_model.cleanup()

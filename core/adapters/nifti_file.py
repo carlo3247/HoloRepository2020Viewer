@@ -72,6 +72,7 @@ def read_nifti_image(input_file_path: str) -> nibabel.nifti1.Nifti1Image:
     :param input_file_path: path to the NIfTI image
     :return: NIfTI image represented as nibabel.nifti1.Nifti1Image
     """
+    logging.info("Reading nifti image from {}".format(input_file_path))
     # Note: Workaround according to https://github.com/nipy/nibabel/issues/626
     nibabel.Nifti1Header.quaternion_threshold = -1e-06
     return nibabel.load(input_file_path)
@@ -101,6 +102,7 @@ def read_nifti_as_np_array(input_path: str, normalise: bool = True) -> np.array:
 def write_nifti_image(
     nifti_image: nibabel.nifti1.Nifti1Image, output_file_path: str
 ) -> None:
+    logging.info("Saving nifti image at {}".format(output_file_path))
     nibabel.save(nifti_image, output_file_path)
 
 

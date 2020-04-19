@@ -24,12 +24,9 @@ def run(
     output_path: str,
     segment_type: list,
 ):
-    logger = logging.getLogger("brain_segmentation_tool")
-    logger.info("READING_INPUT")
     flair_array = read_nifti_as_np_array(flair_input_directory)
     t1_array = read_nifti_as_np_array(t1_input_directory)
     ir_array = read_nifti_as_np_array(ir_input_directory)
-    logger.info("SEGMENTATION")
     segmented_array = brain_model.predict(flair_array, t1_array, ir_array)
 
     meshes = [
@@ -40,5 +37,4 @@ def run(
     ]
 
     meshes = convert_meshes_trimesh(meshes)
-    view_mesh(meshes,output_path)
-
+    view_mesh(meshes, output_path)
