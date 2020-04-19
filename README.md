@@ -81,5 +81,5 @@ Here, the invocation with the `-t` flag produces a model with the spleen, liver 
 If no output is needed. The logging level can simply be reduced to ERROR using the `--quiet` or in short `-q` flag.
 
 ```bash
-HoloBrain -q brain_scan output.glb
+HoloBone -q bone_scan output.glb
 ```
