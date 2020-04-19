@@ -1,4 +1,5 @@
 import os
+import logging
 from miscnn.data_loading.interfaces.nifti_io import NIFTI_interface
 from miscnn.data_loading.data_io import Data_IO
 from miscnn.processing.data_augmentation import Data_Augmentation
@@ -71,11 +72,14 @@ class Kidney_model:
         return os.path.join(self.input_path, "imaging.nii.gz")
 
     def predict(self):
+        logging.info("Segmenting kidney...")
         # predict the image called imaging.nii in the specified folder and saves the result in predictions/foldername.nii
         self.model.predict(["input"])
+        logging.info("Sucessfully segmented kidney")
         return os.path.abspath("./predictions/input.nii.gz")
 
     def cleanup(self):
+        logging.info("Cleaning up kidney model temporary files")
         shutil.rmtree(self.input_path)
         shutil.rmtree(os.path.abspath("./predictions/"))
 

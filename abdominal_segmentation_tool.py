@@ -56,7 +56,7 @@ def add_parser_arguments(parser):
 
 
 def run(args):
-    logging.info("Loading and initializing abdominal pipeline dynamically.")
+    logging.info("Loading and initializing abdominal pipeline dynamically")
     input_dir = args.input
     output_path = args.output
     segment_type = args.type

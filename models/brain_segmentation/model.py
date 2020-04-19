@@ -1,3 +1,4 @@
+import logging
 import numpy as np
 import tensorflow as tf
 
@@ -35,6 +36,7 @@ class Brain_model:
         return net
 
     def predict(self, flair_array, t1_array, ir_array):
+        logging.info("Segmenting new image...")
         pz = self.patch_size[0]
         py = self.patch_size[1]
         px = self.patch_size[2]
@@ -76,6 +78,7 @@ class Brain_model:
         pred_array = pred_array / 8
         pred_array = np.squeeze(pred_array)
         pred_array = np.argmax(pred_array, axis=3).astype(np.float32)
+        logging.info("Successfully segmented image")
         return pred_array
 
     def __exit__(self, exc_type, exc_value, traceback):

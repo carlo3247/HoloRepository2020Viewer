@@ -24,6 +24,7 @@ def run(
     output_path: str,
     segment_type: list,
 ):
+    logging.info("Starting brain pipeline")
     flair_array = read_nifti_as_np_array(flair_input_directory)
     t1_array = read_nifti_as_np_array(t1_input_directory)
     ir_array = read_nifti_as_np_array(ir_input_directory)
@@ -38,3 +39,4 @@ def run(
 
     meshes = convert_meshes_trimesh(meshes)
     view_mesh(meshes, output_path)
+    logging.info("Brain pipeline finished successfully")

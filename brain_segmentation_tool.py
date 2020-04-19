@@ -1,6 +1,5 @@
 import logging
 import argparse
-from sys_logger import configureLogger
 from argparse import RawTextHelpFormatter
 from core.pipelines.pipelines_controller import (
     get_pipeline_description,
@@ -80,7 +79,7 @@ def add_parser_arguments(parser):
 
 
 def run(args):
-    logging.info("Loading and initializing bone pipeline dynamically.")
+    logging.info("Loading and initializing bone pipeline dynamically")
     flair_input_directory = args.flair_input
     t1_input_directory = args.t1_input
     ir_input_directory = args.ir_input

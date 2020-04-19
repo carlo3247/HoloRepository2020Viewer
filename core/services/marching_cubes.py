@@ -12,6 +12,7 @@ from skimage import measure
 def generate_mesh(
     image_data: np.ndarray, threshold=300, step_size=1
 ) -> Tuple[np.array, np.array, np.array]:
+    logging.info("Generating mesh")
     logging.info("Marching cubes: Transposing surface")
 
     # For NIfTI with 5D shape (time etc.); most NIfTI comes in 3D anyway

@@ -32,7 +32,7 @@ def add_parser_arguments(parser):
 
 
 def run(args):
-    logging.info("Loading and initializing bone pipeline dynamically.")
+    logging.info("Loading and initializing bone pipeline dynamically")
     input_dir = args.input
     output_path = args.output
     pipeline_module = load_pipeline_dynamically(plid)

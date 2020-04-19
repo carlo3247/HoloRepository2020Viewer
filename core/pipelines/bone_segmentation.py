@@ -21,9 +21,10 @@ bone_hu_threshold = 300
 
 
 def run(input_dir: str, output_path: str) -> None:
-    logging.info("Reading input from {}".format(input_dir))
+    logging.info("Starting bone pipeline")
     dicom_image: np.ndarray = read_dicom_as_np_ndarray_and_normalise(input_dir)
     downscaled_image = downscale_and_conditionally_crop(dicom_image)
     meshes = [generate_mesh(downscaled_image, bone_hu_threshold)]
     meshes = convert_meshes_trimesh(meshes)
     view_mesh(meshes, output_path)
+    logging.info("Bone pipeline finished successfully")

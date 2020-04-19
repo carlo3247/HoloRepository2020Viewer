@@ -1,7 +1,9 @@
+import logging
 import trimesh
 
 
 def convert_meshes_trimesh(meshes):
+    logging.info("Converting meshes to trimesh.")
     trimesh_objects = []
     index = 0
     for mesh in meshes:

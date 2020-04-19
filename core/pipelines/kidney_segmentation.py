@@ -23,8 +23,8 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 
 def run(input_directory: str, output_path: str, segment_type: list) -> None:
     # TODO for now take in nifti image
+    logging.info("Starting kidney pipeline")
     nifti_image = read_nifti_image(input_directory)
-
     initial_nifti_output_file_path = kidney_model.get_input_path()
     write_nifti_image(nifti_image, initial_nifti_output_file_path)
     segmented_nifti_output_file_path = kidney_model.predict()
@@ -44,3 +44,4 @@ def run(input_directory: str, output_path: str, segment_type: list) -> None:
     view_mesh(meshes, output_path)
 
     kidney_model.cleanup()
+    logging.info("Kidney pipeline finished successfully")
