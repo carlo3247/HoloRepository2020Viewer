@@ -76,7 +76,7 @@ A single integer or a series of integers that correspond to anatominal sub-struc
 ```bash
 holoAbdominal abdominal_scan output.glb -t 1 5 7
 ```
-Here the invocation with the type flag produces a model with the spleen, liver and pancreas.
+Here, the invocation with the `-t` flag produces a model with the spleen, liver and pancreas.
 
 ### Logging output
 
