@@ -8,6 +8,7 @@ import lung_segmentation_tool
 import abdominal_segmentation_tool
 
 
+
 def main():
     parser = ArgumentParser(
         prog="HoloPipelinesCLI",
@@ -67,6 +68,7 @@ def main():
         plid = None
 
     if plid == brain_segmentation_tool.plid:
+        logging.warning('is when this event was logged.')
         sys.exit(brain_segmentation_tool.run(args))
     elif plid == kidney_segmentation_tool.plid:
         sys.exit(kidney_segmentation_tool.run(args))

@@ -9,6 +9,7 @@ from core.services.marching_cubes import generate_mesh
 from core.services.np_image_manipulation import seperate_segmentation
 
 from models.brain_segmentation.model import brain_model
+import logging
 
 this_plid = os.path.basename(__file__).replace(".py", "")
 
@@ -20,11 +21,12 @@ def run(
     output_path: str,
     segment_type: list,
 ):
-
+    logger = logging.getLogger("brain_segmentation_tool")
+    logger.info("READING_INPUT")
     flair_array = read_nifti_as_np_array(flair_input_directory)
     t1_array = read_nifti_as_np_array(t1_input_directory)
     ir_array = read_nifti_as_np_array(ir_input_directory)
-
+    logger.info("SEGMENTATION")
     segmented_array = brain_model.predict(flair_array, t1_array, ir_array)
 
     meshes = [
@@ -36,4 +38,5 @@ def run(
 
     # TODO do something for colours
     colours = [[0, 0.3, 1.0, 0.2], [1.0, 1.0, 0.0, 1.0]]
+    logger.info("WRITING_MESH")
     write_mesh_as_glb_with_colour(meshes, output_path, colours)

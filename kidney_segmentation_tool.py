@@ -7,6 +7,9 @@ from core.pipelines.pipelines_controller import (
 
 from models.model_controller import get_seg_types, get_file_types, get_proc_seg_types
 
+import logging
+from sys_logger import configureLogger
+
 plid = "kidney_segmentation"
 
 
@@ -52,16 +55,25 @@ def add_parser_arguments(parser):
         + "Segmentation types include "
         + model_proc_seg_types,
     )
+    parser.add_argument(
+        "-l",
+        "--log",
+        action='store_true',
+        help="Set flag to turn on logging output",
+    )
     parser.set_defaults(which=plid)
 
 
 def run(args):
+    logger = logging.getLogger(__name__) 
+    logger.info("INITIALIZE PIPELINE")
     input_dir = args.input
     output_path = args.output
     segment_type = args.type
-
+    logger.info("LOADING_MODEL")
     pipeline_module = load_pipeline_dynamically(plid)
     pipeline_module.run(input_dir, output_path, segment_type)
+    logger.info("COMPLETION")
 
 
 def main():
@@ -72,6 +84,7 @@ def main():
     add_parser_arguments(parser)
 
     args = parser.parse_args()
+    logger = configureLogger(__name__,args.log)
     run(args)
 
 
