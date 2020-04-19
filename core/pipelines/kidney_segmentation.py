@@ -34,8 +34,12 @@ def run(input_directory: str, output_path: str, segment_type: list) -> None:
         segmented_nifti_output_file_path, normalise=False
     )
 
-    meshes = [generate_mesh(segment, 0) for segment in seperate_segmentation(
-        segmented_array, unique_values=segment_type)]
+    meshes = [
+        generate_mesh(segment, 0)
+        for segment in seperate_segmentation(
+            segmented_array, unique_values=segment_type
+        )
+    ]
 
     meshes = convert_meshes_trimesh(meshes)
     view_mesh(meshes,output_path)

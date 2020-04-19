@@ -33,21 +33,17 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 hu_threshold = 0
 
 
-def run(dicom_directory_path: str, output_path: str, segment_type:list) -> None:
+def run(dicom_directory_path: str, output_path: str, segment_type: list) -> None:
 
     # TODO include segment type variable to filter segmentations
 
-    dicom_image_array = read_dicom_as_np_ndarray_and_normalise(
-        dicom_directory_path)
+    dicom_image_array = read_dicom_as_np_ndarray_and_normalise(dicom_directory_path)
     # NOTE: Numpy array is flipped in the Y axis here as this is the specific image input for the NiftyNet model
     # dicom_image_array = flip_numpy_array_dimensions_y_only(dicom_image_array)
-    crop_dicom_image_array = downscale_and_conditionally_crop(
-        dicom_image_array)
-    crop_dicom_image_array = flip_numpy_array_dimensions_y_only(
-        crop_dicom_image_array)
+    crop_dicom_image_array = downscale_and_conditionally_crop(dicom_image_array)
+    crop_dicom_image_array = flip_numpy_array_dimensions_y_only(crop_dicom_image_array)
 
-    nifti_image = convert_dicom_np_ndarray_to_nifti_image(
-        crop_dicom_image_array)
+    nifti_image = convert_dicom_np_ndarray_to_nifti_image(crop_dicom_image_array)
     initial_nifti_output_file_path = abdominal_model.get_input_path()
     write_nifti_image(nifti_image, initial_nifti_output_file_path)
 

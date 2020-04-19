@@ -16,7 +16,13 @@ from models.brain_segmentation.model import brain_model
 this_plid = os.path.basename(__file__).replace(".py", "")
 
 
-def run(flair_input_directory, t1_input_directory, ir_input_directory, output_path: str, segment_type: list):
+def run(
+    flair_input_directory: str,
+    t1_input_directory: str,
+    ir_input_directory: str,
+    output_path: str,
+    segment_type: list,
+):
 
     flair_array = read_nifti_as_np_array(flair_input_directory)
     t1_array = read_nifti_as_np_array(t1_input_directory)
@@ -24,8 +30,12 @@ def run(flair_input_directory, t1_input_directory, ir_input_directory, output_pa
 
     segmented_array = brain_model.predict(flair_array, t1_array, ir_array)
 
-    meshes = [generate_mesh(segment, 0) for segment in seperate_segmentation(
-        segmented_array, unique_values=segment_type)]
+    meshes = [
+        generate_mesh(segment, 0)
+        for segment in seperate_segmentation(
+            segmented_array, unique_values=segment_type
+        )
+    ]
 
 
     meshes = convert_meshes_trimesh(meshes)

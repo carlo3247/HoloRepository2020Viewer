@@ -6,7 +6,7 @@ UPLOAD_FOLDER = "./models/dense_vnet_abdominal_ct/input/"
 OUTPUT_FOLDER = "./models/dense_vnet_abdominal_ct/output/"
 
 
-class Abdominal_model():
+class Abdominal_model:
 
     # put your initialization code here
     def __init__(self, saved_path):
@@ -15,20 +15,14 @@ class Abdominal_model():
         os.mkdir(OUTPUT_FOLDER)
         self.input_path = os.path.join(UPLOAD_FOLDER, "abdominal.nii.gz")
         self.output_path = os.path.join(
-            OUTPUT_FOLDER, "window_seg_abdominal__niftynet_out.nii.gz")
+            OUTPUT_FOLDER, "window_seg_abdominal__niftynet_out.nii.gz"
+        )
 
     def get_input_path(self):
         return self.input_path
 
     def predict(self):
-        subprocess.run(
-            [
-                "net_segment",
-                "inference",
-                "-c",
-                self.config_path
-            ]
-        )
+        subprocess.run(["net_segment", "inference", "-c", self.config_path])
         return self.output_path
 
     def cleanup(self):

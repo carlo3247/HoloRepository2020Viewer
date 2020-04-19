@@ -30,14 +30,11 @@ def read_dicom_dataset(input_directory_path: str) -> List[pydicom.dataset.FileDa
     # Ensure that SliceThickness is set for all slices
     try:
         slice_thickness = np.abs(
-            slices[0].ImagePositionPatient[2] -
-            slices[1].ImagePositionPatient[2]
+            slices[0].ImagePositionPatient[2] - slices[1].ImagePositionPatient[2]
         )
     except AttributeError:
-        logging.info(
-            "ImagePositionPatient is not set, using SliceLocation instead.")
-        slice_thickness = np.abs(
-            slices[0].SliceLocation - slices[1].SliceLocation)
+        logging.info("ImagePositionPatient is not set, using SliceLocation instead.")
+        slice_thickness = np.abs(slices[0].SliceLocation - slices[1].SliceLocation)
 
     for s in slices:
         s.SliceThickness = slice_thickness
@@ -109,8 +106,7 @@ def normalise_dicom(dicom_image_array: np.ndarray, input_file_path: str) -> np.n
     )
     dicom_sample_slice = dicom_dataset[0]
 
-    logging.info(
-        "Normalising DICOM image to compensate slice thickness distortion")
+    logging.info("Normalising DICOM image to compensate slice thickness distortion")
     logging.info(f"Shape before normalising: {dicom_image_array.shape}")
 
     # Determine current pixel spacing

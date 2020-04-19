@@ -12,14 +12,10 @@ from trimesh import repair
 import logging
 
 
-def write_mesh_as_glb(
-    meshes, output_obj_file_path: str, metadata={}
-) -> None:
+def write_mesh_as_glb(meshes, output_obj_file_path: str, metadata={}) -> None:
     scene = trimesh.Scene(metadata=metadata)
     for mesh in meshes:
-        mesh2 = trimesh.Trimesh(vertices=mesh[0],
-                                faces=mesh[1],
-                                vertex_normals=mesh[2])
+        mesh2 = trimesh.Trimesh(vertices=mesh[0], faces=mesh[1], vertex_normals=mesh[2])
 
         repair.fix_inversion(mesh2)
         scene.add_geometry(mesh2)
@@ -27,7 +23,7 @@ def write_mesh_as_glb(
 
 
 def write_mesh_as_glb_with_colour(
-        meshes, output_obj_file_path: str, colour, metadata={}
+    meshes, output_obj_file_path: str, colour, metadata={}
 ) -> None:
     scene = trimesh.Scene(metadata=metadata)
     index = 0

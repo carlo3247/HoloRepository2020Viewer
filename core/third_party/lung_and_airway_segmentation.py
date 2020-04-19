@@ -1,7 +1,6 @@
 """
 This module provides a wrapper around the existing ct_lung_segmentation implementation.
 """
-
 import nibabel as nib
 import numpy as np
 

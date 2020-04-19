@@ -8,8 +8,6 @@ from typing import Tuple
 import numpy as np
 from skimage import measure
 
-from numba import jit
-
 
 def generate_mesh(
     image_data: np.ndarray, threshold=300, step_size=1
