@@ -22,6 +22,8 @@ from core.adapters.nifti_file import (
     write_nifti_image,
 )
 from core.adapters.glb_file import write_mesh_as_glb
+from core.adapters.trimesh_converter import convert_meshes_trimesh
+from core.client.viewer import view_mesh
 from core.services.marching_cubes import generate_mesh
 from core.services.np_image_manipulation import downscale_and_conditionally_crop
 
@@ -56,6 +58,7 @@ def run(dicom_directory_path: str, output_path: str, segment_type:list) -> None:
     )
 
     meshes = [generate_mesh(segmented_array, hu_threshold)]
-    write_mesh_as_glb(meshes, output_path)
+    meshes = convert_meshes_trimesh(meshes)
+    view_mesh(meshes, output_path)
 
     abdominal_model.cleanup()

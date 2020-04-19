@@ -38,6 +38,6 @@ def run(input_directory: str, output_path: str, segment_type: list) -> None:
         segmented_array, unique_values=segment_type)]
 
     meshes = convert_meshes_trimesh(meshes)
-    view_mesh(meshes)
+    view_mesh(meshes,output_path)
 
     kidney_model.cleanup()

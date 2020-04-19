@@ -32,7 +32,7 @@ def run(input_dir: str, output_path: str) -> None:
     meshes = [generate_mesh(downscaled_image, bone_hu_threshold),generate_mesh(downscaled_image, bone_hu_threshold)]
 
     meshes = convert_meshes_trimesh(meshes)
-    view_mesh(meshes)
+    view_mesh(meshes,output_path)
 
 if __name__ == "__main__":
     run(sys.argv[1], sys.argv[2])

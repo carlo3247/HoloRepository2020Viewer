@@ -29,4 +29,4 @@ def run(flair_input_directory, t1_input_directory, ir_input_directory, output_pa
 
 
     meshes = convert_meshes_trimesh(meshes)
-    view_mesh(meshes)
+    view_mesh(meshes,output_path)

@@ -1,11 +1,12 @@
 
-from vtkplotter import trimesh2vtk
+from vtkplotter import trimesh2vtk,vtk2trimesh
 from vtkplotter import Plotter,settings
 
+from core.adapters.vtk_to_glb import write_mesh_as_glb_with_colour
 
 index = 0
 
-def view_mesh(meshes):
+def view_mesh(meshes,output_file):
     settings.useDepthPeeling = True
     vmeshes = []
 
@@ -19,8 +20,12 @@ def view_mesh(meshes):
 
     def buttonfunc():
         global index
+        bu.switch()
         index = int(bu.status().split(':')[1])
-        bu.switch()  # change to next status
+
+
+    def save():
+        write_mesh_as_glb_with_colour(vmeshes,output_file)
 
     vp = Plotter(axes=0)
     # pos = position corner number: horizontal [1-4] or vertical [11-14]
@@ -33,6 +38,16 @@ def view_mesh(meshes):
         buttonfunc,
         pos=(0.5, 0.05),  # x,y fraction from bottom left corner
         states= ["Segmentation : "+str(i) for i in range(0,len(meshes))] ,
+        font="courier",  # arial, courier, times
+        size=25,
+        bold=True,
+        italic=False,
+    )
+
+    save_button = vp.addButton(
+        save,
+        pos=(0.5, 0.15),  # x,y fraction from bottom left corner
+        states= ["Save"] ,
         font="courier",  # arial, courier, times
         size=25,
         bold=True,

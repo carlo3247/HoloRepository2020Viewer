@@ -44,4 +44,4 @@ def run(input_dir: str, output_path: str, segment_type: int) -> None:
         raise Exception("Sorry, segmentation type must be either 1 or 2")
 
     meshes = convert_meshes_trimesh(meshes)
-    view_mesh(meshes)
+    view_mesh(meshes,output_path)
