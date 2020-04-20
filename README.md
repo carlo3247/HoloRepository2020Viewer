@@ -6,7 +6,7 @@ A python command line tool that incorporates a barebone version of [HoloPipeline
 
 
 ## Local Installation
-As of right now this tool can only run in this local repository. The tool has only been tested using [python3.7](https://www.python.org/downloads/release/python-370/), this version isrecommended. To do so, first build the environment using one of the [conda](https://docs.conda.io/en/latest/) yaml files.
+As of right now this tool can only run in this local repository. The tool has only been tested using [python3.7](https://www.python.org/downloads/release/python-370/), this version is recommended. To do so, first build the environment using one of the [conda](https://docs.conda.io/en/latest/) yaml files.
 There are four different environments based on your hardware and software:
 
 ||GPU support|CPU only|
