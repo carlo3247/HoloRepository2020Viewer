@@ -57,6 +57,12 @@ HoloPipelines lung_segmentation lung-scan output.glb
 HoloLung lung-scan output.glb
 ```
 
+The output will look similar to the one shown below:
+
+<p align="center">
+  <img width="300" alt="HoloPipelinesCLI logo" src="https://user-images.githubusercontent.com/23082383/79738114-37eafe80-82f4-11ea-88d3-cb80b9648671.PNG">
+</p>
+
 #### Multiple input files
 Some pipelines need more than one scan to perform the generation. Below is an example of the `brain_segmentation` that uses
 three different MRI modalities to generate the hologram. The three modalities `flair_scan.nii.gz`, `t1_scan.nii.gz`, and
