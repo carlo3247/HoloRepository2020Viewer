@@ -101,3 +101,7 @@ If no output is needed. The logging level can simply be reduced to ERROR using t
 ```bash
 HoloBone -q bone_scan output.glb
 ```
+
+<p align="center">
+  <img width="300" alt="bone output" src="https://user-images.githubusercontent.com/23082383/79740241-3ff86d80-82f7-11ea-8eba-afa22ef2e4dd.PNG">
+</p>
