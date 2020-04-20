@@ -1,6 +1,6 @@
 """
 This pipeline performs automatic kidney segmentation on abdominal CT with a 3d UNet.
-It leverages a pre-trained network built with MISCNN and running in a separate container.
+It leverages a pre-trained network built with MISCNN.
 """
 
 import os
