@@ -1,7 +1,6 @@
 """
 This pipeline performs automatic multi-organ segmentation on abdominal CT with Dense
-V-networks. It leverages a pre-trained network built with Niftynet and running in a
-separate container.
+V-networks. It leverages a pre-trained network built with Niftynet.
 
 Model: https://github.com/NifTK/NiftyNetModelZoo/blob/master/dense_vnet_abdominal_ct_model_zoo.md
 Paper: Eli Gibson, Francesco Giganti, Yipeng Hu, Ester Bonmati, Steve Bandula, Kurinchi Gurusamy,
