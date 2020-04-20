@@ -16,7 +16,7 @@ def convert_meshes_trimesh(meshes):
             vertex_colors=get_random_rgb_colours()
             + [0.5],  # set alpha to 0.5 for all colours
         )
-        filter_laplacian(tmp_mesh)
+        filter_laplacian(tmp_mesh, volume_constraint=False)
         trimesh_objects.append(tmp_mesh)
         index += 1
     return trimesh_objects
