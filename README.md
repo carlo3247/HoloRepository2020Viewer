@@ -105,3 +105,8 @@ HoloBone -q bone_scan output.glb
 <p align="center">
   <img width="300" alt="bone output" src="https://user-images.githubusercontent.com/23082383/79740241-3ff86d80-82f7-11ea-8eba-afa22ef2e4dd.PNG">
 </p>
+
+## Acknowledgements
+Built at [University College London](https://www.ucl.ac.uk/) in cooperation with [GOSH DRIVE](https://www.goshdrive.com/).
+
+Logo is derived from a work by <a href="https://www.freepik.com/">Freepik</a> at <a href="https://www.flaticon.com/">www.flaticon.com</a>.
