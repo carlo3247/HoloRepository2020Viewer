@@ -4,6 +4,7 @@ except ImportError:
     from tkinter import *
     from tkinter import messagebox
     from tkinter import font as tkFont
+    from tkinter import filedialog
 
 
 from core.pipelines.pipelines_controller import (
@@ -46,19 +47,35 @@ def generate(entries, plid):
          pipeline_module = load_pipeline_dynamically(plid)
          pipeline_module.run(input_dir, output_path, segment_type)
 
+def browsefunc(ent):
+    folder_selected = filedialog.askdirectory()
+    ent.insert(END, folder_selected) 
 
 def create_form(root, plid):
     fields=['Input Directory', 'Output File'] if plid !='brain_segmentation' else ['Flair Input Directory', 'T1 Input Directory', 'IR Input Directory', 'Output File']
 
     entries = {}
     for field in fields:
-        row = Frame(root)
-        lab = Label(row, width=15, text=field, anchor='w',font=('Helvetica', 15, 'bold'))
-        ent = Entry(row)
-        row.pack(side=TOP, fill=X, padx=5, pady=5)
-        lab.pack(side=LEFT)
-        ent.pack(side=RIGHT, expand=YES, fill=X)
-        entries[field]=ent
+        if(field!="Output File"):
+            row = Frame(root)
+            ent = Entry(row)
+            lab = Label(row, width=15, text=field, anchor='w',font=('Helvetica', 15, 'bold'))
+            lab.pack(side=LEFT)
+            row.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
+            ent.pack(side=LEFT)
+            b1=Button(row,text="Browse Input Directory",font=40,command=lambda: browsefunc(ent))
+            b1.pack(side=RIGHT,fill=X, padx=20)
+            entries[field]=ent
+        else:
+            row = Frame(root)
+            lab = Label(row, width=15, text=field, anchor='w',font=('Helvetica', 15, 'bold'))
+            out_ent = Entry(row)
+            row.pack(side=TOP, fill=X, padx=5, pady=5)
+            lab.pack(side=LEFT)
+            out_ent.pack(side=RIGHT, expand=YES, fill=X)
+            entries[field]=out_ent
+
+
     
     next_row = Frame(root)
     seg_types = get_seg_types(plid).keys()
@@ -81,12 +98,15 @@ def create_form(root, plid):
 
     return entries
 
+# def go_back():
+
 
  
 def parameter_window(tool:str,plid:str)->None:
 
     root.destroy()
     pipeline_window = Tk()
+    pipeline_window.resizable(False, False)
     if plid=="brain_segmentation":
         pipeline_window.geometry("700x700")
     else:
@@ -103,9 +123,11 @@ def parameter_window(tool:str,plid:str)->None:
     tool_description_label.pack()
 
     ents = create_form(pipeline_window, plid) 
-    helv36 = tkFont.Font(family='Helvetica', size=36)
-    b1 = Button(pipeline_window, text='Generate', command=lambda e=ents: generate(e, plid), font=helv36)
-    b1.pack(side=BOTTOM , padx=5, pady=50) 
+    buttonFont = tkFont.Font(family='Helvetica', size=28)
+    b1 = Button(pipeline_window, text='Generate', command=lambda e=ents: generate(e, plid), font=buttonFont)
+    b1.pack(side=LEFT , padx=20, pady=50) 
+    # b2 = Button(pipeline_window, text='Back', command=lambda: go_back(), font=buttonFont)
+    # b2.pack(side=RIGHT , padx=20, pady=50) 
 
 
     pipeline_window.mainloop()
@@ -144,6 +166,7 @@ def main():
 if __name__ == "__main__":
     root = Tk()
     root.geometry("700x500")
+    root.resizable(False, False)
     root.title("HoloPipelinesLocal")
     root.configure(background='#62cbf5')
     main()
