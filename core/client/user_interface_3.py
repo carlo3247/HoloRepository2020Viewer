@@ -3,6 +3,7 @@ try:
 except ImportError:
     from tkinter import *
     from tkinter import messagebox
+    from tkinter import font as tkFont
 
 
 from core.pipelines.pipelines_controller import (
@@ -26,22 +27,21 @@ def get_information(plid):
     return information if plid != "brain_segmentation" else information + "\n3 input scans (modalities) required of types " + ", ".join(model_req_mods)+'\n'
 
 def generate(entries, plid):
+    output_path = entries['Output File'].get()
+    segment_type=list(entries['seg_types'].curselection())
+    quiet = entries['silence_log'].get()
+
     if plid!='brain_segmentation':
         input_dir = entries['Input Directory'].get()
     else:
          flair_dir = entries['Flair Input Directory'].get()
          t1_dir = entries['T1 Input Directory'].get()
-         ir_dir = entries['IR Directory'].get()
+         ir_dir = entries['IR Input Directory'].get()
          input_dir=[flair_dir,t1_dir,ir_dir]
 
-    output_path = entries['Output File'].get()
-    segment_type=list(entries['seg_types'].curselection())
-    quiet = entries['silence_log'].get()
-
    
-
-    if input_dir=='' or output_path=='' or segment_type=='':
-        messagebox.showerror("Error", "Please ensure an input directory, an output path, and segmentation type is inputted")
+    if (plid == 'brain_segmentation' and '' in input_dir) or input_dir=='' or output_path=='' or not segment_type:
+        messagebox.showerror("Error", "Please ensure input directory/ies, an output path, and segmentation type is inputted")
     else:
          pipeline_module = load_pipeline_dynamically(plid)
          pipeline_module.run(input_dir, output_path, segment_type)
@@ -92,6 +92,7 @@ def parameter_window(tool:str,plid:str)->None:
     else:
         pipeline_window.geometry("700x600")
     pipeline_window.title(tool)
+    pipeline_window.configure(background='#62cbf5')
 
     tool_title = Label(pipeline_window, text=tool,wraplength=500)
     tool_title.config(font=("Courier", 44))
@@ -102,7 +103,8 @@ def parameter_window(tool:str,plid:str)->None:
     tool_description_label.pack()
 
     ents = create_form(pipeline_window, plid) 
-    b1 = Button(pipeline_window, text='Generate', command=lambda e=ents: generate(e, plid))
+    helv36 = tkFont.Font(family='Helvetica', size=36)
+    b1 = Button(pipeline_window, text='Generate', command=lambda e=ents: generate(e, plid), font=helv36)
     b1.pack(side=BOTTOM , padx=5, pady=50) 
 
 
@@ -118,22 +120,23 @@ def main():
             Please select one of the pipelines to launch
             """
     description_label = Label(root, text=description)
-    description_label.config(font=("Arial", 15))
-    description_label.pack(pady=10,padx=10)
+    description_label.config(font=('Helvetica', 15, 'bold'),background='#62cbf5')
+    description_label.pack(side=TOP,pady=10)
         
-    button = Button(root, text="HoloBone",command=lambda: parameter_window("HoloBone", "bone_segmentation"), highlightbackground='#3E4149')
+    helv20 = tkFont.Font(family='Helvetica', size=20)
+    button = Button(root, text="HoloBone",command=lambda: parameter_window("HoloBone", "bone_segmentation"), highlightbackground='#3E4149', font=helv20)
     button.pack(pady=10)
 
-    button2 = Button(root, text="HoloLung",command=lambda: parameter_window("HoloLung", "lung_segmentation"), highlightbackground='#3E4149')
+    button2 = Button(root, text="HoloLung",command=lambda: parameter_window("HoloLung", "lung_segmentation"), highlightbackground='#3E4149', font=helv20)
     button2.pack(pady=10)
 
-    button3 = Button(root, text="HoloKidney",command=lambda: parameter_window("HoloKidney", "kidney_segmentation"), highlightbackground='#3E4149')
+    button3 = Button(root, text="HoloKidney",command=lambda: parameter_window("HoloKidney", "kidney_segmentation"), highlightbackground='#3E4149', font=helv20)
     button3.pack(pady=10)
 
-    button4 = Button(root, text="HoloAbdominal",command=lambda: parameter_window("HoloAbdominal", "abdominal_organs_segmentation"), highlightbackground='#3E4149')
+    button4 = Button(root, text="HoloAbdominal",command=lambda: parameter_window("HoloAbdominal", "abdominal_organs_segmentation"), highlightbackground='#3E4149', font=helv20)
     button4.pack(pady=10)
 
-    button5 = Button(root, text="HoloBrain",command=lambda: parameter_window("HoloBrain", "brain_segmentation"), highlightbackground='#3E4149')
+    button5 = Button(root, text="HoloBrain",command=lambda: parameter_window("HoloBrain", "brain_segmentation"), highlightbackground='#3E4149', font=helv20)
     button5.pack(pady=10)
 
     root.mainloop()
@@ -142,4 +145,5 @@ if __name__ == "__main__":
     root = Tk()
     root.geometry("700x500")
     root.title("HoloPipelinesLocal")
+    root.configure(background='#62cbf5')
     main()
