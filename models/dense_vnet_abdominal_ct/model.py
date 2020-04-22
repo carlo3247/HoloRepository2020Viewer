@@ -11,7 +11,11 @@ class Abdominal_model:
     # put your initialization code here
     def __init__(self, saved_path):
         self.config_path = saved_path
+        if os.path.isdir(UPLOAD_FOLDER):
+            shutil.rmtree(UPLOAD_FOLDER)
         os.mkdir(UPLOAD_FOLDER)
+        if os.path.isdir(OUTPUT_FOLDER):
+            shutil.rmtree(OUTPUT_FOLDER)
         os.mkdir(OUTPUT_FOLDER)
         self.input_path = os.path.join(UPLOAD_FOLDER, "abdominal.nii.gz")
         self.output_path = os.path.join(
@@ -26,8 +30,8 @@ class Abdominal_model:
         return self.output_path
 
     def cleanup(self):
-        shutil.rmtree(UPLOAD_FOLDER)
-        shutil.rmtree(OUTPUT_FOLDER)
+        # shutil.rmtree(UPLOAD_FOLDER)
+        # shutil.rmtree(OUTPUT_FOLDER)
 
 
 SAVED_CONFIG_PATH = "./models/dense_vnet_abdominal_ct/config.ini"
