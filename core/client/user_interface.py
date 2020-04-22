@@ -139,7 +139,7 @@ def parameter_window(tool:str,plid:str)->None:
 
     root.destroy()
     pipeline_window = Tk()
-    pipeline_window.resizable(False, False)
+    # pipeline_window.resizable(False, False)
     if plid=="brain_segmentation":
         pipeline_window.geometry("700x700")
     else:
@@ -199,7 +199,7 @@ def main():
 if __name__ == "__main__":
     root = Tk()
     root.geometry("700x500")
-    root.resizable(False, False)
+    # root.resizable(False, False)
     root.title("HoloPipelinesLocal")
     root.configure(background='#62cbf5')
     main()
