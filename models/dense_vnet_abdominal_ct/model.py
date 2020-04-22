@@ -30,8 +30,8 @@ class Abdominal_model:
         return self.output_path
 
     def cleanup(self):
-        # shutil.rmtree(UPLOAD_FOLDER)
-        # shutil.rmtree(OUTPUT_FOLDER)
+        shutil.rmtree(UPLOAD_FOLDER)
+        shutil.rmtree(OUTPUT_FOLDER)
 
 
 SAVED_CONFIG_PATH = "./models/dense_vnet_abdominal_ct/config.ini"
