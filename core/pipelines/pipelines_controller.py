@@ -13,7 +13,7 @@ def get_pipelines_dict() -> dict:
     """
     :return: dict of available pipelines representing "pipelines.json"
     """
-    with open("../pipelines/pipelines.json", "r") as pipelines_file:
+    with open("./core/pipelines/pipelines.json", "r") as pipelines_file:
         return json.load(pipelines_file)
 
 
