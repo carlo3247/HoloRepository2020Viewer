@@ -5,7 +5,7 @@ def get_models_dict() -> dict:
     """
     :return: dict of available pipelines representing "pipelines.json"
     """
-    with open("./models/models.json", "r") as models_file:
+    with open("../../models/models.json", "r") as models_file:
         return json.load(models_file)
 
 

@@ -20,7 +20,7 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 bone_hu_threshold = 300
 
 
-def run(input_dir: str, output_path: str) -> None:
+def run(input_dir: str, output_path: str, segment_type:list) -> None:
     logging.info("Starting bone pipeline")
     dicom_image: np.ndarray = read_dicom_as_np_ndarray_and_normalise(input_dir)
     downscaled_image = downscale_and_conditionally_crop(dicom_image)

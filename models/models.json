@@ -68,7 +68,7 @@
     },
     "bone_segmentation": {
         "segmentation_dict": {
-            "background": 0
+            "bones": 0
         },
         "filetypes": [
             "DICOM"

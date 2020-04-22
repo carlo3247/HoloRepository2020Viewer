@@ -18,12 +18,14 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 
 
 def run(
-    flair_input_directory: str,
-    t1_input_directory: str,
-    ir_input_directory: str,
+    input_directories: list,
     output_path: str,
     segment_type: list,
 ):
+    flair_input_directory=input_directories[0]
+    t1_input_directory=input_directories[1]
+    ir_input_directory=input_directories[2]
+
     logging.info("Starting brain pipeline")
     flair_array = read_nifti_as_np_array(flair_input_directory)
     t1_array = read_nifti_as_np_array(t1_input_directory)
