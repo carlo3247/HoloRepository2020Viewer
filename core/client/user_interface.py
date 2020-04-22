@@ -51,6 +51,11 @@ def browsefunc(entry):
     folder_selected = filedialog.askdirectory()
     entry.insert(END, folder_selected) 
 
+def browsefile(entry):
+    file_selected = filedialog.askopenfilename(filetypes = (("Template files", "*.type"), ("All files", "*")))
+    entry.insert(END, file_selected) 
+
+
 def create_form(root, plid):
     fields=['Input Directory', 'Output File'] if plid !='brain_segmentation' else ['Flair Input Directory', 'T1 Input Directory', 'IR Input Directory', 'Output File']
 
@@ -73,7 +78,7 @@ def create_form(root, plid):
         input_lab.pack(side=LEFT)
         input_row.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
         input_ent.pack(side=LEFT)
-        browse_button=Button(input_row,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent))
+        browse_button=Button(input_row,text="Browse Input Directory",font=40,command=lambda: browsefile(input_ent))
         browse_button.pack(side=RIGHT,fill=X, padx=20)
         entries['Flair Input Directory']=input_ent
 
@@ -83,7 +88,7 @@ def create_form(root, plid):
         input_lab_2.pack(side=LEFT)
         input_row_2.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
         input_ent_2.pack(side=LEFT)
-        browse_button_2=Button(input_row_2,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent_2))
+        browse_button_2=Button(input_row_2,text="Browse Input Directory",font=40,command=lambda: browsefile(input_ent_2))
         browse_button_2.pack(side=RIGHT,fill=X, padx=20)
         entries['T1 Input Directory']=input_ent_2
 
@@ -93,7 +98,7 @@ def create_form(root, plid):
         input_lab_3.pack(side=LEFT)
         input_row_3.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
         input_ent_3.pack(side=LEFT)
-        browse_button_3=Button(input_row_3,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent_3))
+        browse_button_3=Button(input_row_3,text="Browse Input Directory",font=40,command=lambda: browsefile(input_ent_3))
         browse_button_3.pack(side=RIGHT,fill=X, padx=20)
         entries['IR Input Directory']=input_ent_3
     
