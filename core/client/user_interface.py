@@ -47,33 +47,63 @@ def generate(entries, plid):
          pipeline_module = load_pipeline_dynamically(plid)
          pipeline_module.run(input_dir, output_path, segment_type)
 
-def browsefunc(ent):
+def browsefunc(entry):
     folder_selected = filedialog.askdirectory()
-    ent.insert(END, folder_selected) 
+    entry.insert(END, folder_selected) 
 
 def create_form(root, plid):
     fields=['Input Directory', 'Output File'] if plid !='brain_segmentation' else ['Flair Input Directory', 'T1 Input Directory', 'IR Input Directory', 'Output File']
 
     entries = {}
-    for field in fields:
-        if(field!="Output File"):
-            row = Frame(root)
-            ent = Entry(row)
-            lab = Label(row, width=15, text=field, anchor='w',font=('Helvetica', 15, 'bold'))
-            lab.pack(side=LEFT)
-            row.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
-            ent.pack(side=LEFT)
-            b1=Button(row,text="Browse Input Directory",font=40,command=lambda: browsefunc(ent))
-            b1.pack(side=RIGHT,fill=X, padx=20)
-            entries[field]=ent
-        else:
-            row = Frame(root)
-            lab = Label(row, width=15, text=field, anchor='w',font=('Helvetica', 15, 'bold'))
-            out_ent = Entry(row)
-            row.pack(side=TOP, fill=X, padx=5, pady=5)
-            lab.pack(side=LEFT)
-            out_ent.pack(side=RIGHT, expand=YES, fill=X)
-            entries[field]=out_ent
+
+    if(plid!='brain_segmentation'):
+        input_row = Frame(root)
+        input_ent = Entry(input_row)
+        input_lab = Label(input_row, width=15, text='Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
+        input_lab.pack(side=LEFT)
+        input_row.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
+        input_ent.pack(side=LEFT)
+        browse_button=Button(input_row,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent))
+        browse_button.pack(side=RIGHT,fill=X, padx=20)
+        entries['Input Directory']=input_ent
+    else:
+        input_row = Frame(root)
+        input_ent = Entry(input_row)
+        input_lab = Label(input_row, width=15, text='Flair Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
+        input_lab.pack(side=LEFT)
+        input_row.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
+        input_ent.pack(side=LEFT)
+        browse_button=Button(input_row,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent))
+        browse_button.pack(side=RIGHT,fill=X, padx=20)
+        entries['Flair Input Directory']=input_ent
+
+        input_row_2 = Frame(root)
+        input_ent_2 = Entry(input_row_2)
+        input_lab_2 = Label(input_row_2, width=15, text='T1 Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
+        input_lab_2.pack(side=LEFT)
+        input_row_2.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
+        input_ent_2.pack(side=LEFT)
+        browse_button_2=Button(input_row_2,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent_2))
+        browse_button_2.pack(side=RIGHT,fill=X, padx=20)
+        entries['T1 Input Directory']=input_ent_2
+
+        input_row_3 = Frame(root)
+        input_ent_3 = Entry(input_row_3)
+        input_lab_3 = Label(input_row_3, width=15, text='IR Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
+        input_lab_3.pack(side=LEFT)
+        input_row_3.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
+        input_ent_3.pack(side=LEFT)
+        browse_button_3=Button(input_row_3,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent_3))
+        browse_button_3.pack(side=RIGHT,fill=X, padx=20)
+        entries['IR Input Directory']=input_ent_3
+    
+    output_row = Frame(root)
+    output_lab = Label(output_row, width=15, text='Output File', anchor='w',font=('Helvetica', 15, 'bold'))
+    out_ent = Entry(output_row)
+    output_row.pack(side=TOP, fill=X, padx=5, pady=5)
+    output_lab.pack(side=LEFT)
+    out_ent.pack(side=RIGHT, expand=YES, fill=X)
+    entries['Output File']=out_ent
 
 
     
@@ -98,9 +128,12 @@ def create_form(root, plid):
 
     return entries
 
-# def go_back():
-
-
+def help_box(plid):
+    if plid!="brain_segmentation":
+        messagebox.showinfo("Help", """Input Directory: Select the directory containing the scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """)
+    else:
+        messagebox.showinfo("Help", """Input Directories: Select the directories containing the T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """)
+     
  
 def parameter_window(tool:str,plid:str)->None:
 
@@ -126,8 +159,8 @@ def parameter_window(tool:str,plid:str)->None:
     buttonFont = tkFont.Font(family='Helvetica', size=28)
     b1 = Button(pipeline_window, text='Generate', command=lambda e=ents: generate(e, plid), font=buttonFont)
     b1.pack(side=LEFT , padx=20, pady=50) 
-    # b2 = Button(pipeline_window, text='Back', command=lambda: go_back(), font=buttonFont)
-    # b2.pack(side=RIGHT , padx=20, pady=50) 
+    b2 = Button(pipeline_window, text='Help', command=lambda: help_box(plid), font=buttonFont)
+    b2.pack(side=RIGHT , padx=20, pady=50) 
 
 
     pipeline_window.mainloop()
