@@ -1,3 +1,4 @@
+import logging
 try:
     from Tkinter import *
 except ImportError:
@@ -44,15 +45,21 @@ def generate(entries, plid):
     if (plid == 'brain_segmentation' and '' in input_dir) or input_dir=='' or output_path=='' or not segment_type:
         messagebox.showerror("Error", "Please ensure input directory/ies, an output path, and segmentation type is inputted")
     else:
-         pipeline_module = load_pipeline_dynamically(plid)
-         pipeline_module.run(input_dir, output_path, segment_type)
+        logging.basicConfig(
+            level=logging.ERROR if quiet else logging.INFO,
+            format="%(asctime)s - %(module)s:%(levelname)s - %(message)s",
+            datefmt="%d-%b-%y %H:%M:%S")
+        logging.info("Loading and initializing bone pipeline dynamically")
+        pipeline_module = load_pipeline_dynamically(plid)
+        pipeline_module.run(input_dir, output_path, segment_type)
+        logging.info("Done.")
 
 def browsefunc(entry):
     folder_selected = filedialog.askdirectory()
     entry.insert(END, folder_selected) 
 
 def browsefile(entry):
-    file_selected = filedialog.askopenfilename(filetypes = (("Template files", "*.type"), ("All files", "*")))
+    file_selected = filedialog.askopenfilename(filetypes = (("Compressed NifTI", "*.nii.gz"), ("All files", "*")))
     entry.insert(END, file_selected) 
 
 
@@ -67,7 +74,7 @@ def create_form(root, plid):
         input_lab = Label(input_row, width=15, text='Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
         input_lab.pack(side=LEFT)
         input_row.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
-        input_ent.pack(side=LEFT)
+        input_ent.pack(side=LEFT,expand=YES, fill=X,)
         browse_button=Button(input_row,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent))
         browse_button.pack(side=RIGHT,fill=X, padx=20)
         entries['Input Directory']=input_ent
@@ -77,9 +84,11 @@ def create_form(root, plid):
         input_lab = Label(input_row, width=15, text='Flair Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
         input_lab.pack(side=LEFT)
         input_row.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
-        input_ent.pack(side=LEFT)
-        browse_button=Button(input_row,text="Browse Input Directory",font=40,command=lambda: browsefile(input_ent))
+        input_ent.pack(side=LEFT,expand=YES, fill=X,)
+        browse_button=Button(input_row,text="Browse Input File",font=40,command=lambda: browsefile(input_ent))
+        browse_dir_button=Button(input_row,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent))
         browse_button.pack(side=RIGHT,fill=X, padx=20)
+        browse_dir_button.pack(side=RIGHT,fill=X, padx=20)
         entries['Flair Input Directory']=input_ent
 
         input_row_2 = Frame(root)
@@ -87,9 +96,11 @@ def create_form(root, plid):
         input_lab_2 = Label(input_row_2, width=15, text='T1 Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
         input_lab_2.pack(side=LEFT)
         input_row_2.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
-        input_ent_2.pack(side=LEFT)
-        browse_button_2=Button(input_row_2,text="Browse Input Directory",font=40,command=lambda: browsefile(input_ent_2))
+        input_ent_2.pack(side=LEFT,expand=YES, fill=X,)
+        browse_button_2=Button(input_row_2,text="Browse Input File",font=40,command=lambda: browsefile(input_ent_2))
+        browse_dir_button_2=Button(input_row_2,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent_2))
         browse_button_2.pack(side=RIGHT,fill=X, padx=20)
+        browse_dir_button_2.pack(side=RIGHT,fill=X, padx=20)
         entries['T1 Input Directory']=input_ent_2
 
         input_row_3 = Frame(root)
@@ -97,14 +108,17 @@ def create_form(root, plid):
         input_lab_3 = Label(input_row_3, width=15, text='IR Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
         input_lab_3.pack(side=LEFT)
         input_row_3.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
-        input_ent_3.pack(side=LEFT)
-        browse_button_3=Button(input_row_3,text="Browse Input Directory",font=40,command=lambda: browsefile(input_ent_3))
+        input_ent_3.pack(side=LEFT,expand=YES, fill=X,)
+        browse_button_3=Button(input_row_3,text="Browse Input File",font=40,command=lambda: browsefile(input_ent_3))
+        browse_dir_button_3=Button(input_row_3,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent_3))
         browse_button_3.pack(side=RIGHT,fill=X, padx=20)
+        browse_dir_button_3.pack(side=RIGHT,fill=X, padx=20)
         entries['IR Input Directory']=input_ent_3
     
     output_row = Frame(root)
     output_lab = Label(output_row, width=15, text='Output File', anchor='w',font=('Helvetica', 15, 'bold'))
     out_ent = Entry(output_row)
+    out_ent.insert(END, 'output.glb')
     output_row.pack(side=TOP, fill=X, padx=5, pady=5)
     output_lab.pack(side=LEFT)
     out_ent.pack(side=RIGHT, expand=YES, fill=X)
@@ -137,7 +151,7 @@ def help_box(plid):
     if plid!="brain_segmentation":
         messagebox.showinfo("Help", """Input Directory: Select the directory containing the scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """)
     else:
-        messagebox.showinfo("Help", """Input Directories: Select the directories containing the T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """)
+        messagebox.showinfo("Help", """Input Directories: Select the directories or coompressed files containing the T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """)
      
  
 def parameter_window(tool:str,plid:str)->None:
@@ -150,9 +164,9 @@ def parameter_window(tool:str,plid:str)->None:
     else:
         pipeline_window.geometry("700x600")
     pipeline_window.title(tool)
-    pipeline_window.configure(background='#62cbf5')
+    # pipeline_window.configure(background='#62cbf5')
 
-    tool_title = Label(pipeline_window, text=tool,wraplength=500)
+    tool_title = Label(pipeline_window, text=tool)
     tool_title.config(font=("Courier", 44))
     tool_title.pack(pady=20)
 
@@ -180,7 +194,7 @@ def main():
             Please select one of the pipelines to launch
             """
     description_label = Label(root, text=description)
-    description_label.config(font=('Helvetica', 15, 'bold'),background='#62cbf5')
+    description_label.config(font=('Helvetica', 15, 'bold'))
     description_label.pack(side=TOP,pady=10)
         
     helv20 = tkFont.Font(family='Helvetica', size=20)
@@ -203,8 +217,8 @@ def main():
 
 if __name__ == "__main__":
     root = Tk()
-    root.geometry("700x500")
+    root.geometry("700x700")
     # root.resizable(False, False)
     root.title("HoloPipelinesLocal")
-    root.configure(background='#62cbf5')
+    # root.configure(background='#62cbf5')
     main()
