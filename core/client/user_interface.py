@@ -357,10 +357,6 @@ class ParameterPage(tk.Frame):
     def __init__(self, parent, controller, plid):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        button = tk.Button(
-            self, text="Main page", command=lambda: controller.show_frame("StartPage"),
-        )
-        button.pack()
 
         title = re.sub(r"_segmentation", "", plid).title()
         tool_title = tk.Label(self, text=title, font=("Futura", 44, "bold"))
@@ -372,19 +368,54 @@ class ParameterPage(tk.Frame):
 
         ents = create_form(self, plid)
         buttonFont = tkFont.Font(family="Helvetica", size=28)
-        b1 = tk.Button(
-            self,
-            text="Generate",
-            command=lambda e=ents: generate(e, plid),
-            font=buttonFont,
-        )
+        b1 = tk.Button(self, text="3D View", command=lambda e=ents: generate(e, plid),)
         b1.pack(side=tk.LEFT, padx=20, pady=50)
-        b2 = tk.Button(
-            self, text="Help", command=lambda: help_box(plid), font=buttonFont,
+        b2 = tk.Button(self, text="AR View", command=None)
+        b2.pack(side=tk.LEFT, padx=20, pady=50)
+        b3 = tk.Button(self, text="Help", command=lambda: help_box(plid),)
+        b3.pack(side=tk.RIGHT, padx=20, pady=50)
+        b4 = tk.Button(
+            self, text="Back", command=lambda: controller.show_frame("StartPage"),
         )
-        b2.pack(side=tk.RIGHT, padx=20, pady=50)
+        b4.pack(side=tk.RIGHT, padx=20, pady=50)
+
+
+class SplashScreen(tk.Tk):
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+
+        self.state("zoomed")
+        self.title_font = tkfont.Font(
+            family="Helvetica", size=18, weight="bold", slant="italic"
+        )
+
+        # the container is where we'll stack a bunch of frames
+        # on tk.TOP of each other, then the one we want visible
+        # will be raised above the others
+        container = tk.Frame(self)
+
+        self.title("Splash window")
+        self.configure()
+
+        # spath = "images/mypic.png"
+        # simg = ImageTk.PhotoImage(Image.open(spath))
+        # my = Label(sroot, image=simg)
+        # my.image = simg
+        # my.place(x=0, y=0)
+        # tk.Frame(self, height=516, width=5, bg="black").pack()
+        lbl1 = tk.Label(
+            self, text="Welcome to the future", font="Timesnewroman 20 ", fg="blue"
+        )
+        lbl1.config(anchor=tk.CENTER)
+        lbl1.pack(padx=100, pady=100)
 
 
 if __name__ == "__main__":
-    app = ViewerApp()
+    app = SplashScreen()
+
+    def call_mainroot(app):
+        app.destroy()
+        app = ViewerApp()
+
+    app.after(1000, lambda: call_mainroot(app))
     app.mainloop()
