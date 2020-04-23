@@ -16,7 +16,6 @@ hu_threshold = 0
 
 def run(input_file: str) -> None:
     logger = logging.getLogger("glb_importer")
-    logger.info("READING_INPUT")
     trimesh_scene = trimesh.load(input_file)
     if isinstance(trimesh_scene, trimesh.scene.scene.Scene):
         meshes = trimesh_scene.dump()
@@ -26,5 +25,4 @@ def run(input_file: str) -> None:
         meshes = trimesh_scene
 
     logger.info("Viewing")
-    print(type(meshes))
     view_mesh(meshes, input_file)
