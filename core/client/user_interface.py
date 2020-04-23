@@ -200,19 +200,19 @@ def main():
     description_label.pack(side=TOP,pady=10)
         
     helv20 = tkFont.Font(family='Helvetica', size=20)
-    button = Button(root, text="HoloBone",command=lambda: parameter_window("HoloBone", "bone_segmentation"), highlightbackground='#3E4149', font=helv20)
+    button = Button(root, text="Bone",command=lambda: parameter_window("Bone", "bone_segmentation"), highlightbackground='#3E4149', font=helv20)
     button.pack(pady=10)
 
-    button2 = Button(root, text="HoloLung",command=lambda: parameter_window("HoloLung", "lung_segmentation"), highlightbackground='#3E4149', font=helv20)
+    button2 = Button(root, text="Lung",command=lambda: parameter_window("Lung", "lung_segmentation"), highlightbackground='#3E4149', font=helv20)
     button2.pack(pady=10)
 
-    button3 = Button(root, text="HoloKidney",command=lambda: parameter_window("HoloKidney", "kidney_segmentation"), highlightbackground='#3E4149', font=helv20)
+    button3 = Button(root, text="Kidney",command=lambda: parameter_window("Kidney", "kidney_segmentation"), highlightbackground='#3E4149', font=helv20)
     button3.pack(pady=10)
 
-    button4 = Button(root, text="HoloAbdominal",command=lambda: parameter_window("HoloAbdominal", "abdominal_organs_segmentation"), highlightbackground='#3E4149', font=helv20)
+    button4 = Button(root, text="Abdominal",command=lambda: parameter_window("Abdominal", "abdominal_organs_segmentation"), highlightbackground='#3E4149', font=helv20)
     button4.pack(pady=10)
 
-    button5 = Button(root, text="HoloBrain",command=lambda: parameter_window("HoloBrain", "brain_segmentation"), highlightbackground='#3E4149', font=helv20)
+    button5 = Button(root, text="Brain",command=lambda: parameter_window("Brain", "brain_segmentation"), highlightbackground='#3E4149', font=helv20)
     button5.pack(pady=10)
 
     root.mainloop()
