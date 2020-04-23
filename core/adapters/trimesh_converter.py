@@ -22,7 +22,7 @@ def convert_meshes_trimesh(
                                 faces=mesh[1],
                                 vertex_normals=mesh[2],
                                )
-
+        smoothing.filter_laplacian(mesh2)
         trimesh_objects.append(mesh2)
         index += 1
     return trimesh_objects

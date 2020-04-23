@@ -25,7 +25,7 @@ def run(input_dir: str, output_path: str) -> None:
 
     downscaled_image = downscale_and_conditionally_crop(dicom_image)
 
-    meshes = [generate_mesh(downscaled_image, bone_hu_threshold),generate_mesh(downscaled_image, bone_hu_threshold)]
+    meshes = [generate_mesh(downscaled_image, bone_hu_threshold)]
 
     meshes = convert_meshes_trimesh(meshes)
     view_mesh(meshes,output_path)
