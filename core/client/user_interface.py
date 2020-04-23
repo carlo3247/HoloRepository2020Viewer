@@ -86,6 +86,13 @@ def browsefile(entry):
     entry.insert(tk.END, file_selected)
 
 
+def openViewer():
+    file_selected = filedialog.askopenfilename(
+        filetypes=(("glb file", "*.glb"), ("All files", "*"))
+    )
+
+
+
 def create_form(root, plid):
     fields = (
         ["Input", "Output File"]
@@ -356,8 +363,17 @@ class StartPage(tk.Frame):
         description_label.config(font="Helvetica 13 bold")
         description_label.pack(anchor=tk.CENTER, pady=10)
 
-        menu_1_label = tk.Label(self, text="Generate from scan:")
-        menu_1_label.config(font="Helvetica 13 bold")
+        buttons_frame=tk.Frame(self)
+        buttons_frame.pack()
+
+        generate_frame=tk.Frame(buttons_frame)
+        generate_frame.pack(side=tk.LEFT)
+
+        view_frame=tk.Frame(buttons_frame)
+        view_frame.pack(anchor=tk.NW, padx=80)
+
+        menu_1_label = tk.Label(generate_frame, text="Generate from scan:")
+        menu_1_label.config(font=("Helvetica", 13, "bold"))
         menu_1_label.pack(anchor=tk.CENTER, pady=10)
 
         helv20 = tkFont.Font(family="Helvetica", size=20)
@@ -365,7 +381,7 @@ class StartPage(tk.Frame):
         for plid in plids:
             title = re.sub(r"_segmentation", "", plid).title()
             button = tk.Button(
-                self,
+                generate_frame,
                 text=title,
                 command=lambda p=plid: controller.show_frame(p),
                 highlightbackground="#3E4149",
@@ -374,19 +390,45 @@ class StartPage(tk.Frame):
             )
             button.pack(pady=10)
 
-        menu_2_label = tk.Label(self, text="View existing model:")
-        menu_2_label.config(font="Helvetica bold")
+        menu_2_label = tk.Label(view_frame, text="View existing model:")
+        menu_2_label.config(font=("Helvetica", 13, "bold"))
         menu_2_label.pack(anchor=tk.CENTER, pady=10)
 
         view_button = tk.Button(
-            self,
+            view_frame,
             text="Open viewer",
             command=lambda p=plid: controller.show_frame(p),
             highlightbackground="#3E4149",
             font=helv20,
             width=20,
         )
-        view_button.pack(pady=10)
+        view_button.pack(anchor=tk.NE, pady=10)
+
+class ParameterPage(tk.Frame):
+    def __init__(self, parent, controller, plid):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+
+        title = re.sub(r"_segmentation", "", plid).title()
+        tool_title = tk.Label(self, text=title, font=("Futura", 44, "bold"))
+        tool_title.pack(pady=20)
+
+        tool_information = get_information(plid)
+        tool_description_label = tk.Label(self, text=tool_information, wraplength=500)
+        tool_description_label.pack()
+
+        ents = create_form(self, plid)
+        buttonFont = tkFont.Font(family="Helvetica", size=28)
+        b1 = tk.Button(self, text="3D View", command=lambda e=ents: generate(e, plid),)
+        b1.pack(side=tk.LEFT, padx=20, pady=50)
+        b2 = tk.Button(self, text="AR View", command=None)
+        b2.pack(side=tk.LEFT, padx=20, pady=50)
+        b3 = tk.Button(self, text="Help", command=lambda: help_box(plid),)
+        b3.pack(side=tk.RIGHT, padx=20, pady=50)
+        b4 = tk.Button(
+            self, text="Back", command=lambda: controller.show_frame("StartPage"),
+        )
+        b4.pack(side=tk.RIGHT, padx=20, pady=50)
 
 
 class ParameterPage(tk.Frame):
