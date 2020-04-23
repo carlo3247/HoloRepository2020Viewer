@@ -92,7 +92,6 @@ def openViewer():
     )
 
 
-
 def create_form(root, plid):
     fields = (
         ["Input", "Output File"]
@@ -366,20 +365,16 @@ class StartPage(tk.Frame):
         description_label.config(font=("Helvetica", 13))
         description_label.pack(anchor=tk.CENTER, pady=10)
 
-<<<<<<< HEAD
-        buttons_frame=tk.Frame(self)
+        buttons_frame = tk.Frame(self)
         buttons_frame.pack()
 
-        generate_frame=tk.Frame(buttons_frame)
+        generate_frame = tk.Frame(buttons_frame)
         generate_frame.pack(side=tk.LEFT)
 
-        view_frame=tk.Frame(buttons_frame)
+        view_frame = tk.Frame(buttons_frame)
         view_frame.pack(anchor=tk.NW, padx=80)
 
         menu_1_label = tk.Label(generate_frame, text="Generate from scan:")
-=======
-        menu_1_label = tk.Label(self, text="Generate from scan:")
->>>>>>> 09b42e627e1f7bd4445c88e93b56c463af976d22
         menu_1_label.config(font=("Helvetica", 13, "bold"))
         menu_1_label.pack(anchor=tk.CENTER, pady=10)
 
@@ -397,11 +392,7 @@ class StartPage(tk.Frame):
             )
             button.pack(pady=10)
 
-<<<<<<< HEAD
         menu_2_label = tk.Label(view_frame, text="View existing model:")
-=======
-        menu_2_label = tk.Label(self, text="View existing model:")
->>>>>>> 09b42e627e1f7bd4445c88e93b56c463af976d22
         menu_2_label.config(font=("Helvetica", 13, "bold"))
         menu_2_label.pack(anchor=tk.CENTER, pady=10)
 
@@ -414,6 +405,7 @@ class StartPage(tk.Frame):
             width=20,
         )
         view_button.pack(anchor=tk.NE, pady=10)
+
 
 class ParameterPage(tk.Frame):
     def __init__(self, parent, controller, plid):
