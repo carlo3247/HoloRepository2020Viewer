@@ -1,6 +1,8 @@
 import logging
 import re
+import os
 import tkinter as tk  # python 3
+from PIL import Image, ImageTk
 from tkinter import font as tkfont  # python 3
 from tkinter import messagebox
 from tkinter import font as tkFont
@@ -327,17 +329,18 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        title = tk.Label(self, text="HoloPipelinesLocal")
+        title = tk.Label(self, text="HoloPipelines 2020 Viewer")
         title.config(font=("Futura", 44, "bold"))
         title.pack(pady=20)
 
         description = """
-                This is a tool that launches the local versions of the HoloPipelines.
-                Please select one of the pipelines to launch
-                """
+            This tool will open a CT/MRI scan, identify key anatomical structures, and extract them. The structures becomes viewable
+            through a 3D model viewer or an AR viewer. The tool uses local versions of the HoloPipelines.
+            Please select one of the pipelines to launch
+            """
         description_label = tk.Label(self, text=description)
         description_label.config(font=("Helvetica", 15, "bold"))
-        description_label.pack(side=tk.TOP, pady=10)
+        description_label.pack(anchor=tk.CENTER, pady=10)
 
         helv20 = tkFont.Font(family="Helvetica", size=20)
 
@@ -349,6 +352,7 @@ class StartPage(tk.Frame):
                 command=lambda p=plid: controller.show_frame(p),
                 highlightbackground="#3E4149",
                 font=helv20,
+                width=20,
             )
             button.pack(pady=10)
 
@@ -397,17 +401,24 @@ class SplashScreen(tk.Tk):
         self.title("Splash window")
         self.configure()
 
-        # spath = "images/mypic.png"
-        # simg = ImageTk.PhotoImage(Image.open(spath))
-        # my = Label(sroot, image=simg)
-        # my.image = simg
-        # my.place(x=0, y=0)
-        # tk.Frame(self, height=516, width=5, bg="black").pack()
+        logo_path = "./core/client/images"
+        for logo in os.listdir(logo_path):
+            simg = ImageTk.PhotoImage(Image.open(os.path.join(logo_path, logo)))
+            my = tk.Label(self, image=simg)
+            my.image = simg
+
         lbl1 = tk.Label(
-            self, text="Welcome to the future", font="Timesnewroman 20 ", fg="blue"
+            self,
+            text="""\n\n
+        Main authors: Immanuel Baskaran, Abhinath Kumar, Carlo Winkelhake, Daren Alfred
+        \n
+        Supervisors: Prof. Dean Mohamedally, Prof. Neil Sebire
+        \n\n
+        Built at University College London in cooperation with Intel and GOSH DRIVE.
+        """,
         )
-        lbl1.config(anchor=tk.CENTER)
-        lbl1.pack(padx=100, pady=100)
+        lbl1.config(font=("Helvetica", 13))
+        lbl1.pack(anchor=tk.CENTER, pady=100)
 
 
 if __name__ == "__main__":
@@ -417,5 +428,5 @@ if __name__ == "__main__":
         app.destroy()
         app = ViewerApp()
 
-    app.after(1000, lambda: call_mainroot(app))
+    app.after(5000, lambda: call_mainroot(app))
     app.mainloop()
