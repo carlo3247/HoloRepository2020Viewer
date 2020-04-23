@@ -1,7 +1,7 @@
 """
 This module contains some functions to perform manipulations upon numpy data.
 """
-
+import logging
 import numpy as np
 from numba import jit
 
@@ -64,9 +64,9 @@ def downscale_and_conditionally_crop(
         image = pirt.interp.zoom(
             image, [resize_ratio, resize_ratio, resize_ratio], order=1
         )
-    #   logging.info("Array downscale finished")
-    # else:
-    #     logging.info("Array smaller than limit given, no downscale has been done")
+        logging.info("Array downscale finished")
+    else:
+        logging.info("Array smaller than limit given, no downscale has been done")
 
     x = image.shape[0]
     y = image.shape[1]

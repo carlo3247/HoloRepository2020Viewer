@@ -9,8 +9,7 @@ Xinyang Feng, Jie Yang, Andrew F. Laine, Elsa D. Angelini
 import os
 import logging
 
-from core.adapters.dicom_file import read_dicom_as_np_ndarray_and_normalise
-
+from core.adapters.file_loader import read_input_path_as_np_array
 from core.adapters.glb_file import write_mesh_as_glb
 from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.client.viewer import view_mesh
@@ -25,13 +24,11 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 hu_threshold = 0
 
 
-def run(input_dir: str, output_path: str, segment_type: list) -> None:
-    logger = logging.getLogger("lung_segmentation_tool")
-    logger.info("READING_INPUT")
-    image_data = read_dicom_as_np_ndarray_and_normalise(input_dir)
-
+def run(input_path: str, output_path: str, segment_type: list) -> None:
+    logging.info("Starting lung pipeline")
+    image_data = read_input_path_as_np_array(input_path)
     image_data = downscale_and_conditionally_crop(image_data)
-    logger.info("SEGMENTATION")
+
     segmented_lung, segmented_airway = perform_lung_segmentation(image_data)
 
     meshes = []
@@ -47,3 +44,4 @@ def run(input_dir: str, output_path: str, segment_type: list) -> None:
 
     meshes = convert_meshes_trimesh(meshes)
     view_mesh(meshes, output_path)
+    logging.info("Lung pipeline finished successfully")

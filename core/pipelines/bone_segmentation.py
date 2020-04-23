@@ -8,8 +8,7 @@ import sys
 import logging
 
 import numpy as np
-from core.adapters.dicom_file import read_dicom_as_np_ndarray_and_normalise
-
+from core.adapters.file_loader import read_input_path_as_np_array
 from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.services.marching_cubes import generate_mesh
 from core.client.viewer import view_mesh
@@ -20,17 +19,11 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 bone_hu_threshold = 300
 
 
-def run(input_dir: str, output_path: str) -> None:
-    logger = logging.getLogger("bone_segmentation_tool")
-    logger.info("READING_INPUT")
-    dicom_image: np.ndarray = read_dicom_as_np_ndarray_and_normalise(input_dir)
+def run(input_path: str, output_path: str) -> None:
+    logging.info("Starting bone pipeline")
+    dicom_image: np.ndarray = read_input_path_as_np_array(input_path)
     downscaled_image = downscale_and_conditionally_crop(dicom_image)
-    logger.info("SEGMENTATION")
     meshes = [generate_mesh(downscaled_image, bone_hu_threshold)]
-    logger.info("WRITING_MESH")
-
     meshes = convert_meshes_trimesh(meshes)
-    view_mesh(meshes,output_path)
-
-if __name__ == "__main__":
-    run(sys.argv[1], sys.argv[2])
+    view_mesh(meshes, output_path)
+    logging.info("Bone pipeline finished successfully")

@@ -159,6 +159,7 @@ def normalizetest(dicom_image_array, real_resize_factor):
 
 
 def read_dicom_as_np_ndarray_and_normalise(input_directory_path: str) -> np.ndarray:
+    logging.info("Reading dicom input from {}".format(input_directory_path))
     dicom_image = read_dicom_pixels_as_np_ndarray(input_directory_path)
     normalised_dicom_image = normalise_dicom(dicom_image, input_directory_path)
     return normalised_dicom_image
