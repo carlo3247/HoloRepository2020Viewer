@@ -306,6 +306,8 @@ class ViewerApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
+        self.title("HoloPipelines 2020 Viewer")
+
         self.state("zoomed")
         self.title_font = tkfont.Font(
             family="Helvetica", size=18, weight="bold", slant="italic"
@@ -492,5 +494,5 @@ if __name__ == "__main__":
     def call_mainroot(app):
         app.show_frame("StartPage")
 
-    app.after(500, lambda: call_mainroot(app))
+    app.after(5000, lambda: call_mainroot(app))
     app.mainloop()
