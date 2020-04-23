@@ -25,7 +25,7 @@ def get_information(plid):
     model_file_types = get_file_types(plid)
     model_req_mods = get_req_modalities(plid)
 
-    information = pipeline_description + "\n\nInput files must be of type " + " or ".join(model_file_types)
+    information = pipeline_description + "\n\nInput must be " + " or ".join(model_file_types)
     return information if plid != "brain_segmentation" else information + "\n3 input scans (modalities) required of types " + ", ".join(model_req_mods)+'\n'
 
 def generate(entries, plid):
@@ -34,16 +34,16 @@ def generate(entries, plid):
     quiet = entries['silence_log'].get()
 
     if plid!='brain_segmentation':
-        input_dir = entries['Input Directory'].get()
+        input_dir = entries['Input'].get()
     else:
-         flair_dir = entries['Flair Input Directory'].get()
-         t1_dir = entries['T1 Input Directory'].get()
-         ir_dir = entries['IR Input Directory'].get()
+         flair_dir = entries['Flair Input'].get()
+         t1_dir = entries['T1 Input'].get()
+         ir_dir = entries['IR Input'].get()
          input_dir=[flair_dir,t1_dir,ir_dir]
 
    
     if (plid == 'brain_segmentation' and '' in input_dir) or input_dir=='' or output_path=='' or not segment_type:
-        messagebox.showerror("Error", "Please ensure input directory/ies, an output path, and segmentation type is inputted")
+        messagebox.showerror("Error", "Please ensure input/s, an output path, and segmentation type is inputted")
     else:
         logging.basicConfig(
             level=logging.ERROR if quiet else logging.INFO,
@@ -64,24 +64,14 @@ def browsefile(entry):
 
 
 def create_form(root, plid):
-    fields=['Input Directory', 'Output File'] if plid !='brain_segmentation' else ['Flair Input Directory', 'T1 Input Directory', 'IR Input Directory', 'Output File']
+    fields=['Input', 'Output File'] if plid !='brain_segmentation' else ['Flair Input Directory', 'T1 Input Directory', 'IR Input Directory', 'Output File']
 
     entries = {}
 
     if(plid!='brain_segmentation'):
         input_row = Frame(root)
         input_ent = Entry(input_row)
-        input_lab = Label(input_row, width=15, text='Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
-        input_lab.pack(side=LEFT)
-        input_row.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
-        input_ent.pack(side=LEFT,expand=YES, fill=X,)
-        browse_button=Button(input_row,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent))
-        browse_button.pack(side=RIGHT,fill=X, padx=20)
-        entries['Input Directory']=input_ent
-    else:
-        input_row = Frame(root)
-        input_ent = Entry(input_row)
-        input_lab = Label(input_row, width=15, text='Flair Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
+        input_lab = Label(input_row, width=15, text='Input', anchor='w',font=('Helvetica', 15, 'bold'))
         input_lab.pack(side=LEFT)
         input_row.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
         input_ent.pack(side=LEFT,expand=YES, fill=X,)
@@ -89,11 +79,23 @@ def create_form(root, plid):
         browse_dir_button=Button(input_row,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent))
         browse_button.pack(side=RIGHT,fill=X, padx=20)
         browse_dir_button.pack(side=RIGHT,fill=X, padx=20)
-        entries['Flair Input Directory']=input_ent
+        entries['Input']=input_ent
+    else:
+        input_row = Frame(root)
+        input_ent = Entry(input_row)
+        input_lab = Label(input_row, width=15, text='Flair Input', anchor='w',font=('Helvetica', 15, 'bold'))
+        input_lab.pack(side=LEFT)
+        input_row.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
+        input_ent.pack(side=LEFT,expand=YES, fill=X,)
+        browse_button=Button(input_row,text="Browse Input File",font=40,command=lambda: browsefile(input_ent))
+        browse_dir_button=Button(input_row,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent))
+        browse_button.pack(side=RIGHT,fill=X, padx=20)
+        browse_dir_button.pack(side=RIGHT,fill=X, padx=20)
+        entries['Flair Input']=input_ent
 
         input_row_2 = Frame(root)
         input_ent_2 = Entry(input_row_2)
-        input_lab_2 = Label(input_row_2, width=15, text='T1 Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
+        input_lab_2 = Label(input_row_2, width=15, text='T1 Input', anchor='w',font=('Helvetica', 15, 'bold'))
         input_lab_2.pack(side=LEFT)
         input_row_2.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
         input_ent_2.pack(side=LEFT,expand=YES, fill=X,)
@@ -101,11 +103,11 @@ def create_form(root, plid):
         browse_dir_button_2=Button(input_row_2,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent_2))
         browse_button_2.pack(side=RIGHT,fill=X, padx=20)
         browse_dir_button_2.pack(side=RIGHT,fill=X, padx=20)
-        entries['T1 Input Directory']=input_ent_2
+        entries['T1 Input']=input_ent_2
 
         input_row_3 = Frame(root)
         input_ent_3 = Entry(input_row_3)
-        input_lab_3 = Label(input_row_3, width=15, text='IR Input Directory', anchor='w',font=('Helvetica', 15, 'bold'))
+        input_lab_3 = Label(input_row_3, width=15, text='IR Input', anchor='w',font=('Helvetica', 15, 'bold'))
         input_lab_3.pack(side=LEFT)
         input_row_3.pack(side=TOP,expand=YES, fill=X, padx=5, pady=5)
         input_ent_3.pack(side=LEFT,expand=YES, fill=X,)
@@ -113,7 +115,7 @@ def create_form(root, plid):
         browse_dir_button_3=Button(input_row_3,text="Browse Input Directory",font=40,command=lambda: browsefunc(input_ent_3))
         browse_button_3.pack(side=RIGHT,fill=X, padx=20)
         browse_dir_button_3.pack(side=RIGHT,fill=X, padx=20)
-        entries['IR Input Directory']=input_ent_3
+        entries['IR Input']=input_ent_3
     
     output_row = Frame(root)
     output_lab = Label(output_row, width=15, text='Output File', anchor='w',font=('Helvetica', 15, 'bold'))
@@ -149,9 +151,9 @@ def create_form(root, plid):
 
 def help_box(plid):
     if plid!="brain_segmentation":
-        messagebox.showinfo("Help", """Input Directory: Select the directory containing the scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """)
+        messagebox.showinfo("Help", """Input : Select a compressed NifTi file or directory containing DICOM scans through the file or folder browser\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """)
     else:
-        messagebox.showinfo("Help", """Input Directories: Select the directories or coompressed files containing the T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """)
+        messagebox.showinfo("Help", """Input : Select a compressed NifTi file or directory containing DICOM scans through the file or folder browser\n\n Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """)
      
  
 def parameter_window(tool:str,plid:str)->None:

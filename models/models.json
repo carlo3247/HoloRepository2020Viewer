@@ -14,8 +14,8 @@
             "other": 10
         },
         "filetypes": [
-            "NIfTI",
-            "Compressed NIfTI"
+            "directory of DICOM files",
+            "Compressed NIfTI file"
         ],
         "required_modalities": [
             "T2-FLAIR",
@@ -37,7 +37,8 @@
             "duodenum": 8
         },
         "filetypes": [
-            "DICOM"
+            "directory of DICOM files",
+            "Compressed NIfTI file"
         ],
         "required_modalities": [],
         "optional_modalities": []
@@ -49,7 +50,8 @@
             "kidney_tumour": 2
         },
         "filetypes": [
-            "DICOM"
+            "directory of DICOM files",
+            "Compressed NIfTI file"
         ],
         "required_modalities": [],
         "optional_modalities": []
@@ -61,7 +63,8 @@
             "airway": 2
         },
         "filetypes": [
-            "DICOM"
+            "directory of DICOM files",
+            "Compressed NIfTI file"
         ],
         "required_modalities": [],
         "optional_modalities": []
@@ -71,7 +74,8 @@
             "bones": 0
         },
         "filetypes": [
-            "DICOM"
+            "directory of DICOM files",
+            "Compressed NIfTI file"
         ],
         "required_modalities": [],
         "optional_modalities": []
