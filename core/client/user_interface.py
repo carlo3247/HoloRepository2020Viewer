@@ -287,8 +287,8 @@ def add_logo_frame(root):
         simg = ImageTk.PhotoImage(image)
         my = tk.Label(logo_frame, image=simg)
         my.image = simg
-        my.pack(side=tk.LEFT, padx=20, pady=50)
-    logo_frame.pack(anchor=tk.NW, padx=0.5, pady=0.5)
+        my.pack(side=tk.LEFT, padx=5, pady=5)
+    logo_frame.pack(anchor=tk.NW)
 
 
 class ViewerApp(tk.Tk):
@@ -348,7 +348,7 @@ class StartPage(tk.Frame):
 
         title = tk.Label(self, text="HoloPipelines 2020 Viewer")
         title.config(font=("Futura", 44, "bold"))
-        title.pack(pady=20)
+        title.pack()
 
         description = """
             This tool will open a CT/MRI scan, identify key anatomical structures, and extract them. The structures becomes viewable
@@ -396,10 +396,11 @@ class ParameterPage(tk.Frame):
     def __init__(self, parent, controller, plid):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        add_logo_frame(self)
 
         title = re.sub(r"_segmentation", "", plid).title()
         tool_title = tk.Label(self, text=title, font=("Futura", 44, "bold"))
-        tool_title.pack(pady=20)
+        tool_title.pack()
 
         tool_information = get_information(plid)
         tool_description_label = tk.Label(self, text=tool_information, wraplength=500)
