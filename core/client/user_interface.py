@@ -12,6 +12,7 @@ from tkinter import filedialog
 from core.pipelines.pipelines_controller import (
     get_pipeline_description,
     load_pipeline_dynamically,
+    get_pipelines_ids_list,
 )
 from models.model_controller import (
     get_seg_types,
@@ -318,13 +319,8 @@ class ViewerApp(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        plids = [
-            "brain_segmentation",
-            "lung_segmentation",
-            "kidney_segmentation",
-            "bone_segmentation",
-            "abdominal_organs_segmentation",
-        ]
+        plids = get_pipelines_ids_list()
+        plids.remove('glb_importer')
 
         self.frames = {}
         splash_screen = SplashScreen(parent=container, controller=self)
@@ -361,7 +357,7 @@ class StartPage(tk.Frame):
         title.pack()
 
         description = """
-            This tool will open a CT/MRI scan, identify key anatomical structures, and extract them. The structures becomes viewable
+            This tool will open a CT/MRI scan, identify key anatomical structures, and extract them. The structures become viewable
             through a 3D model viewer or an AR viewer. The tool uses local versions of the HoloPipelines.
             Please select one of the pipelines to launch
             """
