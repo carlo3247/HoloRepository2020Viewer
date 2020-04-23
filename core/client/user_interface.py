@@ -290,12 +290,12 @@ def add_logo_frame(root):
     logo_frame = tk.Frame(root)
     for logo in os.listdir(logo_path):
         image = Image.open(os.path.join(logo_path, logo))
-        image = image.resize((100, 100), Image.ANTIALIAS)
+        image = image.resize((75, 75), Image.ANTIALIAS)
         simg = ImageTk.PhotoImage(image)
         my = tk.Label(logo_frame, image=simg)
         my.image = simg
-        my.pack(side=tk.LEFT, padx=20, pady=50)
-    logo_frame.pack(anchor=tk.NW, padx=0.5, pady=0.5)
+        my.pack(side=tk.LEFT, padx=5, pady=5)
+    logo_frame.pack(anchor=tk.NW)
 
 
 class ViewerApp(tk.Tk):
@@ -324,6 +324,9 @@ class ViewerApp(tk.Tk):
         ]
 
         self.frames = {}
+        splash_screen = SplashScreen(parent=container, controller=self)
+        self.frames["SplashScreen"] = splash_screen
+        splash_screen.grid(row=0, column=0, sticky="nsew")
         start_page = StartPage(parent=container, controller=self, plids=plids)
         self.frames["StartPage"] = start_page
         start_page.grid(row=0, column=0, sticky="nsew")
@@ -336,7 +339,7 @@ class ViewerApp(tk.Tk):
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("StartPage")
+        self.show_frame("SplashScreen")
 
     def show_frame(self, page_name):
         """Show a frame for the given page name"""
@@ -352,7 +355,7 @@ class StartPage(tk.Frame):
 
         title = tk.Label(self, text="HoloPipelines 2020 Viewer")
         title.config(font=("Futura", 44, "bold"))
-        title.pack(pady=20)
+        title.pack()
 
         description = """
             This tool will open a CT/MRI scan, identify key anatomical structures, and extract them. The structures becomes viewable
@@ -360,9 +363,10 @@ class StartPage(tk.Frame):
             Please select one of the pipelines to launch
             """
         description_label = tk.Label(self, text=description)
-        description_label.config(font="Helvetica 13 bold")
+        description_label.config(font=("Helvetica", 13))
         description_label.pack(anchor=tk.CENTER, pady=10)
 
+<<<<<<< HEAD
         buttons_frame=tk.Frame(self)
         buttons_frame.pack()
 
@@ -373,6 +377,9 @@ class StartPage(tk.Frame):
         view_frame.pack(anchor=tk.NW, padx=80)
 
         menu_1_label = tk.Label(generate_frame, text="Generate from scan:")
+=======
+        menu_1_label = tk.Label(self, text="Generate from scan:")
+>>>>>>> 09b42e627e1f7bd4445c88e93b56c463af976d22
         menu_1_label.config(font=("Helvetica", 13, "bold"))
         menu_1_label.pack(anchor=tk.CENTER, pady=10)
 
@@ -390,7 +397,11 @@ class StartPage(tk.Frame):
             )
             button.pack(pady=10)
 
+<<<<<<< HEAD
         menu_2_label = tk.Label(view_frame, text="View existing model:")
+=======
+        menu_2_label = tk.Label(self, text="View existing model:")
+>>>>>>> 09b42e627e1f7bd4445c88e93b56c463af976d22
         menu_2_label.config(font=("Helvetica", 13, "bold"))
         menu_2_label.pack(anchor=tk.CENTER, pady=10)
 
@@ -435,10 +446,11 @@ class ParameterPage(tk.Frame):
     def __init__(self, parent, controller, plid):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        add_logo_frame(self)
 
         title = re.sub(r"_segmentation", "", plid).title()
         tool_title = tk.Label(self, text=title, font=("Futura", 44, "bold"))
-        tool_title.pack(pady=20)
+        tool_title.pack()
 
         tool_information = get_information(plid)
         tool_description_label = tk.Label(self, text=tool_information, wraplength=500)
@@ -458,22 +470,13 @@ class ParameterPage(tk.Frame):
         b4.pack(side=tk.RIGHT, padx=20, pady=50)
 
 
-class SplashScreen(tk.Tk):
-    def __init__(self, *args, **kwargs):
-        tk.Tk.__init__(self, *args, **kwargs)
-
-        self.state("zoomed")
+class SplashScreen(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
         self.title_font = tkfont.Font(
             family="Helvetica", size=18, weight="bold", slant="italic"
         )
-
-        # the container is where we'll stack a bunch of frames
-        # on tk.TOP of each other, then the one we want visible
-        # will be raised above the others
-        container = tk.Frame(self)
-
-        self.title("tk")
-        self.configure()
 
         add_logo_frame(self)
 
@@ -492,11 +495,10 @@ class SplashScreen(tk.Tk):
 
 
 if __name__ == "__main__":
-    app = SplashScreen()
+    app = ViewerApp()
 
     def call_mainroot(app):
-        app.destroy()
-        app = ViewerApp()
+        app.show_frame("StartPage")
 
     app.after(500, lambda: call_mainroot(app))
     app.mainloop()
