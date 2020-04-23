@@ -23,7 +23,7 @@
         ],
         "optional_modalities": []
     },
-    "abdominal_organs_segmentation": {
+    "abdominal_segmentation": {
         "segmentation_dict": {
             "spleen": 1,
             "left_kidney": 2,

@@ -37,9 +37,9 @@
       ]
     ]
   },
-  "abdominal_organs_segmentation": {
-    "plid": "abdominal_organs_segmentation",
-    "title": "Abdominal organs segmentation",
+  "abdominal_segmentation": {
+    "plid": "abdominal_segmentation",
+    "title": "Abdominal Segmentation",
     "description": "This pipeline uses a pre-trained dense VNET neural network to segment abdominal CT scans. The resulting model will provide a segmentation of 8 different organs in the abdominal area.",
     "inputConstraints": [
       [
@@ -52,21 +52,6 @@
       ],
       [
         "Image resolution",
-        "Any"
-      ]
-    ]
-  },
-  "mesh_generation_only": {
-    "plid": "mesh_generation_only",
-    "title": "Mesh generation from existing segmentation file.",
-    "description": "This pipeline only creates a 3D object from an existing 3D segmentation file.",
-    "inputConstraints": [
-      [
-        "Body site",
-        "Any"
-      ],
-      [
-        "Imaging study type",
         "Any"
       ]
     ]
