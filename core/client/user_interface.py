@@ -217,8 +217,8 @@ def main():
 
 if __name__ == "__main__":
     root = Tk()
-    root.geometry("700x700")
-    # root.resizable(False, False)
+    root.geometry("700x500")
+    root.resizable(False, False)
     root.title("HoloPipelinesLocal")
     # root.configure(background='#62cbf5')
     main()
