@@ -19,6 +19,8 @@ class Kidney_model:
     def __init__(self, saved_path):
 
         self.input_path = os.path.join(path_prefix, "input/")
+        if os.path.isdir(self.input_path):
+            shutil.rmtree(self.input_path)
         os.mkdir(self.input_path)
 
         interface = NIFTI_interface(pattern="input", channels=1, classes=3)
