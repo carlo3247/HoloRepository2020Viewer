@@ -278,6 +278,19 @@ def help_box(plid):
         )
 
 
+def add_logo_frame(root):
+    logo_path = "./core/client/logos"
+    logo_frame = tk.Frame(root)
+    for logo in os.listdir(logo_path):
+        image = Image.open(os.path.join(logo_path, logo))
+        image = image.resize((100, 100), Image.ANTIALIAS)
+        simg = ImageTk.PhotoImage(image)
+        my = tk.Label(logo_frame, image=simg)
+        my.image = simg
+        my.pack(side=tk.LEFT, padx=20, pady=50)
+    logo_frame.pack(anchor=tk.NW, padx=0.5, pady=0.5)
+
+
 class ViewerApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -328,6 +341,7 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller, plids):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        add_logo_frame(self)
 
         title = tk.Label(self, text="HoloPipelines 2020 Viewer")
         title.config(font=("Futura", 44, "bold"))
@@ -339,8 +353,12 @@ class StartPage(tk.Frame):
             Please select one of the pipelines to launch
             """
         description_label = tk.Label(self, text=description)
-        description_label.config(font=("Helvetica", 15, "bold"))
+        description_label.config(font="Helvetica 13 bold")
         description_label.pack(anchor=tk.CENTER, pady=10)
+
+        menu_1_label = tk.Label(self, text="Generate from scan:")
+        menu_1_label.config(font="Helvetica 13 bold")
+        menu_1_label.pack(anchor=tk.CENTER, pady=10)
 
         helv20 = tkFont.Font(family="Helvetica", size=20)
 
@@ -355,6 +373,20 @@ class StartPage(tk.Frame):
                 width=20,
             )
             button.pack(pady=10)
+
+        menu_2_label = tk.Label(self, text="View existing model:")
+        menu_2_label.config(font="Helvetica bold")
+        menu_2_label.pack(anchor=tk.CENTER, pady=10)
+
+        view_button = tk.Button(
+            self,
+            text="Open viewer",
+            command=lambda p=plid: controller.show_frame(p),
+            highlightbackground="#3E4149",
+            font=helv20,
+            width=20,
+        )
+        view_button.pack(pady=10)
 
 
 class ParameterPage(tk.Frame):
@@ -398,14 +430,10 @@ class SplashScreen(tk.Tk):
         # will be raised above the others
         container = tk.Frame(self)
 
-        self.title("Splash window")
+        self.title("tk")
         self.configure()
 
-        logo_path = "./core/client/images"
-        for logo in os.listdir(logo_path):
-            simg = ImageTk.PhotoImage(Image.open(os.path.join(logo_path, logo)))
-            my = tk.Label(self, image=simg)
-            my.image = simg
+        add_logo_frame(self)
 
         lbl1 = tk.Label(
             self,
@@ -428,5 +456,5 @@ if __name__ == "__main__":
         app.destroy()
         app = ViewerApp()
 
-    app.after(5000, lambda: call_mainroot(app))
+    app.after(500, lambda: call_mainroot(app))
     app.mainloop()
