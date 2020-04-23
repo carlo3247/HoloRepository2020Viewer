@@ -88,13 +88,12 @@ def browsefile(entry):
 
 
 def openViewer():
-    plid="glb_importer"
+    plid = "glb_importer"
     file_selected = filedialog.askopenfilename(
         filetypes=(("glb file", "*.glb"), ("All files", "*"))
     )
     pipeline_module = load_pipeline_dynamically(plid)
     pipeline_module.run(file_selected)
-
 
 
 def create_form(root, plid):
@@ -322,7 +321,7 @@ class ViewerApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         plids = get_pipelines_ids_list()
-        plids.remove('glb_importer')
+        plids.remove("glb_importer")
 
         self.frames = {}
         splash_screen = SplashScreen(parent=container, controller=self)
@@ -494,5 +493,5 @@ if __name__ == "__main__":
     def call_mainroot(app):
         app.show_frame("StartPage")
 
-    app.after(5000, lambda: call_mainroot(app))
+    app.after(1000, lambda: call_mainroot(app))
     app.mainloop()
