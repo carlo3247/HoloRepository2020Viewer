@@ -24,7 +24,9 @@ def write_mesh_as_glb_with_colour(
         mesh2 = vtk2trimesh(mesh)
 
         repair.fix_inversion(mesh2)
-        print(type((mesh.color().tolist())))
+
+        mesh2.visual.vertex_colors = mesh.color().tolist()
+
         mesh2.visual.material = trimesh.visual.material.SimpleMaterial(
             diffuse=np.asarray(mesh.color().tolist()+[mesh.alpha()]))
         scene.add_geometry(mesh2)

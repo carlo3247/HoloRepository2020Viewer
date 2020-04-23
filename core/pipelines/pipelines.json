@@ -104,5 +104,20 @@
         "MRI: T1, FLAIR, IR"
       ]
     ]
+  },"glb_importer": {
+    "plid": "glb_importer",
+    "title": "brain glb_importer",
+    "description": "Imports a glb file into the viewer",
+    "inputConstraints": [
+      [
+        "Body site",
+        ""
+      ],
+      [
+        "Imaging study type",
+        "MRI: T1, FLAIR, IR"
+      ]
+    ]
   }
+
 }
