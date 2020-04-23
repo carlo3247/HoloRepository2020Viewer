@@ -68,7 +68,7 @@ def generate(entries, plid):
             format="%(asctime)s - %(module)s:%(levelname)s - %(message)s",
             datefmt="%d-%b-%y %H:%M:%S",
         )
-        logging.info("Loading and initializing bone pipeline dynamically")
+        logging.info("Loading and initializing pipeline dynamically")
         pipeline_module = load_pipeline_dynamically(plid)
         pipeline_module.run(input_dir, output_path, segment_type)
         logging.info("Done.")
@@ -87,9 +87,13 @@ def browsefile(entry):
 
 
 def openViewer():
+    plid="glb_importer"
     file_selected = filedialog.askopenfilename(
         filetypes=(("glb file", "*.glb"), ("All files", "*"))
     )
+    pipeline_module = load_pipeline_dynamically(plid)
+    pipeline_module.run(file_selected)
+
 
 
 def create_form(root, plid):
@@ -399,7 +403,7 @@ class StartPage(tk.Frame):
         view_button = tk.Button(
             view_frame,
             text="Open viewer",
-            command=lambda p=plid: controller.show_frame(p),
+            command=lambda: openViewer(),
             highlightbackground="#3E4149",
             font=helv20,
             width=20,
