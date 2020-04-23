@@ -14,7 +14,6 @@ from models.model_controller import (
 )
 
 import logging
-from sys_logger import configureLogger
 
 plid = "glb_importer"
 
@@ -41,19 +40,21 @@ def add_parser_arguments(parser):
         type=str,
         help="Specify the path to the directory containing the T2-FLAIR input scans",
     )
+    parser.add_argument(
+        "-q",
+        "--quiet",
+        action="store_true",
+        help="Set the logging level from INFO to ERROR",
+    )
     parser.set_defaults(which=plid)
 
 
 def run(args):
-    logger = logging.getLogger(__name__) 
-    logger.info("INITIALIZE PIPELINE")
+    logging.info("Loading and initializing mesh viewer dynamically")
     input_file = args.input_file
-    logger.info("LOADING_MODEL")
     pipeline_module = load_pipeline_dynamically(plid)
-    pipeline_module.run(
-        input_file
-    )
-    logger.info("COMPLETION")
+    pipeline_module.run(input_file)
+    logging.info("Done.")
 
 
 def main():
@@ -62,8 +63,12 @@ def main():
         description=description, formatter_class=RawTextHelpFormatter
     )
     add_parser_arguments(parser)
-
     args = parser.parse_args()
+    logging.basicConfig(
+        level=logging.ERROR if args.quiet else logging.INFO,
+        format="%(asctime)s - %(module)s:%(levelname)s - %(message)s",
+        datefmt="%d-%b-%y %H:%M:%S",
+    )
     run(args)
 
 
