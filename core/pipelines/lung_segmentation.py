@@ -16,6 +16,7 @@ from core.client.viewer import view_mesh
 from core.services.marching_cubes import generate_mesh
 from core.services.np_image_manipulation import downscale_and_conditionally_crop
 from core.third_party.lung_and_airway_segmentation import perform_lung_segmentation
+from models.model_controller import get_seg_types
 
 
 this_plid = os.path.basename(__file__).replace(".py", "")
@@ -43,5 +44,7 @@ def run(input_path: str, output_path: str, segment_type: list) -> None:
         )
 
     meshes = convert_meshes_trimesh(meshes)
-    view_mesh(meshes, output_path)
+    segment_dict = get_seg_types(this_plid)
+    mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
+    view_mesh(meshes=meshes, mesh_names=mesh_names, output_file=output_path)
     logging.info("Lung pipeline finished successfully")

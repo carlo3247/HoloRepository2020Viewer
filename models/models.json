@@ -1,7 +1,6 @@
 {
     "brain_segmentation": {
         "segmentation_dict": {
-            "background": 0,
             "cortical_gray_matter": 1,
             "basal_ganglia": 2,
             "white_matter": 3,
@@ -14,8 +13,8 @@
             "other": 10
         },
         "filetypes": [
-            "NIfTI",
-            "Compressed NIfTI"
+            "directory of DICOM files",
+            "Compressed NIfTI file"
         ],
         "required_modalities": [
             "T2-FLAIR",
@@ -24,9 +23,8 @@
         ],
         "optional_modalities": []
     },
-    "abdominal_organs_segmentation": {
+    "abdominal_segmentation": {
         "segmentation_dict": {
-            "background": 0,
             "spleen": 1,
             "left_kidney": 2,
             "gallbladder": 3,
@@ -37,45 +35,48 @@
             "duodenum": 8
         },
         "filetypes": [
-            "DICOM"
+            "directory of DICOM files",
+            "Compressed NIfTI file"
         ],
         "required_modalities": [],
         "optional_modalities": []
     },
     "kidney_segmentation": {
         "segmentation_dict": {
-            "background": 0,
             "kidneys": 1,
             "kidney_tumour": 2
         },
         "filetypes": [
-            "DICOM"
+            "directory of DICOM files",
+            "Compressed NIfTI file"
         ],
         "required_modalities": [],
         "optional_modalities": []
     },
     "lung_segmentation": {
         "segmentation_dict": {
-            "background": 0,
             "lung": 1,
             "airway": 2
         },
         "filetypes": [
-            "DICOM"
+            "directory of DICOM files",
+            "Compressed NIfTI file"
         ],
         "required_modalities": [],
         "optional_modalities": []
     },
     "bone_segmentation": {
         "segmentation_dict": {
-            "background": 0
+            "bones": 1
         },
         "filetypes": [
-            "DICOM"
+            "directory of DICOM files",
+            "Compressed NIfTI file"
         ],
         "required_modalities": [],
         "optional_modalities": []
-    },"glb_importer": {
+    },
+    "glb_importer": {
         "segmentation_dict": {
             "background": 0
         },

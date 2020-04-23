@@ -90,9 +90,7 @@ def run(args):
     segment_type = args.type
     pipeline_module = load_pipeline_dynamically(plid)
     pipeline_module.run(
-        flair_input_directory,
-        t1_input_directory,
-        ir_input_directory,
+        [flair_input_directory, t1_input_directory, ir_input_directory],
         output_path,
         segment_type,
     )
