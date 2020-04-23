@@ -19,3 +19,4 @@ samples/
 tests.txt
 HoloPipelinesCLI.egg-info
 .ipynb_checkpoints
+test.py

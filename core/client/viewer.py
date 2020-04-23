@@ -6,7 +6,7 @@ from core.adapters.vtk_to_glb import write_mesh_as_glb_with_colour
 index = 0
 
 
-def view_mesh(meshes, output_file):
+def view_mesh(meshes: list, output_file: str, mesh_names: list = []):
     logging.info("Opening mesh viewer.")
     settings.useDepthPeeling = True
     vmeshes = []
@@ -22,7 +22,7 @@ def view_mesh(meshes, output_file):
     def buttonfunc():
         global index
         bu.switch()
-        index = int(bu.status().split(":")[1])
+        index = mesh_names.index(bu.status())
 
     def save():
         write_mesh_as_glb_with_colour(vmeshes, output_file)
@@ -44,7 +44,7 @@ def view_mesh(meshes, output_file):
     bu = vp.addButton(
         buttonfunc,
         pos=(0.5, 0.05),  # x,y fraction from bottom left corner
-        states=["Segmentation : " + str(i) for i in range(0, len(meshes))],
+        states=mesh_names,
         font="courier",  # arial, courier, times
         size=25,
         bold=True,

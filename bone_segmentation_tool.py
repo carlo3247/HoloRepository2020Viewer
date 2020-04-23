@@ -39,7 +39,7 @@ def run(args):
     input_dir = args.input
     output_path = args.output
     pipeline_module = load_pipeline_dynamically(plid)
-    pipeline_module.run(input_dir, output_path)
+    pipeline_module.run(input_dir, output_path, [1])
     logging.info("Done.")
 
 
