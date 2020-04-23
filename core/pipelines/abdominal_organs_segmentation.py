@@ -11,13 +11,10 @@ multi-organ segmentation on abdominal CT with dense v-networks https://doi.org/1
 import os
 import logging
 
-from core.adapters.dicom_file import (
-    read_dicom_as_np_ndarray_and_normalise,
-    flip_numpy_array_dimensions_y_only,
-)
-
+from core.adapters.dicom_file import flip_numpy_array_dimensions_y_only
+from core.adapters.file_loader import read_input_path_as_np_array
 from core.adapters.nifti_file import (
-    convert_dicom_np_ndarray_to_nifti_image,
+    convert_np_ndarray_to_nifti_image,
     read_nifti_as_np_array,
     write_nifti_image,
 )
@@ -36,13 +33,13 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 hu_threshold = 0
 
 
-def run(dicom_directory_path: str, output_path: str, segment_type: list) -> None:
-    dicom_image_array = read_dicom_as_np_ndarray_and_normalise(dicom_directory_path)
+def run(input_path: str, output_path: str, segment_type: list) -> None:
+    dicom_image_array = read_input_path_as_np_array(input_path)
     crop_dicom_image_array = downscale_and_conditionally_crop(dicom_image_array)
     # NOTE: Numpy array is flipped in the Y axis here as this is the specific image input for the NiftyNet model
     crop_dicom_image_array = flip_numpy_array_dimensions_y_only(crop_dicom_image_array)
 
-    nifti_image = convert_dicom_np_ndarray_to_nifti_image(crop_dicom_image_array)
+    nifti_image = convert_np_ndarray_to_nifti_image(crop_dicom_image_array)
     initial_nifti_output_file_path = abdominal_model.get_input_path()
     write_nifti_image(nifti_image, initial_nifti_output_file_path)
     segmented_nifti_output_file_path = abdominal_model.predict()

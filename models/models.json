@@ -79,5 +79,14 @@
         ],
         "required_modalities": [],
         "optional_modalities": []
+    },"glb_importer": {
+        "segmentation_dict": {
+            "background": 0
+        },
+        "filetypes": [
+            "GLB"
+        ],
+        "required_modalities": [],
+        "optional_modalities": []
     }
 }

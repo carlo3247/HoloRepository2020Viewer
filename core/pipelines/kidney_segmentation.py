@@ -11,6 +11,7 @@ from core.adapters.nifti_file import (
     read_nifti_image,
     write_nifti_image,
 )
+from core.adapters.file_loader import read_input_path_as_np_array
 from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.client.viewer import view_mesh
 from core.services.marching_cubes import generate_mesh
@@ -21,12 +22,11 @@ from models.kidney_segmentation.model import kidney_model
 this_plid = os.path.basename(__file__).replace(".py", "")
 
 
-def run(input_directory: str, output_path: str, segment_type: list) -> None:
-    # TODO for now take in nifti image
+def run(input_path: str, output_path: str, segment_type: list) -> None:
     logging.info("Starting kidney pipeline")
-    nifti_image = read_nifti_image(input_directory)
+    image = read_nifti_image(input_path)
     initial_nifti_output_file_path = kidney_model.get_input_path()
-    write_nifti_image(nifti_image, initial_nifti_output_file_path)
+    write_nifti_image(image, initial_nifti_output_file_path)
     segmented_nifti_output_file_path = kidney_model.predict()
 
     segmented_array = read_nifti_as_np_array(
