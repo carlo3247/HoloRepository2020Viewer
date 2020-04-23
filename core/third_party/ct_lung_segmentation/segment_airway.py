@@ -41,7 +41,6 @@ def segment_lung_airway(params, I, I_affine, Mlung):
     #####################################################
 
     Mawtmp = ndimage.binary_dilation(Maw, structure=struct_l, iterations=1)
-    Mawtmp = np.int8(Mawtmp)
-    Mlung[Maw > 0] = 0
+    Mlung[Mawtmp > 0] = 0
 
     return Mlung, Maw

@@ -5,6 +5,7 @@ It implements a basic Hounsfield unit thresholding.
 
 import os
 import sys
+import logging
 
 import numpy as np
 from core.adapters.dicom_file import read_dicom_as_np_ndarray_and_normalise
@@ -20,12 +21,13 @@ bone_hu_threshold = 300
 
 
 def run(input_dir: str, output_path: str) -> None:
-
+    logger = logging.getLogger("bone_segmentation_tool")
+    logger.info("READING_INPUT")
     dicom_image: np.ndarray = read_dicom_as_np_ndarray_and_normalise(input_dir)
-
     downscaled_image = downscale_and_conditionally_crop(dicom_image)
-
+    logger.info("SEGMENTATION")
     meshes = [generate_mesh(downscaled_image, bone_hu_threshold)]
+    logger.info("WRITING_MESH")
 
     meshes = convert_meshes_trimesh(meshes)
     view_mesh(meshes,output_path)

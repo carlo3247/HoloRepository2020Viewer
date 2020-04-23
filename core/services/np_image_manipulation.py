@@ -7,7 +7,7 @@ from numba import jit
 
 import pirt.interp
 
-INPUT_RESOLUTION_MAX = 256
+INPUT_RESOLUTION_MAX = 512
 
 
 @jit

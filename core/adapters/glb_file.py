@@ -2,14 +2,8 @@
 This module contains functionality related to writing a mesh to disk as an GLB file.
 """
 import numpy as np
-import math
-
 import trimesh
-from trimesh import visual
 from trimesh import repair
-
-
-import logging
 
 
 def write_mesh_as_glb(meshes, output_obj_file_path: str, metadata={}) -> None:

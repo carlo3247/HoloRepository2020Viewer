@@ -7,6 +7,7 @@ Paper: Discriminative Localization in CNNs for Weakly-Supervised Segmentation of
 Xinyang Feng, Jie Yang, Andrew F. Laine, Elsa D. Angelini
 """
 import os
+import logging
 
 from core.adapters.dicom_file import read_dicom_as_np_ndarray_and_normalise
 
@@ -24,20 +25,25 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 hu_threshold = 0
 
 
-def run(input_dir: str, output_path: str, segment_type: int) -> None:
-
+def run(input_dir: str, output_path: str, segment_type: list) -> None:
+    logger = logging.getLogger("lung_segmentation_tool")
+    logger.info("READING_INPUT")
     image_data = read_dicom_as_np_ndarray_and_normalise(input_dir)
 
     image_data = downscale_and_conditionally_crop(image_data)
-
+    logger.info("SEGMENTATION")
     segmented_lung, segmented_airway = perform_lung_segmentation(image_data)
 
-    if segment_type == 1:  # lung segmentation
-        meshes = [generate_mesh(segmented_lung, hu_threshold)]
-    elif segment_type == 2:  # airway segmentation
-        meshes = [generate_mesh(segmented_airway, hu_threshold)]
-    else:
-        raise Exception("Sorry, segmentation type must be either 1 or 2")
+    meshes = []
+    if 1 in segment_type:  # lung segmentation
+        meshes.append(generate_mesh(segmented_lung, hu_threshold))
+    if 2 in segment_type:  # airway segmentation
+        meshes.append(generate_mesh(segmented_airway, hu_threshold))
+
+    if len(meshes) == 0:
+        raise Exception(
+            "No valid segmentation specified, segmentation type must be either 1 or 2"
+        )
 
     meshes = convert_meshes_trimesh(meshes)
-    view_mesh(meshes,output_path)
+    view_mesh(meshes, output_path)

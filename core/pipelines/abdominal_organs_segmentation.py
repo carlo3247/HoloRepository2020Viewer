@@ -10,6 +10,7 @@ multi-organ segmentation on abdominal CT with dense v-networks https://doi.org/1
 """
 
 import os
+import logging
 
 from core.adapters.dicom_file import (
     read_dicom_as_np_ndarray_and_normalise,
@@ -25,7 +26,10 @@ from core.adapters.glb_file import write_mesh_as_glb
 from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.client.viewer import view_mesh
 from core.services.marching_cubes import generate_mesh
-from core.services.np_image_manipulation import downscale_and_conditionally_crop
+from core.services.np_image_manipulation import (
+    downscale_and_conditionally_crop,
+    seperate_segmentation,
+)
 
 from models.dense_vnet_abdominal_ct.model import abdominal_model
 
@@ -34,7 +38,8 @@ hu_threshold = 0
 
 
 def run(dicom_directory_path: str, output_path: str, segment_type: list) -> None:
-
+    logger = logging.getLogger("abdominal_segmentation_tool")
+    logger.info("READING_INPUT")
     # TODO include segment type variable to filter segmentations
 
     dicom_image_array = read_dicom_as_np_ndarray_and_normalise(dicom_directory_path)
@@ -46,14 +51,19 @@ def run(dicom_directory_path: str, output_path: str, segment_type: list) -> None
     nifti_image = convert_dicom_np_ndarray_to_nifti_image(crop_dicom_image_array)
     initial_nifti_output_file_path = abdominal_model.get_input_path()
     write_nifti_image(nifti_image, initial_nifti_output_file_path)
-
+    logger.info("SEGMENTATION")
     segmented_nifti_output_file_path = abdominal_model.predict()
 
     segmented_array = read_nifti_as_np_array(
         segmented_nifti_output_file_path, normalise=False
     )
 
-    meshes = [generate_mesh(segmented_array, hu_threshold)]
+    meshes = [
+        generate_mesh(segment, 0)
+        for segment in seperate_segmentation(
+            segmented_array, unique_values=segment_type
+        )
+    ]
     meshes = convert_meshes_trimesh(meshes)
     view_mesh(meshes, output_path)
 
