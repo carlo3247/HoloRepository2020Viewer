@@ -23,6 +23,7 @@ from models.model_controller import (
 
 
 text_font_size = 15
+title_font_size = 40
 form_button_text_size = 20
 form_entry_width = 100
 
@@ -254,7 +255,7 @@ def create_form(root, plid):
     )
     out_ent = tk.Entry(output_row, width=form_entry_width)
     out_ent.insert(tk.END, "output.glb")
-    output_row.pack(side=tk.TOP, fill=tk.X, padx=2, pady=5)
+    output_row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
     output_lab.pack(side=tk.LEFT)
     out_ent.pack(side=tk.LEFT, fill=tk.X)
     entries["Output File"] = out_ent
@@ -269,7 +270,7 @@ def create_form(root, plid):
         anchor="w",
         font=("Helvetica", text_font_size, "bold"),
     )
-    type_label.grid(row=0, column=0, padx=10)
+    type_label.grid(row=0, column=0, padx=(0, 10))
     # listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
     scrollbar = tk.Scrollbar(next_row, orient=tk.VERTICAL)
     listbox = tk.Listbox(
@@ -381,11 +382,11 @@ class StartPage(tk.Frame):
         add_logo_frame(self)
 
         title = tk.Label(self, text="HoloRepository 2020 Viewer")
-        title.config(font=("Futura", 44, "bold"))
+        title.config(font=("Futura", title_font_size, "bold"))
         title.pack()
 
         description = "This tool will open a CT/MRI scan from a local file, identify key anatomical structures, and extract them. The structures become viewable through a 3D model viewer or an AR viewer. The tool uses local versions of the HoloPipelines.\n\nPlease select one of the pipelines to launch."
-        description_label = tk.Label(self, text=description, wraplength=600)
+        description_label = tk.Label(self, text=description, wraplength=800)
         description_label.config(font=("Helvetica", text_font_size))
         description_label.pack(anchor=tk.CENTER, pady=10)
 
@@ -414,7 +415,7 @@ class StartPage(tk.Frame):
                 font=helv20,
                 width=20,
             )
-            button.pack(pady=10)
+            button.pack(pady=(0, 10))
 
         menu_2_label = tk.Label(view_frame, text="View existing model:")
         menu_2_label.config(font=("Helvetica", 13, "bold"))
@@ -451,11 +452,13 @@ class ParameterPage(tk.Frame):
 
         add_logo_frame(self)
         title = re.sub(r"_segmentation", "", plid).title()
-        tool_title = tk.Label(self, text=title, font=("Futura", 44, "bold"))
+        tool_title = tk.Label(
+            self, text=title, font=("Futura", title_font_size, "bold")
+        )
         tool_title.pack()
 
         tool_information = get_information(plid)
-        tool_description_label = tk.Label(self, text=tool_information, wraplength=600)
+        tool_description_label = tk.Label(self, text=tool_information, wraplength=800)
         tool_description_label.config(font=("Helvetica", text_font_size))
         tool_description_label.pack()
 
