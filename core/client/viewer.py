@@ -1,12 +1,12 @@
 import logging
-from vtkplotter import trimesh2vtk,interactive,colors
+from vtkplotter import trimesh2vtk,interactive,colors,Text2D
 from vtkplotter import Plotter, settings
 from core.adapters.vtk_to_glb import write_mesh_as_glb_with_colour
 
 index = 0
 
 
-def view_mesh(meshes: list, output_file: str, mesh_names: list = []):
+def view_mesh(meshes: list, output_file: str, mesh_names: list = [], patient_data = ""):
     logging.info("Opening mesh viewer.")
     settings.useDepthPeeling = True
     vmeshes = []
@@ -80,8 +80,8 @@ def view_mesh(meshes: list, output_file: str, mesh_names: list = []):
 
     for i in range(0, len(meshes)):
         vmeshes.append(trimesh2vtk(meshes[i], alphaPerCell=True))
-
-    vp.show(vmeshes)
+    doc = Text2D(patient_data, pos=4,c="blue")
     vp.backgroundRenderer.GetActiveCamera().Zoom(1.3)
-
+    vp.show(doc)
+    vp.show(vmeshes)
     interactive()

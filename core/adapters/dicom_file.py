@@ -42,6 +42,7 @@ def read_dicom_dataset(input_directory_path: str) -> List[pydicom.dataset.FileDa
     return slices
 
 
+
 def read_dicom_pixels_as_np_ndarray(input_file_path: str) -> np.ndarray:
     """
     Reads a DICOM image and returns it as a numpy ndarray. The method will always call
@@ -92,6 +93,17 @@ def flip_numpy_array_dimensions_y_only(array: np.ndarray) -> np.ndarray:
     """
     array = np.flip(array, 1)
     return array
+
+def extract_dicom_data(input_file_path: str) -> str:
+    dicom_dataset: List[pydicom.dataset.FileDataset] = read_dicom_dataset(
+        input_file_path
+    )
+    dicom_sample_slice = dicom_dataset[0]
+
+    stringData = "Patient ID: "+dicom_sample_slice.PatientID
+    stringData = stringData+"\nModality: "+dicom_sample_slice.Modality
+    stringData = stringData+"\nDate of scan " + dicom_sample_slice.AcquisitionDateTime
+    return stringData
 
 
 def normalise_dicom(dicom_image_array: np.ndarray, input_file_path: str) -> np.ndarray:
