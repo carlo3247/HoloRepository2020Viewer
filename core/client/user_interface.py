@@ -357,12 +357,8 @@ class StartPage(tk.Frame):
         title.config(font=("Futura", 44, "bold"))
         title.pack()
 
-        description = """
-            This tool will open a CT/MRI scan, identify key anatomical structures, and extract them. The structures become viewable
-            through a 3D model viewer or an AR viewer. The tool uses local versions of the HoloPipelines.
-            Please select one of the pipelines to launch
-            """
-        description_label = tk.Label(self, text=description)
+        description = "This tool will open a CT/MRI scan, identify key anatomical structures, and extract them. The structures become viewable through a 3D model viewer or an AR viewer. The tool uses local versions of the HoloPipelines.\n\nPlease select one of the pipelines to launch."
+        description_label = tk.Label(self, text=description, wraplength=600)
         description_label.config(font=("Helvetica", 13))
         description_label.pack(anchor=tk.CENTER, pady=10)
 
@@ -373,7 +369,7 @@ class StartPage(tk.Frame):
         generate_frame.pack(side=tk.LEFT)
 
         view_frame = tk.Frame(buttons_frame)
-        view_frame.pack(anchor=tk.NW, padx=80)
+        view_frame.pack(anchor=tk.NW, padx=50)
 
         menu_1_label = tk.Label(generate_frame, text="Generate from scan:")
         menu_1_label.config(font=("Helvetica", 13, "bold"))
