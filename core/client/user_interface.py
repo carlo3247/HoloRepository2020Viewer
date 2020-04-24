@@ -101,8 +101,9 @@ def openViewer():
     file_selected = filedialog.askopenfilename(
         filetypes=(("glb file", "*.glb"), ("All files", "*"))
     )
-    pipeline_module = load_pipeline_dynamically(plid)
-    pipeline_module.run(file_selected)
+    if file_selected != "":
+        pipeline_module = load_pipeline_dynamically(plid)
+        pipeline_module.run(file_selected)
 
 
 def create_form(root, plid):
@@ -268,19 +269,30 @@ def create_form(root, plid):
         anchor="w",
         font=("Helvetica", text_font_size, "bold"),
     )
-    type_label.grid(row=0, column=0, padx=2)
+    type_label.grid(row=0, column=0, padx=10)
+    # listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+    scrollbar = tk.Scrollbar(next_row, orient=tk.VERTICAL)
+    listbox = tk.Listbox(
+        next_row,
+        font=("Helvetica", 15),
+        height=min(len(seg_types), 7),
+        selectmode="multiple",
+        yscrollcommand=scrollbar.set,
+    )
+    scrollbar.config(command=listbox.yview)
+    if len(seg_types) >= 7:
+        scrollbar.grid(row=0, column=42, sticky="nse")
 
-    listbox = tk.Listbox(next_row, selectmode="multiple")
     for item in seg_types:
         listbox.insert(tk.END, item)
-    listbox.grid(row=0, column=10, padx=10)
+    listbox.grid(row=0, column=40, padx=10)
     entries["seg_types"] = listbox
 
     silence_log = tk.IntVar()
     silence_button = tk.Checkbutton(
         next_row, text="Silence logging ", variable=silence_log
     )
-    silence_button.grid(row=0, column=40, padx=30)
+    silence_button.grid(row=0, column=80, padx=30)
     entries["silence_log"] = silence_log
 
     return entries
@@ -308,7 +320,7 @@ def add_logo_frame(root):
         simg = ImageTk.PhotoImage(image)
         my = tk.Label(logo_frame, image=simg)
         my.image = simg
-        my.pack(side=tk.LEFT, padx=5, pady=5)
+        my.pack(side=tk.LEFT, padx=20, pady=5)
     logo_frame.pack(anchor=tk.NW)
 
 
@@ -418,6 +430,20 @@ class StartPage(tk.Frame):
         )
         view_button.pack(anchor=tk.NE, pady=10)
 
+        footer_frame = tk.Frame(self)
+        footer_frame.pack(side=tk.RIGHT)
+
+        about_button = tk.Button(
+            footer_frame,
+            text="About",
+            command=lambda: controller.show_frame("SplashScreen"),
+            highlightbackground="#3E4149",
+            font=helv20,
+            width=10,
+            height=30,
+        )
+        about_button.pack(side=tk.RIGHT, padx=20, pady=(0, 5))
+
 
 class ParameterPage(tk.Frame):
     def __init__(self, parent, controller, plid):
@@ -469,15 +495,28 @@ class SplashScreen(tk.Frame):
 
         add_logo_frame(self)
 
+        image = Image.open(os.path.join("./core/client/images/hologram_icon.png"))
+        image = image.resize((150, 150), Image.ANTIALIAS)
+        tk_img = ImageTk.PhotoImage(image)
+        imgLbl = tk.Label(self, image=tk_img)
+        imgLbl.image = tk_img
+        imgLbl.bind("<Button-1>", next_screen_func)
+        imgLbl.pack(anchor=tk.CENTER, pady=(50, 20))
+
         lbl1 = tk.Label(
             self,
             text="""\n
-        This 2020 edition of the HoloRepository, HoloPipelines and HoloRegistration components is intended for local PC/Laptop viewing of CT/MRI scans in 3D. Further editions for Azure, HoloLens 2 and for Intel NUC platforms are available on holorepository.com and https://github.com/AppertaFoundation/HoloRepository-2020.
-        \n
-        Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
+        This 2020 edition of the HoloRepository, HoloPipelines and HoloRegistration components is intended for local PC/Laptop viewing of CT/MRI scans in 3D. Further editions for Azure, HoloLens 2 and for Intel™ Technologies including the Intel NUC platforms are available on holorepository.com and https://github.com/AppertaFoundation/HoloRepository-2020.
         \n
         Main authors: Immanuel Baskaran, Abhinath Kumar, Carlo Winkelhake, Daren Alfred
         Supervisors: Prof. Dean Mohamedally, Prof. Neil Sebire, Sheena Visram
+        """,
+            wraplength=900,
+        )
+        lbl2 = tk.Label(
+            self,
+            text="""
+        Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
         \n\n
         Built at University College London in cooperation with Intel and GOSH DRIVE.
         It is licenced for open source use under AGPLv3.
@@ -486,7 +525,10 @@ class SplashScreen(tk.Frame):
         )
         lbl1.bind("<Button-1>", next_screen_func)
         lbl1.config(font=("Helvetica", text_font_size))
-        lbl1.pack(anchor=tk.CENTER, pady=100)
+        lbl1.pack(anchor=tk.CENTER, pady=(0, 5))
+        lbl2.bind("<Button-1>", next_screen_func)
+        lbl2.config(font=("Helvetica", text_font_size - 3))
+        lbl2.pack(anchor=tk.CENTER, pady=0)
 
 
 if __name__ == "__main__":
