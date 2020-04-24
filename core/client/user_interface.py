@@ -428,10 +428,10 @@ class StartPage(tk.Frame):
             font=helv20,
             width=20,
         )
-        view_button.pack(anchor=tk.NE, pady=10)
+        view_button.pack(anchor=tk.NE)
 
         footer_frame = tk.Frame(self)
-        footer_frame.pack(side=tk.RIGHT)
+        footer_frame.pack(side=tk.RIGHT, anchor=tk.SE)
 
         about_button = tk.Button(
             footer_frame,
@@ -440,9 +440,8 @@ class StartPage(tk.Frame):
             highlightbackground="#3E4149",
             font=helv20,
             width=10,
-            height=30,
         )
-        about_button.pack(side=tk.RIGHT, padx=20, pady=(0, 5))
+        about_button.pack(side=tk.RIGHT, anchor=tk.SE, padx=20, pady=(0, 10))
 
 
 class ParameterPage(tk.Frame):
@@ -468,20 +467,20 @@ class ParameterPage(tk.Frame):
             font=buttonFont,
             command=lambda e=ents: generate(e, plid),
         )
-        b1.pack(side=tk.LEFT, padx=20, pady=50)
+        b1.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
         b2 = tk.Button(self, text="AR View", font=buttonFont, command=None)
-        b2.pack(side=tk.LEFT, padx=20, pady=50)
+        b2.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
         b3 = tk.Button(
             self, text="Help", font=buttonFont, command=lambda: help_box(plid),
         )
-        b3.pack(side=tk.RIGHT, padx=20, pady=50)
+        b3.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
         b4 = tk.Button(
             self,
             text="Back",
             font=buttonFont,
             command=lambda: controller.show_frame("StartPage"),
         )
-        b4.pack(side=tk.RIGHT, padx=20, pady=50)
+        b4.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
 
 
 class SplashScreen(tk.Frame):
