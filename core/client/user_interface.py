@@ -22,13 +22,19 @@ from models.model_controller import (
 )
 
 
+text_font_size = 15
+
+
 def get_information(plid):
     pipeline_description = get_pipeline_description(plid)
     model_file_types = get_file_types(plid)
     model_req_mods = get_req_modalities(plid)
 
     information = (
-        pipeline_description + "\n\nInput must be " + " or ".join(model_file_types)
+        pipeline_description
+        + "\n\nInput must be "
+        + " or ".join(model_file_types)
+        + "."
     )
     return (
         information
@@ -353,13 +359,13 @@ class StartPage(tk.Frame):
         self.controller = controller
         add_logo_frame(self)
 
-        title = tk.Label(self, text="HoloPipelines 2020 Viewer")
+        title = tk.Label(self, text="HoloRepository 2020 Viewer")
         title.config(font=("Futura", 44, "bold"))
         title.pack()
 
         description = "This tool will open a CT/MRI scan, identify key anatomical structures, and extract them. The structures become viewable through a 3D model viewer or an AR viewer. The tool uses local versions of the HoloPipelines.\n\nPlease select one of the pipelines to launch."
         description_label = tk.Label(self, text=description, wraplength=600)
-        description_label.config(font=("Helvetica", 13))
+        description_label.config(font=("Helvetica", text_font_size))
         description_label.pack(anchor=tk.CENTER, pady=10)
 
         buttons_frame = tk.Frame(self)
@@ -414,35 +420,8 @@ class ParameterPage(tk.Frame):
         tool_title.pack(pady=20)
 
         tool_information = get_information(plid)
-        tool_description_label = tk.Label(self, text=tool_information, wraplength=500)
-        tool_description_label.pack()
-
-        ents = create_form(self, plid)
-        buttonFont = tkFont.Font(family="Helvetica", size=28)
-        b1 = tk.Button(self, text="3D View", command=lambda e=ents: generate(e, plid),)
-        b1.pack(side=tk.LEFT, padx=20, pady=50)
-        b2 = tk.Button(self, text="AR View", command=None)
-        b2.pack(side=tk.LEFT, padx=20, pady=50)
-        b3 = tk.Button(self, text="Help", command=lambda: help_box(plid),)
-        b3.pack(side=tk.RIGHT, padx=20, pady=50)
-        b4 = tk.Button(
-            self, text="Back", command=lambda: controller.show_frame("StartPage"),
-        )
-        b4.pack(side=tk.RIGHT, padx=20, pady=50)
-
-
-class ParameterPage(tk.Frame):
-    def __init__(self, parent, controller, plid):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        add_logo_frame(self)
-
-        title = re.sub(r"_segmentation", "", plid).title()
-        tool_title = tk.Label(self, text=title, font=("Futura", 44, "bold"))
-        tool_title.pack()
-
-        tool_information = get_information(plid)
-        tool_description_label = tk.Label(self, text=tool_information, wraplength=500)
+        tool_description_label = tk.Label(self, text=tool_information, wraplength=600)
+        tool_description_label.config(font=("Helvetica", text_font_size))
         tool_description_label.pack()
 
         ents = create_form(self, plid)
@@ -472,14 +451,18 @@ class SplashScreen(tk.Frame):
         lbl1 = tk.Label(
             self,
             text="""\n\n
-        Main authors: Immanuel Baskaran, Abhinath Kumar, Carlo Winkelhake, Daren Alfred
+        This 2020 edition of the HoloRepository, HoloPipelines and HoloRegistration components is intended for local PC/Laptop viewing of CT/MRI scans in 3D. Further editions for Azure, HoloLens 2 and for Intel NUC platforms are available on holorepository.com and https://github.com/AppertaFoundation/HoloRepository-2020.
         \n
-        Supervisors: Prof. Dean Mohamedally, Prof. Neil Sebire
+        It is licenced for open source use under AGPLv3.
+        \n
+        Main authors: Immanuel Baskaran, Abhinath Kumar, Carlo Winkelhake, Daren Alfred
+        Supervisors: Prof. Dean Mohamedally, Prof. Neil Sebire, Sheena Visram
         \n\n
         Built at University College London in cooperation with Intel and GOSH DRIVE.
         """,
+            wraplength=900,
         )
-        lbl1.config(font=("Helvetica", 13))
+        lbl1.config(font=("Helvetica", text_font_size))
         lbl1.pack(anchor=tk.CENTER, pady=100)
 
 
