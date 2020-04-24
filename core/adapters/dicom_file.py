@@ -100,9 +100,8 @@ def extract_dicom_data(input_file_path: str) -> str:
     )
     dicom_sample_slice = dicom_dataset[0]
 
-    stringData = "Patient ID: "+dicom_sample_slice.PatientID
-    stringData = stringData+"\nModality: "+dicom_sample_slice.Modality
-    stringData = stringData+"\nDate of scan " + dicom_sample_slice.AcquisitionDateTime
+    stringData = "Patient ID: "+dicom_sample_slice.PatientID+"\n"
+    stringData = stringData+"Modality: "+dicom_sample_slice.Modality+"\n"
     return stringData
 
 

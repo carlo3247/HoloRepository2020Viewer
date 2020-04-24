@@ -80,7 +80,7 @@ def view_mesh(meshes: list, output_file: str, mesh_names: list = [], patient_dat
 
     for i in range(0, len(meshes)):
         vmeshes.append(trimesh2vtk(meshes[i], alphaPerCell=True))
-    doc = Text2D(patient_data, pos=4,c="blue")
+    doc = Text2D(patient_data, pos=4,c=(0,113,197))
     vp.backgroundRenderer.GetActiveCamera().Zoom(1.3)
     vp.show(doc)
     vp.show(vmeshes)
