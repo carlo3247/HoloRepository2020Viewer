@@ -8,7 +8,7 @@ from core.pipelines.pipelines_controller import (
 from models.model_controller import get_seg_types, get_file_types, get_proc_seg_types
 
 
-plid = "abdominal_organs_segmentation"
+plid = "abdominal_segmentation"
 
 
 def get_description():

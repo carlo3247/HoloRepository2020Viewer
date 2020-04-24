@@ -22,16 +22,25 @@ from models.model_controller import (
 )
 
 
+text_font_size = 15
+title_font_size = 40
+form_button_text_size = 20
+form_entry_width = 100
+
+
 def get_information(plid):
     pipeline_description = get_pipeline_description(plid)
     model_file_types = get_file_types(plid)
     model_req_mods = get_req_modalities(plid)
 
     information = (
-        pipeline_description + "\n\nInput must be " + " or ".join(model_file_types)
+        pipeline_description
+        + "\n\nInput must be "
+        + " or ".join(model_file_types)
+        + "."
     )
     return (
-        information
+        information + "\n"
         if plid != "brain_segmentation"
         else information
         + "\n3 input scans (modalities) required of types "
@@ -43,6 +52,7 @@ def get_information(plid):
 def generate(entries, plid):
     output_path = entries["Output File"].get()
     segment_type = list(entries["seg_types"].curselection())
+    segment_type = [s + 1 for s in segment_type]
     quiet = entries["silence_log"].get()
 
     if plid != "brain_segmentation":
@@ -92,11 +102,15 @@ def openViewer():
     file_selected = filedialog.askopenfilename(
         filetypes=(("glb file", "*.glb"), ("All files", "*"))
     )
-    pipeline_module = load_pipeline_dynamically(plid)
-    pipeline_module.run(file_selected)
+    if file_selected != "":
+        pipeline_module = load_pipeline_dynamically(plid)
+        pipeline_module.run(file_selected)
 
 
 def create_form(root, plid):
+    input_form = tk.Frame(root)
+    input_form.pack(padx=50)
+
     fields = (
         ["Input", "Output File"]
         if plid != "brain_segmentation"
@@ -111,8 +125,8 @@ def create_form(root, plid):
     entries = {}
 
     if plid != "brain_segmentation":
-        input_row = tk.Frame(root)
-        input_ent = tk.Entry(input_row)
+        input_row = tk.Frame(input_form)
+        input_ent = tk.Entry(input_row, width=form_entry_width)
         input_lab = tk.Label(
             input_row,
             width=15,
@@ -121,28 +135,28 @@ def create_form(root, plid):
             font=("Helvetica", 15, "bold"),
         )
         input_lab.pack(side=tk.LEFT)
-        input_row.pack(side=tk.TOP, expand=tk.YES, fill=tk.X, padx=5, pady=5)
+        input_row.pack(side=tk.TOP, expand=tk.YES, fill=tk.X, padx=5)
         input_ent.pack(
-            side=tk.LEFT, expand=tk.YES, fill=tk.X,
+            side=tk.LEFT, fill=tk.X,
         )
         browse_button = tk.Button(
             input_row,
             text="Browse Input File",
-            font=40,
+            font=form_button_text_size,
             command=lambda: browsefile(input_ent),
         )
         browse_dir_button = tk.Button(
             input_row,
             text="Browse Input Directory",
-            font=40,
+            font=form_button_text_size,
             command=lambda: browsefunc(input_ent),
         )
         browse_button.pack(side=tk.RIGHT, fill=tk.X, padx=20)
         browse_dir_button.pack(side=tk.RIGHT, fill=tk.X, padx=20)
         entries["Input"] = input_ent
     else:
-        input_row = tk.Frame(root)
-        input_ent = tk.Entry(input_row)
+        input_row = tk.Frame(input_form)
+        input_ent = tk.Entry(input_row, width=form_entry_width)
         input_lab = tk.Label(
             input_row,
             width=15,
@@ -153,26 +167,26 @@ def create_form(root, plid):
         input_lab.pack(side=tk.LEFT)
         input_row.pack(side=tk.TOP, expand=tk.YES, fill=tk.X, padx=5, pady=5)
         input_ent.pack(
-            side=tk.LEFT, expand=tk.YES, fill=tk.X,
+            side=tk.LEFT, fill=tk.X,
         )
         browse_button = tk.Button(
             input_row,
             text="Browse Input File",
-            font=40,
+            font=form_button_text_size,
             command=lambda: browsefile(input_ent),
         )
         browse_dir_button = tk.Button(
             input_row,
             text="Browse Input Directory",
-            font=40,
+            font=form_button_text_size,
             command=lambda: browsefunc(input_ent),
         )
         browse_button.pack(side=tk.RIGHT, fill=tk.X, padx=20)
         browse_dir_button.pack(side=tk.RIGHT, fill=tk.X, padx=20)
         entries["Flair Input"] = input_ent
 
-        input_row_2 = tk.Frame(root)
-        input_ent_2 = tk.Entry(input_row_2)
+        input_row_2 = tk.Frame(input_form)
+        input_ent_2 = tk.Entry(input_row_2, width=form_entry_width)
         input_lab_2 = tk.Label(
             input_row_2,
             width=15,
@@ -183,26 +197,26 @@ def create_form(root, plid):
         input_lab_2.pack(side=tk.LEFT)
         input_row_2.pack(side=tk.TOP, expand=tk.YES, fill=tk.X, padx=5, pady=5)
         input_ent_2.pack(
-            side=tk.LEFT, expand=tk.YES, fill=tk.X,
+            side=tk.LEFT, fill=tk.X,
         )
         browse_button_2 = tk.Button(
             input_row_2,
             text="Browse Input File",
-            font=40,
+            font=form_button_text_size,
             command=lambda: browsefile(input_ent_2),
         )
         browse_dir_button_2 = tk.Button(
             input_row_2,
             text="Browse Input Directory",
-            font=40,
+            font=form_button_text_size,
             command=lambda: browsefunc(input_ent_2),
         )
         browse_button_2.pack(side=tk.RIGHT, fill=tk.X, padx=20)
         browse_dir_button_2.pack(side=tk.RIGHT, fill=tk.X, padx=20)
         entries["T1 Input"] = input_ent_2
 
-        input_row_3 = tk.Frame(root)
-        input_ent_3 = tk.Entry(input_row_3)
+        input_row_3 = tk.Frame(input_form)
+        input_ent_3 = tk.Entry(input_row_3, width=form_entry_width)
         input_lab_3 = tk.Label(
             input_row_3,
             width=15,
@@ -213,63 +227,73 @@ def create_form(root, plid):
         input_lab_3.pack(side=tk.LEFT)
         input_row_3.pack(side=tk.TOP, expand=tk.YES, fill=tk.X, padx=5, pady=5)
         input_ent_3.pack(
-            side=tk.LEFT, expand=tk.YES, fill=tk.X,
+            side=tk.LEFT, fill=tk.X,
         )
         browse_button_3 = tk.Button(
             input_row_3,
             text="Browse Input File",
-            font=40,
+            font=form_button_text_size,
             command=lambda: browsefile(input_ent_3),
         )
         browse_dir_button_3 = tk.Button(
             input_row_3,
             text="Browse Input Directory",
-            font=40,
+            font=form_button_text_size,
             command=lambda: browsefunc(input_ent_3),
         )
         browse_button_3.pack(side=tk.RIGHT, fill=tk.X, padx=20)
         browse_dir_button_3.pack(side=tk.RIGHT, fill=tk.X, padx=20)
         entries["IR Input"] = input_ent_3
 
-    output_row = tk.Frame(root)
+    output_row = tk.Frame(input_form)
     output_lab = tk.Label(
         output_row,
         width=15,
         text="Output File",
         anchor="w",
-        font=("Helvetica", 15, "bold"),
+        font=("Helvetica", text_font_size, "bold"),
     )
-    out_ent = tk.Entry(output_row)
+    out_ent = tk.Entry(output_row, width=form_entry_width)
     out_ent.insert(tk.END, "output.glb")
     output_row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
     output_lab.pack(side=tk.LEFT)
-    out_ent.pack(side=tk.RIGHT, expand=tk.YES, fill=tk.X)
+    out_ent.pack(side=tk.LEFT, fill=tk.X)
     entries["Output File"] = out_ent
 
-    next_row = tk.Frame(root)
     seg_types = get_seg_types(plid).keys()
 
-    next_row = tk.Frame(root)
+    next_row = tk.Frame(input_form)
     next_row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
     type_label = tk.Label(
         next_row,
         text="Please select one or more types",
         anchor="w",
-        font=("Helvetica", 15, "bold"),
+        font=("Helvetica", text_font_size, "bold"),
     )
-    type_label.grid(row=0, column=0, padx=10)
+    type_label.grid(row=0, column=0, padx=(0, 10))
+    # listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+    scrollbar = tk.Scrollbar(next_row, orient=tk.VERTICAL)
+    listbox = tk.Listbox(
+        next_row,
+        font=("Helvetica", 15),
+        height=min(len(seg_types), 7),
+        selectmode="multiple",
+        yscrollcommand=scrollbar.set,
+    )
+    scrollbar.config(command=listbox.yview)
+    if len(seg_types) >= 7:
+        scrollbar.grid(row=0, column=42, sticky="nse")
 
-    listbox = tk.Listbox(next_row, selectmode="multiple")
     for item in seg_types:
         listbox.insert(tk.END, item)
-    listbox.grid(row=0, column=10, padx=10)
+    listbox.grid(row=0, column=40, padx=10)
     entries["seg_types"] = listbox
 
     silence_log = tk.IntVar()
     silence_button = tk.Checkbutton(
         next_row, text="Silence logging ", variable=silence_log
     )
-    silence_button.grid(row=0, column=40, padx=30)
+    silence_button.grid(row=0, column=80, padx=30)
     entries["silence_log"] = silence_log
 
     return entries
@@ -297,7 +321,7 @@ def add_logo_frame(root):
         simg = ImageTk.PhotoImage(image)
         my = tk.Label(logo_frame, image=simg)
         my.image = simg
-        my.pack(side=tk.LEFT, padx=5, pady=5)
+        my.pack(side=tk.LEFT, padx=20, pady=5)
     logo_frame.pack(anchor=tk.NW)
 
 
@@ -305,7 +329,7 @@ class ViewerApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
-        self.title("HoloPipelines 2020 Viewer")
+        self.title("HoloRepository 2020 Viewer")
 
         self.state("zoomed")
         self.title_font = tkfont.Font(
@@ -324,7 +348,11 @@ class ViewerApp(tk.Tk):
         plids.remove("glb_importer")
 
         self.frames = {}
-        splash_screen = SplashScreen(parent=container, controller=self)
+        splash_screen = SplashScreen(
+            parent=container,
+            controller=self,
+            next_screen_func=lambda x: self.show_frame("StartPage"),
+        )
         self.frames["SplashScreen"] = splash_screen
         splash_screen.grid(row=0, column=0, sticky="nsew")
         start_page = StartPage(parent=container, controller=self, plids=plids)
@@ -353,13 +381,13 @@ class StartPage(tk.Frame):
         self.controller = controller
         add_logo_frame(self)
 
-        title = tk.Label(self, text="HoloPipelines 2020 Viewer")
-        title.config(font=("Futura", 44, "bold"))
+        title = tk.Label(self, text="HoloRepository 2020 Viewer")
+        title.config(font=("Futura", title_font_size, "bold"))
         title.pack()
 
-        description = "This tool will open a CT/MRI scan, identify key anatomical structures, and extract them. The structures become viewable through a 3D model viewer or an AR viewer. The tool uses local versions of the HoloPipelines.\n\nPlease select one of the pipelines to launch."
-        description_label = tk.Label(self, text=description, wraplength=600)
-        description_label.config(font=("Helvetica", 13))
+        description = "This tool will open a CT/MRI scan from a local file, identify key anatomical structures, and extract them. The structures become viewable through a 3D model viewer or an AR viewer. The tool uses local versions of the HoloPipelines.\n\nPlease select one of the pipelines to launch."
+        description_label = tk.Label(self, text=description, wraplength=800)
+        description_label.config(font=("Helvetica", text_font_size))
         description_label.pack(anchor=tk.CENTER, pady=10)
 
         buttons_frame = tk.Frame(self)
@@ -387,7 +415,7 @@ class StartPage(tk.Frame):
                 font=helv20,
                 width=20,
             )
-            button.pack(pady=10)
+            button.pack(pady=(0, 10))
 
         menu_2_label = tk.Label(view_frame, text="View existing model:")
         menu_2_label.config(font=("Helvetica", 13, "bold"))
@@ -401,93 +429,113 @@ class StartPage(tk.Frame):
             font=helv20,
             width=20,
         )
-        view_button.pack(anchor=tk.NE, pady=10)
+        view_button.pack(anchor=tk.NE)
 
+        footer_frame = tk.Frame(self)
+        footer_frame.pack(side=tk.RIGHT, anchor=tk.SE)
 
-class ParameterPage(tk.Frame):
-    def __init__(self, parent, controller, plid):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-
-        title = re.sub(r"_segmentation", "", plid).title()
-        tool_title = tk.Label(self, text=title, font=("Futura", 44, "bold"))
-        tool_title.pack(pady=20)
-
-        tool_information = get_information(plid)
-        tool_description_label = tk.Label(self, text=tool_information, wraplength=500)
-        tool_description_label.pack()
-
-        ents = create_form(self, plid)
-        buttonFont = tkFont.Font(family="Helvetica", size=28)
-        b1 = tk.Button(self, text="3D View", command=lambda e=ents: generate(e, plid),)
-        b1.pack(side=tk.LEFT, padx=20, pady=50)
-        b2 = tk.Button(self, text="AR View", command=None)
-        b2.pack(side=tk.LEFT, padx=20, pady=50)
-        b3 = tk.Button(self, text="Help", command=lambda: help_box(plid),)
-        b3.pack(side=tk.RIGHT, padx=20, pady=50)
-        b4 = tk.Button(
-            self, text="Back", command=lambda: controller.show_frame("StartPage"),
+        about_button = tk.Button(
+            footer_frame,
+            text="About",
+            command=lambda: controller.show_frame("SplashScreen"),
+            highlightbackground="#3E4149",
+            font=helv20,
+            width=10,
         )
-        b4.pack(side=tk.RIGHT, padx=20, pady=50)
+        about_button.pack(side=tk.RIGHT, anchor=tk.SE, padx=20, pady=(0, 10))
 
 
 class ParameterPage(tk.Frame):
     def __init__(self, parent, controller, plid):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        add_logo_frame(self)
 
+        add_logo_frame(self)
         title = re.sub(r"_segmentation", "", plid).title()
-        tool_title = tk.Label(self, text=title, font=("Futura", 44, "bold"))
+        tool_title = tk.Label(
+            self, text=title, font=("Futura", title_font_size, "bold")
+        )
         tool_title.pack()
 
         tool_information = get_information(plid)
-        tool_description_label = tk.Label(self, text=tool_information, wraplength=500)
+        tool_description_label = tk.Label(self, text=tool_information, wraplength=800)
+        tool_description_label.config(font=("Helvetica", text_font_size))
         tool_description_label.pack()
 
         ents = create_form(self, plid)
-        buttonFont = tkFont.Font(family="Helvetica", size=28)
-        b1 = tk.Button(self, text="3D View", command=lambda e=ents: generate(e, plid),)
-        b1.pack(side=tk.LEFT, padx=20, pady=50)
-        b2 = tk.Button(self, text="AR View", command=None)
-        b2.pack(side=tk.LEFT, padx=20, pady=50)
-        b3 = tk.Button(self, text="Help", command=lambda: help_box(plid),)
-        b3.pack(side=tk.RIGHT, padx=20, pady=50)
-        b4 = tk.Button(
-            self, text="Back", command=lambda: controller.show_frame("StartPage"),
+        buttonFont = tkFont.Font(family="Helvetica", size=form_button_text_size)
+        b1 = tk.Button(
+            self,
+            text="3D View",
+            font=buttonFont,
+            command=lambda e=ents: generate(e, plid),
         )
-        b4.pack(side=tk.RIGHT, padx=20, pady=50)
+        b1.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
+        b2 = tk.Button(self, text="AR View", font=buttonFont, command=None)
+        b2.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
+        b3 = tk.Button(
+            self, text="Help", font=buttonFont, command=lambda: help_box(plid),
+        )
+        b3.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
+        b4 = tk.Button(
+            self,
+            text="Back",
+            font=buttonFont,
+            command=lambda: controller.show_frame("StartPage"),
+        )
+        b4.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
 
 
 class SplashScreen(tk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, next_screen_func):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        self.bind("<Button-1>", next_screen_func)
         self.title_font = tkfont.Font(
             family="Helvetica", size=18, weight="bold", slant="italic"
         )
 
         add_logo_frame(self)
 
+        image = Image.open(os.path.join("./core/client/images/hologram_icon.png"))
+        image = image.resize((150, 150), Image.ANTIALIAS)
+        tk_img = ImageTk.PhotoImage(image)
+        imgLbl = tk.Label(self, image=tk_img)
+        imgLbl.image = tk_img
+        imgLbl.bind("<Button-1>", next_screen_func)
+        imgLbl.pack(anchor=tk.CENTER, pady=(50, 20))
+
         lbl1 = tk.Label(
             self,
-            text="""\n\n
-        Main authors: Immanuel Baskaran, Abhinath Kumar, Carlo Winkelhake, Daren Alfred
+            text="""\n
+        This 2020 edition of the HoloRepository, HoloPipelines and HoloRegistration components is intended for local PC/Laptop viewing of CT/MRI scans in 3D. Further editions for Azure, HoloLens 2 and for Intel™ Technologies including the Intel NUC platforms are available on holorepository.com and https://github.com/AppertaFoundation/HoloRepository-2020.
         \n
-        Supervisors: Prof. Dean Mohamedally, Prof. Neil Sebire
+        Main authors: Immanuel Baskaran, Abhinath Kumar, Carlo Winkelhake, Daren Alfred
+        Supervisors: Prof. Dean Mohamedally, Prof. Neil Sebire, Sheena Visram
+        """,
+            wraplength=900,
+        )
+        lbl2 = tk.Label(
+            self,
+            text="""
+        Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
         \n\n
         Built at University College London in cooperation with Intel and GOSH DRIVE.
+        It is licenced for open source use under AGPLv3.
         """,
+            wraplength=900,
         )
-        lbl1.config(font=("Helvetica", 13))
-        lbl1.pack(anchor=tk.CENTER, pady=100)
+        lbl1.bind("<Button-1>", next_screen_func)
+        lbl1.config(font=("Helvetica", text_font_size))
+        lbl1.pack(anchor=tk.CENTER, pady=(0, 5))
+        lbl2.bind("<Button-1>", next_screen_func)
+        lbl2.config(font=("Helvetica", text_font_size - 3))
+        lbl2.pack(anchor=tk.CENTER, pady=0)
 
 
 if __name__ == "__main__":
     app = ViewerApp()
-
-    def call_mainroot(app):
-        app.show_frame("StartPage")
-
-    app.after(1000, lambda: call_mainroot(app))
+    # def next_screen_func(app):
+    # app.show_frame("StartPage")
+    # app.after(10000, lambda: call_mainroot(app))
     app.mainloop()
