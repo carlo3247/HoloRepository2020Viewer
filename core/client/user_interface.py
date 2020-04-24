@@ -39,7 +39,7 @@ def get_information(plid):
         + "."
     )
     return (
-        information
+        information + "\n"
         if plid != "brain_segmentation"
         else information
         + "\n3 input scans (modalities) required of types "
@@ -51,6 +51,7 @@ def get_information(plid):
 def generate(entries, plid):
     output_path = entries["Output File"].get()
     segment_type = list(entries["seg_types"].curselection())
+    segment_type = [s + 1 for s in segment_type]
     quiet = entries["silence_log"].get()
 
     if plid != "brain_segmentation":
