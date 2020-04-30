@@ -1,4 +1,4 @@
-name: holopipelines
+name: holopipelinesgpuwin
 channels:
   - conda-forge
   - intel

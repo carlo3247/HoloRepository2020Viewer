@@ -1,9 +1,10 @@
 
 import os
-import logging
-import trimesh
 
-from core.adapters.trimesh_converter import convert_meshes_trimesh
+from trimesh import load_mesh
+from trimesh import scene
+
+
 from core.client.viewer import view_mesh
 
 import numpy as np
@@ -17,12 +18,9 @@ hu_threshold = 0
 
 
 def run(input_file: str) -> None:
-    trimesh_scene = trimesh.load(input_file)
-    if isinstance(trimesh_scene, trimesh.scene.scene.Scene):
+    trimesh_scene = load_mesh(input_file)
+    if isinstance(trimesh_scene, scene.Scene):
         meshes = trimesh_scene.dump()
-        for mesh in meshes:
-            mesh.visual.vertex_colors = get_random_rgb_colours()
-
     else:
         meshes = trimesh_scene
     mesh_names = ["segmentation {}".format(i+1) for i in range(len(meshes))]

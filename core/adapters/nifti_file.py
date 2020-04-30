@@ -7,7 +7,7 @@ import logging
 
 import nibabel
 import numpy as np
-import scipy.ndimage
+
 import pirt.interp
 
 
