@@ -23,7 +23,9 @@ from models.model_controller import get_seg_types
 this_plid = os.path.basename(__file__).replace(".py", "")
 
 
-def run(input_path: str, output_path: str, segment_type: list) -> None:
+def run(
+    input_path: str, output_path: str, segment_type: list, open_viewer=True
+) -> None:
     logging.info("Starting kidney pipeline")
     image = read_nifti_image(input_path)
     initial_nifti_output_file_path = kidney_model.get_input_path()
@@ -41,9 +43,13 @@ def run(input_path: str, output_path: str, segment_type: list) -> None:
         )
     ]
 
-    meshes = convert_meshes_trimesh(meshes)
-    segment_dict = get_seg_types(this_plid)
-    mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
-    view_mesh(meshes=meshes, mesh_names=mesh_names, output_file=output_path)
+    if open_viewer:
+        meshes = convert_meshes_trimesh(meshes)
+        segment_dict = get_seg_types(this_plid)
+        mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
+        view_mesh(meshes=meshes, mesh_names=mesh_names, output_file=output_path)
+    else:
+        write_mesh_as_glb_with_colour(meshes, output_path)
+
     kidney_model.cleanup()
     logging.info("Kidney pipeline finished successfully")
