@@ -5,6 +5,8 @@ from trimesh.visual import ColorVisuals
 from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.client.viewer import view_mesh
 
+import numpy as np
+
 
 this_plid = os.path.basename(__file__).replace(".py", "")
 
@@ -24,3 +26,7 @@ def run(input_file: str) -> None:
         meshes = trimesh_scene
     mesh_names = ["segmentation {}".format(i + 1) for i in range(len(meshes))]
     view_mesh(meshes=meshes, mesh_names=mesh_names, output_file=input_file)
+
+
+def get_random_rgb_colours():
+    return list(np.random.rand(3))
