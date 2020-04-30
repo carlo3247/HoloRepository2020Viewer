@@ -472,7 +472,12 @@ class ParameterPage(tk.Frame):
             command=lambda e=ents: generate(e, plid, False),
         )
         b1.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
-        b2 = tk.Button(self, text="AR View", font=buttonFont, command=lambda e=ents: generate(e, plid, True)
+        b2 = tk.Button(
+            self,
+            text="AR View",
+            font=buttonFont,
+            command=lambda e=ents: generate(e, plid, True),
+        )
         b2.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
         b3 = tk.Button(
             self, text="Help", font=buttonFont, command=lambda: help_box(plid),
