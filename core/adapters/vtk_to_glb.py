@@ -20,6 +20,7 @@ def write_mesh_as_glb_with_colour(
         mesh2 = vtk2trimesh(mesh)
 
         repair.fix_inversion(mesh2)
+
         mesh2.visual.material = trimesh.visual.material.SimpleMaterial(
             diffuse=np.asarray(mesh.color().tolist() + [mesh.alpha()])
         )

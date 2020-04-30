@@ -15,8 +15,8 @@ hu_threshold = 0
 
 
 def run(input_file: str) -> None:
-    trimesh_scene = trimesh.load(input_file)
-    if isinstance(trimesh_scene, trimesh.scene.scene.Scene):
+    trimesh_scene = load_mesh(input_file)
+    if isinstance(trimesh_scene, scene.Scene):
         meshes = trimesh_scene.dump()
         for mesh in meshes:
             mesh.visual = ColorVisuals(

@@ -12,6 +12,7 @@ from core.adapters.nifti_file import (
     write_nifti_image,
 )
 from core.adapters.file_loader import read_input_path_as_np_array
+from core.adapters.file_loader import get_metadata
 from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.client.viewer import view_mesh
 from core.services.marching_cubes import generate_mesh
@@ -44,10 +45,17 @@ def run(
     ]
 
     if open_viewer:
+        metadata = get_metadata(input_path)
         meshes = convert_meshes_trimesh(meshes)
         segment_dict = get_seg_types(this_plid)
         mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
-        view_mesh(meshes=meshes, mesh_names=mesh_names, output_file=output_path)
+        view_mesh(
+            meshes=meshes,
+            mesh_names=mesh_names,
+            output_file=output_path,
+            patient_data=metadata,
+            plid=this_plid,
+        )
     else:
         write_mesh_as_glb_with_colour(meshes, output_path)
 

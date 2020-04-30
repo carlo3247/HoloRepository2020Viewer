@@ -25,11 +25,11 @@ def run(
     input_path: str, output_path: str, segment_type: list, open_viewer=True
 ) -> None:
     logging.info("Starting bone pipeline")
-    dicom_image: np.ndarray = read_input_path_as_np_array(input_path)
-    metadata = get_metadata(input_path)
-    downscaled_image = downscale_and_conditionally_crop(dicom_image)
-    meshes = [generate_mesh(downscaled_image, bone_hu_threshold)]
+    image_data = read_input_path_as_np_array(input_path)
+    image_data = downscale_and_conditionally_crop(image_data)
+    meshes = [generate_mesh(image_data, bone_hu_threshold)]
     if open_viewer:
+        metadata = get_metadata(input_path)
         meshes = convert_meshes_trimesh(meshes)
         segment_dict = get_seg_types(this_plid)
         mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
@@ -38,6 +38,7 @@ def run(
             mesh_names=mesh_names,
             output_file=output_path,
             patient_data=metadata,
+            plid=this_plid,
         )
     else:
         write_mesh_as_glb_with_colour(meshes, output_path)
