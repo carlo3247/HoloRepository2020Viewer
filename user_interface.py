@@ -7,6 +7,7 @@ from tkinter import font as tkfont  # python 3
 from tkinter import messagebox
 from tkinter import font as tkFont
 from tkinter import filedialog
+from core.wrappers import holo_registration_wrapper
 
 
 from core.pipelines.pipelines_controller import (
@@ -81,9 +82,12 @@ def generate(entries, plid, ar_view):
         )
         logging.info("Loading and initializing pipeline dynamically")
         pipeline_module = load_pipeline_dynamically(plid)
-        pipeline_module.run(input_dir, output_path, segment_type)
-        if ar_view == False:
-            logging.info("Done.")
+        if ar_view:
+            pipeline_module.run(input_dir, output_path, segment_type, False)
+            holo_registration_wrapper.start_viewer(output_path, plid)
+        else:
+            pipeline_module.run(input_dir, output_path, segment_type)
+        logging.info("Done.")
 
 
 def browsefunc(entry):
@@ -472,10 +476,14 @@ class ParameterPage(tk.Frame):
             command=lambda e=ents: generate(e, plid, False),
         )
         b1.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
+
         b2 = tk.Button(
             self,
             text="AR View",
             font=buttonFont,
+            state=tk.NORMAL
+            if holo_registration_wrapper.is_supported(plid)
+            else tk.DISABLED,
             command=lambda e=ents: generate(e, plid, True),
         )
         b2.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)

@@ -11,7 +11,6 @@ import SimpleITK as sitk
 import numpy as np
 import pydicom
 import pirt.interp
-from numba import jit
 
 
 def read_dicom_dataset(input_directory_path: str) -> List[pydicom.dataset.FileDataset]:

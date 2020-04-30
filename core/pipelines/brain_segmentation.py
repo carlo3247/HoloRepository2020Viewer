@@ -4,8 +4,10 @@ This is a pipeline performs brain segmentation using the winning network from mr
 import os
 import logging
 from core.adapters.file_loader import read_input_path_as_np_array
+from core.adapters.file_loader import get_metadata
 from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.services.marching_cubes import generate_mesh
+from core.adapters.glb_file import write_mesh_as_glb_with_colour
 from core.services.np_image_manipulation import seperate_segmentation
 from models.model_controller import get_seg_types
 from core.client.viewer import view_mesh
@@ -15,7 +17,7 @@ this_plid = os.path.basename(__file__).replace(".py", "")
 
 
 def run(
-    input_directories: list, output_path: str, segment_type: list,
+    input_directories: list, output_path: str, segment_type: list, open_viewer=True
 ):
     flair_input_path = input_directories[0]
     t1_input_path = input_directories[1]
@@ -34,8 +36,18 @@ def run(
         )
     ]
 
-    meshes = convert_meshes_trimesh(meshes)
-    segment_dict = get_seg_types(this_plid)
-    mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
-    view_mesh(meshes=meshes, mesh_names=mesh_names, output_file=output_path)
+    if open_viewer:
+        metadata = get_metadata(input_path)
+        meshes = convert_meshes_trimesh(meshes)
+        segment_dict = get_seg_types(this_plid)
+        mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
+        view_mesh(
+            meshes=meshes,
+            mesh_names=mesh_names,
+            output_file=output_path,
+            patient_data=metadata,
+            plid=this_plid,
+        )
+    else:
+        write_mesh_as_glb_with_colour(meshes, output_path)
     logging.info("Brain pipeline finished successfully")

@@ -12,6 +12,7 @@ from core.adapters.nifti_file import (
     write_nifti_image,
 )
 from core.adapters.file_loader import read_input_path_as_np_array
+from core.adapters.file_loader import get_metadata
 from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.client.viewer import view_mesh
 from core.services.marching_cubes import generate_mesh
@@ -23,7 +24,9 @@ from models.model_controller import get_seg_types
 this_plid = os.path.basename(__file__).replace(".py", "")
 
 
-def run(input_path: str, output_path: str, segment_type: list) -> None:
+def run(
+    input_path: str, output_path: str, segment_type: list, open_viewer=True
+) -> None:
     logging.info("Starting kidney pipeline")
     image = read_nifti_image(input_path)
     initial_nifti_output_file_path = kidney_model.get_input_path()
@@ -41,9 +44,20 @@ def run(input_path: str, output_path: str, segment_type: list) -> None:
         )
     ]
 
-    meshes = convert_meshes_trimesh(meshes)
-    segment_dict = get_seg_types(this_plid)
-    mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
-    view_mesh(meshes=meshes, mesh_names=mesh_names, output_file=output_path)
+    if open_viewer:
+        metadata = get_metadata(input_path)
+        meshes = convert_meshes_trimesh(meshes)
+        segment_dict = get_seg_types(this_plid)
+        mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
+        view_mesh(
+            meshes=meshes,
+            mesh_names=mesh_names,
+            output_file=output_path,
+            patient_data=metadata,
+            plid=this_plid,
+        )
+    else:
+        write_mesh_as_glb_with_colour(meshes, output_path)
+
     kidney_model.cleanup()
     logging.info("Kidney pipeline finished successfully")
