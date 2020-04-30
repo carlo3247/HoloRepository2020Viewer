@@ -49,7 +49,7 @@ def get_information(plid):
     )
 
 
-def generate(entries, plid):
+def generate(entries, plid, ar_view):
     output_path = entries["Output File"].get()
     segment_type = list(entries["seg_types"].curselection())
     segment_type = [s + 1 for s in segment_type]
@@ -82,7 +82,8 @@ def generate(entries, plid):
         logging.info("Loading and initializing pipeline dynamically")
         pipeline_module = load_pipeline_dynamically(plid)
         pipeline_module.run(input_dir, output_path, segment_type)
-        logging.info("Done.")
+        if ar_view == False:
+            logging.info("Done.")
 
 
 def browsefunc(entry):
@@ -303,12 +304,12 @@ def help_box(plid):
     if plid != "brain_segmentation":
         messagebox.showinfo(
             "Help",
-            """Input : Select a compressed NifTi file or directory containing DICOM scans through the file or folder browser\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """,
+            """Input : Select a compressed NifTi file (*.nii.gz) or directory containing DICOM (*.dcm) scans through the file or folder browser\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """,
         )
     else:
         messagebox.showinfo(
             "Help",
-            """Input : Select a compressed NifTi file or directory containing DICOM scans through the file or folder browser\n\n Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """,
+            """Input : Select a compressed NifTi file (*.nii.gz) or directory containing DICOM (*.dcm) scans through the file or folder browser\n\n Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """,
         )
 
 
@@ -468,10 +469,10 @@ class ParameterPage(tk.Frame):
             self,
             text="3D View",
             font=buttonFont,
-            command=lambda e=ents: generate(e, plid),
+            command=lambda e=ents: generate(e, plid, False),
         )
         b1.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
-        b2 = tk.Button(self, text="AR View", font=buttonFont, command=None)
+        b2 = tk.Button(self, text="AR View", font=buttonFont, command=lambda e=ents: generate(e, plid, True)
         b2.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
         b3 = tk.Button(
             self, text="Help", font=buttonFont, command=lambda: help_box(plid),
