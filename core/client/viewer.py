@@ -1,12 +1,15 @@
 import logging
-from vtkplotter import trimesh2vtk,interactive,colors,Text2D
+from vtkplotter import trimesh2vtk, interactive, colors, Text2D
 from vtkplotter import Plotter, settings
 from core.adapters.vtk_to_glb import write_mesh_as_glb_with_colour
+from core.wrappers import holo_registration_wrapper
 
 index = 0
 
 
-def view_mesh(meshes: list, output_file: str, mesh_names: list = [], patient_data = ""):
+def view_mesh(
+    meshes: list, output_file: str, mesh_names: list = [], patient_data="", plid=""
+):
     logging.info("Opening mesh viewer.")
     settings.useDepthPeeling = True
     vmeshes = []
@@ -28,12 +31,20 @@ def view_mesh(meshes: list, output_file: str, mesh_names: list = [], patient_dat
         bg_button.switch()
         vp.backgroundRenderer.SetBackground(colors.getColor(bg_button.status()))
 
+    def ar_view():
+        save()
+        holo_registration_wrapper.start_viewer(output_file, plid)
+
     def save():
         write_mesh_as_glb_with_colour(vmeshes, output_file)
 
-    vp = Plotter(sharecam=False,
-                 bg="./core/client/images/hologram_icon2.png",
-                 bg2='black',shape=[1,1],interactive=False)
+    vp = Plotter(
+        sharecam=False,
+        bg="./core/client/images/hologram_icon2.png",
+        bg2="black",
+        shape=[1, 1],
+        interactive=False,
+    )
     # pos = position corner number: horizontal [1-4] or vertical [11-14]
     vp.addSlider2D(slider1, -9, 9, value=0, pos=4, title="color number")
 
@@ -67,20 +78,30 @@ def view_mesh(meshes: list, output_file: str, mesh_names: list = [], patient_dat
         italic=False,
     )
 
+    if holo_registration_wrapper.is_supported(plid):
+        ar_button = vp.addButton(
+            ar_view,
+            pos=(0.15, 0.05),
+            states=["AR View"],
+            font="courier",
+            size=25,
+            bold=True,
+            italic=False,
+        )
+
     bg_button = vp.addButton(
         background_swap,
         pos=(0.5, 0.10),  # x,y fraction from bottom left corner
-        states=["black","white"],
+        states=["black", "white"],
         font="courier",  # arial, courier, times
         size=25,
         bold=True,
         italic=False,
     )
 
-
     for i in range(0, len(meshes)):
         vmeshes.append(trimesh2vtk(meshes[i], alphaPerCell=True))
-    doc = Text2D(patient_data, pos=4,c=(0,113,197))
+    doc = Text2D(patient_data, pos=4, c=(0, 113, 197))
     vp.backgroundRenderer.GetActiveCamera().Zoom(1.3)
     vp.show(doc)
     vp.show(vmeshes)

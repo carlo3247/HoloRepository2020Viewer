@@ -49,7 +49,12 @@ def run(
         meshes = convert_meshes_trimesh(meshes)
         segment_dict = get_seg_types(this_plid)
         mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
-        view_mesh(meshes=meshes, mesh_names=mesh_names, output_file=output_path)
+        view_mesh(
+            meshes=meshes,
+            mesh_names=mesh_names,
+            output_file=output_path,
+            plid=this_plid,
+        )
     else:
         write_mesh_as_glb_with_colour(meshes, output_path)
     logging.info("Lung pipeline finished successfully")
