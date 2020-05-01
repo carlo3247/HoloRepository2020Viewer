@@ -53,8 +53,8 @@ def view_mesh(
 
     vp.addSlider2D(
         slider2,
-        xmin=0.01,
-        xmax=0.99,
+        xmin=0.00,
+        xmax=1.00,
         value=0.5,
         pos=14,
         c="blue",
