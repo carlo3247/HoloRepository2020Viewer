@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-path_to_ar_viewer = r"C:\Users\carlo\Desktop\HoloReg\OpenPosePlugin.exe"
+path_to_ar_viewer = r"path\to\ar_viewer"
 
 plid_to_id_dict = {
     "lung_segmentation": "lung",
