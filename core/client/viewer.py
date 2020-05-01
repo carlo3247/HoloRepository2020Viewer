@@ -5,6 +5,7 @@ from core.adapters.vtk_to_glb import write_mesh_as_glb_with_colour
 from core.wrappers import holo_registration_wrapper
 
 index = 0
+font_style = "arial"
 
 
 def view_mesh(
@@ -48,6 +49,8 @@ def view_mesh(
     # pos = position corner number: horizontal [1-4] or vertical [11-14]
     vp.addSlider2D(slider1, -9, 9, value=0, pos=4, title="color number")
 
+    left_side_x = 0.1
+
     vp.addSlider2D(
         slider2,
         xmin=0.01,
@@ -62,7 +65,7 @@ def view_mesh(
         buttonfunc,
         pos=(0.5, 0.05),  # x,y fraction from bottom left corner
         states=mesh_names,
-        font="courier",  # arial, courier, times
+        font=font_style,  # arial, courier, times
         size=25,
         bold=True,
         italic=False,
@@ -70,9 +73,9 @@ def view_mesh(
 
     save_button = vp.addButton(
         save,
-        pos=(0.5, 0.15),  # x,y fraction from bottom left corner
+        pos=(left_side_x, 0.05),  # x,y fraction from bottom left corner
         states=["Save"],
-        font="courier",  # arial, courier, times
+        font=font_style,  # arial, courier, times
         size=25,
         bold=True,
         italic=False,
@@ -81,9 +84,9 @@ def view_mesh(
     if holo_registration_wrapper.is_supported(plid):
         ar_button = vp.addButton(
             ar_view,
-            pos=(0.15, 0.05),
+            pos=(left_side_x, 0.15),
             states=["AR View"],
-            font="courier",
+            font=font_style,
             size=25,
             bold=True,
             italic=False,
@@ -91,9 +94,9 @@ def view_mesh(
 
     bg_button = vp.addButton(
         background_swap,
-        pos=(0.5, 0.10),  # x,y fraction from bottom left corner
+        pos=(left_side_x, 0.10),  # x,y fraction from bottom left corner
         states=["black", "white"],
-        font="courier",  # arial, courier, times
+        font=font_style,
         size=25,
         bold=True,
         italic=False,
