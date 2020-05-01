@@ -55,6 +55,7 @@ def run(
             output_file=output_path,
             patient_data=metadata,
             plid=this_plid,
+            scan_path=input_path,
         )
     else:
         write_mesh_as_glb_with_colour(meshes, output_path)

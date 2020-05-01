@@ -3,13 +3,19 @@ from vtkplotter import trimesh2vtk, interactive, colors, Text2D
 from vtkplotter import Plotter, settings
 from core.adapters.vtk_to_glb import write_mesh_as_glb_with_colour
 from core.wrappers import holo_registration_wrapper
+from core.wrappers import external_2d_viewer
 
 index = 0
 font_style = "arial"
 
 
 def view_mesh(
-    meshes: list, output_file: str, mesh_names: list = [], patient_data="", plid=""
+    meshes: list,
+    output_file: str,
+    mesh_names: list = [],
+    patient_data="",
+    plid="",
+    scan_path="",
 ):
     logging.info("Opening mesh viewer.")
     settings.useDepthPeeling = True
@@ -38,6 +44,9 @@ def view_mesh(
 
     def save():
         write_mesh_as_glb_with_colour(vmeshes, output_file)
+
+    def open_scan():
+        external_2d_viewer.start(scan_path)
 
     vp = Plotter(
         sharecam=False,
@@ -84,8 +93,19 @@ def view_mesh(
     if holo_registration_wrapper.is_supported(plid):
         ar_button = vp.addButton(
             ar_view,
-            pos=(left_side_x, 0.15),
+            pos=(left_side_x, 0.20),
             states=["AR View"],
+            font=font_style,
+            size=25,
+            bold=True,
+            italic=False,
+        )
+
+    if scan_path != "":
+        scan_button = vp.addButton(
+            open_scan,
+            pos=(left_side_x, 0.15),
+            states=["2D View"],
             font=font_style,
             size=25,
             bold=True,

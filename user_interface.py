@@ -8,6 +8,7 @@ from tkinter import messagebox
 from tkinter import font as tkFont
 from tkinter import filedialog
 from core.wrappers import holo_registration_wrapper
+from core.wrappers import external_2d_viewer
 
 
 from core.pipelines.pipelines_controller import (
@@ -469,15 +470,24 @@ class ParameterPage(tk.Frame):
 
         ents = create_form(self, plid)
         buttonFont = tkFont.Font(family="Helvetica", size=form_button_text_size)
-        b1 = tk.Button(
+        viewer_btn = tk.Button(
             self,
             text="3D View",
             font=buttonFont,
             command=lambda e=ents: generate(e, plid, False),
         )
-        b1.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
+        viewer_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
 
-        b2 = tk.Button(
+        external_2d_btn = tk.Button(
+            self,
+            text="2D View",
+            font=buttonFont,
+            state=tk.NORMAL if "Input" in ents else tk.DISABLED,
+            command=lambda e=ents: external_2d_viewer.start(e["Input"].get()),
+        )
+        external_2d_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
+
+        ar_view_btn = tk.Button(
             self,
             text="AR View",
             font=buttonFont,
@@ -486,18 +496,20 @@ class ParameterPage(tk.Frame):
             else tk.DISABLED,
             command=lambda e=ents: generate(e, plid, True),
         )
-        b2.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
-        b3 = tk.Button(
+        ar_view_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
+
+        help_btn = tk.Button(
             self, text="Help", font=buttonFont, command=lambda: help_box(plid),
         )
-        b3.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
-        b4 = tk.Button(
+        help_btn.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
+
+        back_btn = tk.Button(
             self,
             text="Back",
             font=buttonFont,
             command=lambda: controller.show_frame("StartPage"),
         )
-        b4.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
+        back_btn.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
 
 
 class SplashScreen(tk.Frame):
