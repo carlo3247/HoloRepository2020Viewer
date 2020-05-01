@@ -37,7 +37,6 @@ def run(
     ]
 
     if open_viewer:
-        metadata = get_metadata(input_path)
         meshes = convert_meshes_trimesh(meshes)
         segment_dict = get_seg_types(this_plid)
         mesh_names = [k for k, v in segment_dict.items() if v in segment_type]
@@ -45,7 +44,6 @@ def run(
             meshes=meshes,
             mesh_names=mesh_names,
             output_file=output_path,
-            patient_data=metadata,
             plid=this_plid,
         )
     else:
