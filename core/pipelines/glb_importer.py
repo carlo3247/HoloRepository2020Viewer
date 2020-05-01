@@ -1,6 +1,7 @@
 import os
 import logging
-import trimesh
+from trimesh import load_mesh
+from trimesh.scene import Scene
 from trimesh.visual import ColorVisuals
 from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.client.viewer import view_mesh
@@ -16,7 +17,7 @@ hu_threshold = 0
 
 def run(input_file: str) -> None:
     trimesh_scene = load_mesh(input_file)
-    if isinstance(trimesh_scene, scene.Scene):
+    if isinstance(trimesh_scene, Scene):
         meshes = trimesh_scene.dump()
         for mesh in meshes:
             mesh.visual = ColorVisuals(
