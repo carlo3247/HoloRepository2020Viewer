@@ -6,10 +6,14 @@ A python command line tool that incorporates a barebone version of [HoloPipeline
 
 Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
 
-## Installing the latest Release
+# Getting started with the latest release
+## Installation
+wip
+## Using the Viewer
 wip
 
-## Manual Installation
+# Manual Setup
+## Installation
 As of right now this tool can only run in this local repository. The tool has only been tested using [python3.7](https://www.python.org/downloads/release/python-370/), this version is recommended. To do so, first build the environment using one of the [conda](https://docs.conda.io/en/latest/) yaml files.
 There are four different environments based on your hardware and software:
 
@@ -30,7 +34,10 @@ conda activate holopipelines
 pip install -e .
 ```
 ## Using the Viewer
-wip
+The following command will start up the viewer:
+```bash
+python user_interface.py
+```
 
 
 ## CLI Usage of HoloPipelines Functionality
@@ -112,7 +119,7 @@ HoloBone -q bone_scan output.glb
   <img width="300" alt="bone output" src="https://user-images.githubusercontent.com/23082383/79740241-3ff86d80-82f7-11ea-8eba-afa22ef2e4dd.PNG">
 </p>
 
-## Acknowledgements
+# Acknowledgements
 Main authors: Immanuel Baskaran, Abhinath Kumar, Carlo Winkelhake, Daren Alfred
 
 Supervisors: Prof. Dean Mohamedally, Prof. Neil Sebire, Sheena Visram
