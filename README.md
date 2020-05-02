@@ -4,8 +4,12 @@
 
 A python command line tool that incorporates a barebone version of [HoloPipelines](https://github.com/nbckr/HoloRepository-Core/tree/dev/HoloPipelines), wich is part of [HoloRepository](https://github.com/nbckr/HoloRepository-Core), to segment and generate 3D models of various anatomical stuctures. These include the lungs, brain, kidneys, abdominals and bones.
 
+Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
 
-## Local Installation
+## Installing the latest Release
+wip
+
+## Manual Installation
 As of right now this tool can only run in this local repository. The tool has only been tested using [python3.7](https://www.python.org/downloads/release/python-370/), this version is recommended. To do so, first build the environment using one of the [conda](https://docs.conda.io/en/latest/) yaml files.
 There are four different environments based on your hardware and software:
 
@@ -25,8 +29,11 @@ conda activate holopipelines
 
 pip install -e .
 ```
+## Using the Viewer
+wip
 
-## Usage
+
+## CLI Usage of HoloPipelines Functionality
 There are several ways to run the local HoloPipelines.
 The general command line interface can be invoked like this:
 ```bash
@@ -43,8 +50,7 @@ HoloAbdominal -h
 HoloBone -h
 ```
 
-## Example Usage
-### Basic Usage
+### Examples
 #### Basic example
 The following example uses the `lung_segmentation` pipeline on a stack of dicom images stored in the `lung-scan` directory.
 The generated mesh is stored at `output.glb`.
@@ -107,6 +113,11 @@ HoloBone -q bone_scan output.glb
 </p>
 
 ## Acknowledgements
-Built at [University College London](https://www.ucl.ac.uk/) in cooperation with [GOSH DRIVE](https://www.goshdrive.com/).
+Main authors: Immanuel Baskaran, Abhinath Kumar, Carlo Winkelhake, Daren Alfred
+
+Supervisors: Prof. Dean Mohamedally, Prof. Neil Sebire, Sheena Visram
+
+Built at [University College London](https://www.ucl.ac.uk/) in cooperation with [Intel™](https://www.intel.co.uk) and [GOSH DRIVE](https://www.goshdrive.com/).
+
 
 Logo is derived from a work by <a href="https://www.freepik.com/">Freepik</a> at <a href="https://www.flaticon.com/">www.flaticon.com</a>.
