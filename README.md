@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="400" alt="HoloPipelinesCLI logo" src="https://user-images.githubusercontent.com/23082383/79690583-0ec66180-8253-11ea-8088-0131d01beb89.png">
+  <img width="400" alt="HoloPipelinesCLI logo" src="https://user-images.githubusercontent.com/23082383/80860583-6f489c00-8c60-11ea-950c-e27ceb89b410.png">
 </p>
 
 A python command line tool that incorporates a barebone version of [HoloPipelines](https://github.com/nbckr/HoloRepository-Core/tree/dev/HoloPipelines), wich is part of [HoloRepository](https://github.com/nbckr/HoloRepository-Core), to segment and generate 3D models of various anatomical stuctures. These include the lungs, brain, kidneys, abdominals and bones.
