@@ -44,17 +44,19 @@ def view_mesh(
 
     def save():
         write_mesh_as_glb_with_colour(vmeshes, output_file)
-
+        
     def open_scan():
         external_2d_viewer.start(scan_path)
 
-    vp = Plotter(
-        sharecam=False,
-        bg="./core/client/images/hologram_icon2.png",
-        bg2="black",
-        shape=[1, 1],
-        interactive=False,
+
+    vp = Plotter(sharecam=False,
+                 bg="./core/client/images/hologram_icon2.png",
+                 bg2='black',
+                 shape=[1,1],
+                 size=[640,480],
+                 interactive=False,
     )
+
     # pos = position corner number: horizontal [1-4] or vertical [11-14]
     vp.addSlider2D(slider1, -9, 9, value=0, pos=4, title="color number")
 
@@ -124,8 +126,12 @@ def view_mesh(
 
     for i in range(0, len(meshes)):
         vmeshes.append(trimesh2vtk(meshes[i], alphaPerCell=True))
-    doc = Text2D(patient_data, pos=4, c=(0, 113, 197))
-    vp.backgroundRenderer.GetActiveCamera().Zoom(1.3)
+
+    doc = Text2D(patient_data, pos=4,c=(0,113,197))
+
     vp.show(doc)
+    vp.backgroundRenderer.GetActiveCamera().Zoom(1.3)
+
     vp.show(vmeshes)
+
     interactive()
