@@ -7,6 +7,8 @@ from tkinter import font as tkfont  # python 3
 from tkinter import messagebox
 from tkinter import font as tkFont
 from tkinter import filedialog
+from core.wrappers import holo_registration_wrapper
+from core.wrappers import external_2d_viewer
 
 
 from core.pipelines.pipelines_controller import (
@@ -49,7 +51,7 @@ def get_information(plid):
     )
 
 
-def generate(entries, plid):
+def generate(entries, plid, ar_view):
     output_path = entries["Output File"].get()
     segment_type = list(entries["seg_types"].curselection())
     segment_type = [s + 1 for s in segment_type]
@@ -81,7 +83,11 @@ def generate(entries, plid):
         )
         logging.info("Loading and initializing pipeline dynamically")
         pipeline_module = load_pipeline_dynamically(plid)
-        pipeline_module.run(input_dir, output_path, segment_type)
+        if ar_view:
+            pipeline_module.run(input_dir, output_path, segment_type, False)
+            holo_registration_wrapper.start_viewer(output_path, plid)
+        else:
+            pipeline_module.run(input_dir, output_path, segment_type)
         logging.info("Done.")
 
 
@@ -303,12 +309,12 @@ def help_box(plid):
     if plid != "brain_segmentation":
         messagebox.showinfo(
             "Help",
-            """Input : Select a compressed NifTi file or directory containing DICOM scans through the file or folder browser\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """,
+            """Input : Select a compressed NifTi file (*.nii.gz) or directory containing DICOM (*.dcm) scans through the file or folder browser\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """,
         )
     else:
         messagebox.showinfo(
             "Help",
-            """Input : Select a compressed NifTi file or directory containing DICOM scans through the file or folder browser\n\n Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """,
+            """Input : Select a compressed NifTi file (*.nii.gz) or directory containing DICOM (*.dcm) scans through the file or folder browser\n\n Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """,
         )
 
 
@@ -464,26 +470,46 @@ class ParameterPage(tk.Frame):
 
         ents = create_form(self, plid)
         buttonFont = tkFont.Font(family="Helvetica", size=form_button_text_size)
-        b1 = tk.Button(
+        viewer_btn = tk.Button(
             self,
             text="3D View",
             font=buttonFont,
-            command=lambda e=ents: generate(e, plid),
+            command=lambda e=ents: generate(e, plid, False),
         )
-        b1.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
-        b2 = tk.Button(self, text="AR View", font=buttonFont, command=None)
-        b2.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
-        b3 = tk.Button(
+        viewer_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
+
+        external_2d_btn = tk.Button(
+            self,
+            text="2D View",
+            font=buttonFont,
+            state=tk.NORMAL if "Input" in ents else tk.DISABLED,
+            command=lambda e=ents: external_2d_viewer.start(e["Input"].get()),
+        )
+        external_2d_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
+
+        ar_view_btn = tk.Button(
+            self,
+            text="AR View",
+            font=buttonFont,
+            state=tk.NORMAL
+            if holo_registration_wrapper.is_supported(plid)
+            else tk.DISABLED,
+            command=lambda e=ents: generate(e, plid, True),
+        )
+        ar_view_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
+
+        help_btn = tk.Button(
             self, text="Help", font=buttonFont, command=lambda: help_box(plid),
         )
-        b3.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
-        b4 = tk.Button(
+        help_btn.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
+
+        back_btn = tk.Button(
             self,
             text="Back",
             font=buttonFont,
             command=lambda: controller.show_frame("StartPage"),
         )
-        b4.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
+        back_btn.pack(side=tk.RIGHT, anchor=tk.SW, padx=20, pady=10)
 
 
 class SplashScreen(tk.Frame):

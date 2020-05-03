@@ -1,11 +1,19 @@
 <p align="center">
-  <img width="400" alt="HoloPipelinesCLI logo" src="https://user-images.githubusercontent.com/23082383/79690583-0ec66180-8253-11ea-8088-0131d01beb89.png">
+  <img width="600" alt="HoloPipelinesCLI logo" src="https://user-images.githubusercontent.com/23082383/80860583-6f489c00-8c60-11ea-950c-e27ceb89b410.png">
 </p>
 
 A python command line tool that incorporates a barebone version of [HoloPipelines](https://github.com/nbckr/HoloRepository-Core/tree/dev/HoloPipelines), wich is part of [HoloRepository](https://github.com/nbckr/HoloRepository-Core), to segment and generate 3D models of various anatomical stuctures. These include the lungs, brain, kidneys, abdominals and bones.
 
+Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
 
-## Local Installation
+# Getting started with the latest release
+## Installation
+wip
+## Using the Viewer
+wip
+
+# Manual Setup
+## Installation
 As of right now this tool can only run in this local repository. The tool has only been tested using [python3.7](https://www.python.org/downloads/release/python-370/), this version is recommended. To do so, first build the environment using one of the [conda](https://docs.conda.io/en/latest/) yaml files.
 There are four different environments based on your hardware and software:
 
@@ -25,8 +33,14 @@ conda activate holopipelines
 
 pip install -e .
 ```
+## Using the Viewer
+The following command will start up the viewer:
+```bash
+python user_interface.py
+```
 
-## Usage
+
+## CLI Usage of HoloPipelines Functionality
 There are several ways to run the local HoloPipelines.
 The general command line interface can be invoked like this:
 ```bash
@@ -43,8 +57,7 @@ HoloAbdominal -h
 HoloBone -h
 ```
 
-## Example Usage
-### Basic Usage
+### Examples
 #### Basic example
 The following example uses the `lung_segmentation` pipeline on a stack of dicom images stored in the `lung-scan` directory.
 The generated mesh is stored at `output.glb`.
@@ -106,7 +119,12 @@ HoloBone -q bone_scan output.glb
   <img width="300" alt="bone output" src="https://user-images.githubusercontent.com/23082383/79740241-3ff86d80-82f7-11ea-8eba-afa22ef2e4dd.PNG">
 </p>
 
-## Acknowledgements
-Built at [University College London](https://www.ucl.ac.uk/) in cooperation with [GOSH DRIVE](https://www.goshdrive.com/).
+# Acknowledgements
+Main authors: Immanuel Baskaran, Abhinath Kumar, Carlo Winkelhake, Daren Alfred
+
+Supervisors: Prof. Dean Mohamedally, Prof. Neil Sebire, Sheena Visram
+
+Built at [University College London](https://www.ucl.ac.uk/) in cooperation with [Intel™](https://www.intel.co.uk) and [GOSH DRIVE](https://www.goshdrive.com/).
+
 
 Logo is derived from a work by <a href="https://www.freepik.com/">Freepik</a> at <a href="https://www.flaticon.com/">www.flaticon.com</a>.

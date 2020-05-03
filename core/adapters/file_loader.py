@@ -5,7 +5,7 @@ from core.adapters.nifti_file import read_nifti_as_np_array
 from core.adapters.dicom_file import (
     read_dicom_as_np_ndarray_and_normalise,
     read_dicom_pixels_as_np_ndarray,
-    extract_dicom_data
+    extract_dicom_data,
 )
 
 
@@ -26,6 +26,7 @@ def read_input_path_as_np_array(input_path: str, normalise: bool = True) -> np.n
             "Can not determine input path. Please specify a folder containing DICOM images or a NIfTI image."
         )
 
+
 def get_metadata(input_path: str) -> str:
     logging.info("Determining file type")
     file_extension = get_file_extension(input_path)
@@ -39,6 +40,7 @@ def get_metadata(input_path: str) -> str:
         raise Exception(
             "Can not determine input path. Please specify a folder containing DICOM images or a NIfTI image."
         )
+
 
 def get_file_extension(input_path: str) -> str:
     _, file_extension = os.path.splitext(input_path)

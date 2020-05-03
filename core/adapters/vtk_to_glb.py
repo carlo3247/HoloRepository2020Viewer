@@ -20,10 +20,9 @@ def write_mesh_as_glb_with_colour(
         mesh2 = vtk2trimesh(mesh)
 
         repair.fix_inversion(mesh2)
-        tolist = mesh.color().tolist()
 
         mesh2.visual.material = trimesh.visual.material.SimpleMaterial(
-            diffuse=np.asarray(tolist + [mesh.alpha()])
+            diffuse=np.asarray(mesh.color().tolist() + [mesh.alpha()])
         )
         scene.add_geometry(mesh2)
     scene.export(output_obj_file_path)
