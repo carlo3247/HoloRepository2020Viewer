@@ -336,7 +336,7 @@ class ViewerApp(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
 
         self.title("HoloRepository 2020 Viewer")
-
+        self.iconbitmap("./core/client/images/favicon.ico")
         self.state("zoomed")
         self.title_font = tkfont.Font(
             family="Helvetica", size=18, weight="bold", slant="italic"
