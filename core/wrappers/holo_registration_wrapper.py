@@ -1,5 +1,6 @@
 import os
 import subprocess
+import platform
 
 path_to_ar_viewer = r"path\to\ar_viewer"
 
@@ -11,7 +12,7 @@ plid_to_id_dict = {
 
 
 def is_supported(plid):
-    return plid in plid_to_id_dict
+    return (plid in plid_to_id_dict) and (platform.system()=='Windows')
 
 
 def start_viewer(input_model_path, plid):
