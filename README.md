@@ -52,7 +52,8 @@ python user_interface.py
 
 
 ## CLI Usage of HoloPipelines Functionality
-There are several ways to run the local HoloPipelines.
+Another method of using the tool involves the command line interface (CLI).
+
 The general command line interface can be invoked like this:
 ```bash
 HoloPipelines -h
