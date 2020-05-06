@@ -29,7 +29,7 @@ wip
 The tool has only been tested using [python3.7](https://www.python.org/downloads/release/python-370/), this version is recommended. To do so, first build the environment using one of the [conda](https://docs.conda.io/en/latest/) yaml files.
 There are four different environments based on your hardware and software:
 
-||GPU support|CPU only|
+||[GPU support](https://github.com/carlo3247/HoloRepository2020Viewer/tree/v0.1_gpu)|[CPU only](https://github.com/carlo3247/HoloRepository2020Viewer/tree/v0.1_cpu)|
 |-|:-:|:-:|
 |**Ubuntu**|environment_gpu.yml|environment.yml|
 |**Windows**|environment_win_gpu.yml|environment.yml|
