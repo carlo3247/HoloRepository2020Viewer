@@ -10,8 +10,7 @@ This repository contains a python tool that incorporates a barebone version of [
 
 Through the GUI interface, one can either process a new medical scan or open an existing hologram. The created objects can be viewed through a proof of concept hologram viewer built on top of [vtkplotter](https://github.com/marcomusy/vtkplotter). The `2D View` will attempt to open the scan using the default program selected for the task. For this, we recommend [mango](http://ric.uthscsa.edu/mango/).
 
-On Windows, the GUI also includes the HoloRegistration application. This enables a scan to be laid on top of a patient.
-
+On Windows, the tool also includes an augmented reality (AR) view, which uses the HoloRegistration application. This enables segmented organ models to be overlayed over the human body using the webcam.
 
 Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
 
