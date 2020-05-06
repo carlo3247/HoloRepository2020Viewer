@@ -4,6 +4,10 @@
 
 This repository contains a python command line tool that incorporates a barebone version of [HoloPipelines](https://github.com/nbckr/HoloRepository-Core/tree/dev/HoloPipelines), wich is part of [HoloRepository](https://github.com/nbckr/HoloRepository-Core), to segment and generate 3D models of various anatomical stuctures. These include the lungs, brain, kidneys, abdominals and bones.
 
+<p align="center">
+  <img width="600" alt="lung demo" src="https://user-images.githubusercontent.com/23082383/81220853-e8861d00-8fd9-11ea-98f0-7cea18d9916c.gif">
+</p>
+
 Another way of using the pipelines is through a simple GUI. From this interface one can either process a new medical scan or oben an existing holograg. The created objects can be viewed through a proof of concept hologram viewer built on top of [vtkplotter](https://github.com/marcomusy/vtkplotter). The `2D View` will attempt to open the scan using the default program selected for the task. For this, we recommend [mango](http://ric.uthscsa.edu/mango/).
 
 On Windows, the GUI also includes the HoloRegistration application. This enables a scan to be laid on top of a patient.
@@ -12,9 +16,8 @@ On Windows, the GUI also includes the HoloRegistration application. This enables
 Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
 
 <p align="center">
-  <img width="600" alt="lung demo" src="https://user-images.githubusercontent.com/23082383/81220853-e8861d00-8fd9-11ea-98f0-7cea18d9916c.gif">
+  <img width="600" alt="lung demo" src="https://user-images.githubusercontent.com/23082383/81221140-56324900-8fda-11ea-9c99-02db6fb3bd6c.gif">
 </p>
-
 
 
 # Getting started with the latest release
