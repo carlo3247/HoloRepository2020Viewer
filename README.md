@@ -11,7 +11,11 @@ On Windows, the GUI also includes the HoloRegistration application. This enables
 
 Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
 
-![](https://user-images.githubusercontent.com/23082383/81220853-e8861d00-8fd9-11ea-98f0-7cea18d9916c.gif)
+<p align="center">
+  <img width="600" alt="lung demo" src="https://user-images.githubusercontent.com/23082383/81220853-e8861d00-8fd9-11ea-98f0-7cea18d9916c.gif">
+</p>
+
+
 
 # Getting started with the latest release
 ## Installation
