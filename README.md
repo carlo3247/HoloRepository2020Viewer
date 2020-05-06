@@ -23,8 +23,6 @@ Disclaimer: This system is a Proof of Concept, provided as is, and not for redep
 # Getting started with the latest release
 ## Installation
 wip
-## Using the Viewer
-wip
 
 # Manual Setup
 ## Installation
@@ -47,7 +45,7 @@ conda activate holopipelines
 
 pip install -e .
 ```
-## Using the Viewer
+## Opening the Viewer
 The following command will start up the viewer:
 ```bash
 python user_interface.py
