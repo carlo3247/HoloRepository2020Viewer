@@ -1,4 +1,4 @@
-name: holopipelinesgpuwin
+name: holopipelines
 channels:
   - conda-forge
   - intel
@@ -87,6 +87,8 @@ dependencies:
     - scikit-image==0.15.0
     - scipy==1.3.0
     - simpleitk==1.2.0
+    - vtk==8.1.2
+    - vtkplotter==2020.2.4
     - visvis==1.12.2
     - werkzeug==0.16.0
 
