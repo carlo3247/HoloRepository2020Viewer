@@ -131,6 +131,11 @@ HoloBone -q bone_scan output.glb
   <img width="300" alt="bone output" src="https://user-images.githubusercontent.com/23082383/79740241-3ff86d80-82f7-11ea-8eba-afa22ef2e4dd.PNG">
 </p>
 
+# Architecture of HoloRepository2020Viewer
+
+![holoViewer](https://user-images.githubusercontent.com/24452907/81239886-e46bf680-8ffd-11ea-9921-d6f30947f8db.png)
+
+
 # Acknowledgements
 Main authors: Immanuel Baskaran, Abhinath Kumar, Carlo Winkelhake, Daren Alfred
 
