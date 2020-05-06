@@ -309,12 +309,12 @@ def help_box(plid):
     if plid != "brain_segmentation":
         messagebox.showinfo(
             "Help",
-            """Input : Select a compressed NifTi file (*.nii.gz) or directory containing DICOM (*.dcm) scans through the file or folder browser\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """,
+            """Input : Select a compressed NifTi file (*.nii.gz) or directory containing DICOM (*.dcm) scans through the file or folder browser\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated\n\nAR View only suported on Windows OS""",
         )
     else:
         messagebox.showinfo(
             "Help",
-            """Input : Select a compressed NifTi file (*.nii.gz) or directory containing DICOM (*.dcm) scans through the file or folder browser\n\n Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated """,
+            """Input : Select a compressed NifTi file (*.nii.gz) or directory containing DICOM (*.dcm) scans through the file or folder browser\n\n Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated\n\nAR View only suported on Windows OS""",
         )
 
 
