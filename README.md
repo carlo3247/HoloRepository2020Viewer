@@ -29,6 +29,7 @@ Disclaimer: This system is a Proof of Concept, provided as is, and not for redep
 wip
 
 # Manual Setup
+The latest code for HoloRepository2020Viewer can be found at https://github.com/carlo3247/HoloRepository2020Viewer
 ## Installation
 The tool has only been tested using [python3.7](https://www.python.org/downloads/release/python-370/), this version is recommended. To do so, first build the environment using one of the [conda](https://docs.conda.io/en/latest/) yaml files.
 There are four different environments based on your hardware and software:
