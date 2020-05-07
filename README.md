@@ -17,15 +17,14 @@ On Windows, the tool also includes an augmented reality (AR) view, which uses th
 Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
 
 
+# Getting started with the latest release
+The latest release is the [2020 version](https://github.com/carlo3247/HoloRepository2020Viewer/releases/tag/v1.0). To use this release, download the file and uncompress it using [7zip](https://www.7-zip.org/). Then inside the folder, run the viewer by double-clicking **run.bat**.
+
 <br />
 <p align="center">
   <img width="600" alt="lung demo" src="https://user-images.githubusercontent.com/23082383/81221140-56324900-8fda-11ea-9c99-02db6fb3bd6c.gif">
 </p>
 
-
-
-# Getting started with the latest release
-The latest release is the [2020 version](https://github.com/carlo3247/HoloRepository2020Viewer/releases/tag/v1.0). To use this release, download the file and uncompress it using [7zip](https://www.7-zip.org/). Then inside the folder, run the viewer by double-clicking **run.bat**.
 
 # Manual Setup
 The latest code for HoloRepository2020Viewer can be found at https://github.com/carlo3247/HoloRepository2020Viewer
