@@ -6,7 +6,7 @@ This repository contains a python tool that incorporates a barebone version of [
 
 
 <p align="center">
-  <img width="398" alt="lung_scan" src="https://user-images.githubusercontent.com/23082383/81287290-70ac0700-905a-11ea-9c1c-121b5d5f7113.png">
+  <img width="200" alt="lung_scan" src="https://user-images.githubusercontent.com/23082383/81287290-70ac0700-905a-11ea-9c1c-121b5d5f7113.png">
   
   <img width="600" alt="lung demo" src="https://user-images.githubusercontent.com/23082383/81220853-e8861d00-8fd9-11ea-98f0-7cea18d9916c.gif">
 </p>
