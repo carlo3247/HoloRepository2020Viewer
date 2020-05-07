@@ -133,7 +133,7 @@ HoloBone -q bone_scan output.glb
 
 # Architecture of HoloRepository2020Viewer
 
-![HoloViewer (1)](https://user-images.githubusercontent.com/24452907/81240108-665c1f80-8ffe-11ea-9ecd-2b1cf47e91be.png)
+![HoloViewer (2)](https://user-images.githubusercontent.com/24452907/81240166-94416400-8ffe-11ea-90e0-744f9f7530fc.png)
 
 
 # Acknowledgements
