@@ -18,7 +18,7 @@ Disclaimer: This system is a Proof of Concept, provided as is, and not for redep
 
 
 # Getting started with the latest release
-The latest release is the [2020 version](https://github.com/carlo3247/HoloRepository2020Viewer/releases/tag/v1.0). To use this release, download the file and uncompress it using [7zip](https://www.7-zip.org/). Then inside the folder, run the viewer by double-clicking **run.bat**.
+The latest release is the [2020 version](https://github.com/carlo3247/HoloRepository2020Viewer/releases/tag/v1.0). To use this release, download the file called **HoloPipelinesCLI.7z** and uncompress it using [7zip](https://www.7-zip.org/). Then inside the folder, run the viewer by double-clicking **run.bat**.
 
 <br />
 <p align="center">
