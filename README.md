@@ -10,7 +10,7 @@ This repository contains a python tool that incorporates a barebone version of [
 </p>
 <br />
 
-Through the GUI interface, one can either process a new medical scan or open an existing hologram. The created objects can be viewed through a proof of concept hologram viewer built on top of [vtkplotter](https://github.com/marcomusy/vtkplotter). The `2D View` will attempt to open the scan using the default program selected for the task. For this, we recommend [mango](http://ric.uthscsa.edu/mango/).
+Through the GUI interface, one can either process a new medical scan or open an existing hologram. The created objects can be viewed through a proof of concept hologram viewer built on top of [vtkplotter](https://github.com/marcomusy/vtkplotter). The **2D View** will attempt to open the scan using the default program selected for the task. For this, we recommend [mango](http://ric.uthscsa.edu/mango/).
 
 On Windows, the tool also includes an augmented reality (AR) view, which uses the HoloRegistration application. This enables segmented organ models to be overlayed over the human body using the webcam.
 
@@ -25,8 +25,7 @@ Disclaimer: This system is a Proof of Concept, provided as is, and not for redep
 
 
 # Getting started with the latest release
-## Installation
-wip
+The latest release is the [2020 version](https://github.com/carlo3247/HoloRepository2020Viewer/releases/tag/v1.0). To use this release, download the file and uncompress it using [7zip](https://www.7-zip.org/). Then inside the folder, run the viewer by double-clicking **run.bat**.
 
 # Manual Setup
 The latest code for HoloRepository2020Viewer can be found at https://github.com/carlo3247/HoloRepository2020Viewer
