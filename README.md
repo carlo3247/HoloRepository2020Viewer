@@ -2,7 +2,7 @@
   <img width="600" alt="HoloPipelinesCLI logo" src="https://user-images.githubusercontent.com/23082383/80860583-6f489c00-8c60-11ea-950c-e27ceb89b410.png">
 </p>
 
-This repository contains a python tool that incorporates a barebone version of [HoloPipelines](https://github.com/nbckr/HoloRepository-Core/tree/dev/HoloPipelines), wich is part of [HoloRepository](https://github.com/nbckr/HoloRepository-Core), to segment and generate 3D models of various anatomical stuctures. These include the lungs, brain, kidneys, abdominals and bones.
+This repository contains a python tool that incorporates a barebone version of [HoloPipelines](https://github.com/AbhinathK/CloudHoloRepository2020-Core/tree/dev/HoloPipelines), wich is part of [HoloRepository](https://github.com/AbhinathK/CloudHoloRepository2020-Core), to segment and generate 3D models of various anatomical stuctures. These include the lungs, brain, kidneys, abdominals and bones.
 
 <p align="center">
   <img width="340" alt="lung scan" src="https://user-images.githubusercontent.com/23082383/81289225-f087a080-905d-11ea-8815-818f9503b2ff.png">
