@@ -18,7 +18,7 @@ Disclaimer: This system is a Proof of Concept, provided as is, and not for redep
 
 
 # Getting started with the latest release
-The latest release is the [2020 version](https://github.com/carlo3247/HoloRepository2020Viewer/releases/tag/v1.0). To use this release, download the file called **HoloPipelinesCLI.7z** and uncompress it using [7zip](https://www.7-zip.org/). Then inside the folder, run the viewer by double-clicking **run.bat**. Some examples to try out the tool can be found [here](https://drive.google.com/open?id=1jyGbIbzpcW4JY8BkzAWD0IkBSuhdaxoU).
+The latest release is the [2020 version](https://github.com/carlo3247/HoloRepository2020Viewer/releases/tag/v1.0). To use this release, download the file called **Holorepository2020Viewer.7z** and uncompress it using [7zip](https://www.7-zip.org/). Then inside the folder, run the viewer by double-clicking **run.bat**. Some examples to try out the tool can be found [here](https://drive.google.com/open?id=1jyGbIbzpcW4JY8BkzAWD0IkBSuhdaxoU).
 
 Note: To accelerate the pipelines through a GPU, please make sure [CUDA](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/) is set up correctly on your machine. More instructions can be found [here](https://www.tensorflow.org/install/gpu).
 
