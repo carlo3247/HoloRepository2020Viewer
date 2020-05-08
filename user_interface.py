@@ -161,6 +161,7 @@ def create_form(root, plid):
             input_row,
             text="Browse DICOM Directory",
             font=form_button_text_size,
+            state=tk.NORMAL if plid != "kidney_segmentation" else tk.DISABLED,
             command=lambda: browsefunc(input_ent),
         )
         browse_button.pack(side=tk.RIGHT, fill=tk.X, padx=20)
