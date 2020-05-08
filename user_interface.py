@@ -83,7 +83,7 @@ def generate(entries, plid, ar_view):
         )
         messagebox.showinfo(
             "Help",
-            """This may take a while...\n\nPlease click ok to continue and check console output for progress""",
+            """This may take a while...\n\nPlease click 'ok' to continue. and check the console output for progress updates.""",
         )
         logging.info("Loading and initializing pipeline dynamically")
         pipeline_module = load_pipeline_dynamically(plid)
