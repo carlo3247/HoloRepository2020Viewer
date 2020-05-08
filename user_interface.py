@@ -81,6 +81,10 @@ def generate(entries, plid, ar_view):
             format="%(asctime)s - %(module)s:%(levelname)s - %(message)s",
             datefmt="%d-%b-%y %H:%M:%S",
         )
+        messagebox.showinfo(
+            "Help",
+            """This may take a while...\n\nPlease click ok to continue and check console output for progress""",
+        )
         logging.info("Loading and initializing pipeline dynamically")
         pipeline_module = load_pipeline_dynamically(plid)
         if ar_view:
@@ -93,6 +97,7 @@ def generate(entries, plid, ar_view):
 
 def browsefunc(entry):
     folder_selected = filedialog.askdirectory()
+    entry.delete(0,tk.END)
     entry.insert(tk.END, folder_selected)
 
 
@@ -100,6 +105,7 @@ def browsefile(entry):
     file_selected = filedialog.askopenfilename(
         filetypes=(("Compressed NifTI", "*.nii.gz"), ("All files", "*"))
     )
+    entry.delete(0,tk.END)
     entry.insert(tk.END, file_selected)
 
 
@@ -147,13 +153,13 @@ def create_form(root, plid):
         )
         browse_button = tk.Button(
             input_row,
-            text="Browse Input File",
+            text="Browse NiFTI File",
             font=form_button_text_size,
             command=lambda: browsefile(input_ent),
         )
         browse_dir_button = tk.Button(
             input_row,
-            text="Browse Input Directory",
+            text="Browse DICOM Directory",
             font=form_button_text_size,
             command=lambda: browsefunc(input_ent),
         )
@@ -177,13 +183,13 @@ def create_form(root, plid):
         )
         browse_button = tk.Button(
             input_row,
-            text="Browse Input File",
+            text="Browse NiFTI File",
             font=form_button_text_size,
             command=lambda: browsefile(input_ent),
         )
         browse_dir_button = tk.Button(
             input_row,
-            text="Browse Input Directory",
+            text="Browse DICOM Directory",
             font=form_button_text_size,
             command=lambda: browsefunc(input_ent),
         )
@@ -207,13 +213,13 @@ def create_form(root, plid):
         )
         browse_button_2 = tk.Button(
             input_row_2,
-            text="Browse Input File",
+            text="Browse NiFTI File",
             font=form_button_text_size,
             command=lambda: browsefile(input_ent_2),
         )
         browse_dir_button_2 = tk.Button(
             input_row_2,
-            text="Browse Input Directory",
+            text="Browse DICOM Directory",
             font=form_button_text_size,
             command=lambda: browsefunc(input_ent_2),
         )
@@ -237,13 +243,13 @@ def create_form(root, plid):
         )
         browse_button_3 = tk.Button(
             input_row_3,
-            text="Browse Input File",
+            text="Browse NiFTI File",
             font=form_button_text_size,
             command=lambda: browsefile(input_ent_3),
         )
         browse_dir_button_3 = tk.Button(
             input_row_3,
-            text="Browse Input Directory",
+            text="Browse DICOM Directory",
             font=form_button_text_size,
             command=lambda: browsefunc(input_ent_3),
         )
@@ -309,12 +315,12 @@ def help_box(plid):
     if plid != "brain_segmentation":
         messagebox.showinfo(
             "Help",
-            """Input : Select a compressed NifTi file (*.nii.gz) or directory containing DICOM (*.dcm) scans through the file or folder browser\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated\n\nAR View only suported on Windows OS""",
+            """Input : Select a compressed NifTi file (*.nii.gz) OR directory containing DICOM (*.dcm) scans through the file or folder browser\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated\n\nAR View only suported on Windows OS""",
         )
     else:
         messagebox.showinfo(
             "Help",
-            """Input : Select a compressed NifTi file (*.nii.gz) or directory containing DICOM (*.dcm) scans through the file or folder browser\n\n Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated\n\nAR View only suported on Windows OS""",
+            """Input : Select a compressed NifTi file (*.nii.gz) OR directory containing DICOM (*.dcm) scans through the file or folder browser\n\n Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated\n\nAR View only suported on Windows OS""",
         )
 
 
@@ -463,7 +469,7 @@ class ParameterPage(tk.Frame):
         )
         tool_title.pack()
 
-        tool_information = get_information(plid)
+        tool_information = get_information(plid) + "Please click the help button and view the instructions before proceeding"
         tool_description_label = tk.Label(self, text=tool_information, wraplength=800)
         tool_description_label.config(font=("Helvetica", text_font_size))
         tool_description_label.pack()
