@@ -1,5 +1,6 @@
 import os
 import logging
+import tensorflow as tf
 from miscnn.data_loading.interfaces.nifti_io import NIFTI_interface
 from miscnn.data_loading.data_io import Data_IO
 from miscnn.processing.data_augmentation import Data_Augmentation
@@ -11,6 +12,8 @@ from miscnn.neural_network.architecture.unet.standard import Architecture
 from miscnn.neural_network.model import Neural_Network
 from miscnn.neural_network.metrics import dice_soft, dice_crossentropy, tversky_loss
 import shutil
+
+tf.logging.set_verbosity(tf.logging.ERROR)
 
 path_prefix = "./models/kidney_segmentation/"
 
