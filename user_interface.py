@@ -97,7 +97,7 @@ def generate(entries, plid, ar_view):
 
 def browsefunc(entry):
     folder_selected = filedialog.askdirectory()
-    entry.delete(0,tk.END)
+    entry.delete(0, tk.END)
     entry.insert(tk.END, folder_selected)
 
 
@@ -105,7 +105,7 @@ def browsefile(entry):
     file_selected = filedialog.askopenfilename(
         filetypes=(("Compressed NifTI", "*.nii.gz"), ("All files", "*"))
     )
-    entry.delete(0,tk.END)
+    entry.delete(0, tk.END)
     entry.insert(tk.END, file_selected)
 
 
@@ -298,6 +298,8 @@ def create_form(root, plid):
 
     for item in seg_types:
         listbox.insert(tk.END, item)
+    if len(seg_types) == 1:  # if only one item pre-select it
+        listbox.selection_set(0, tk.END)
     listbox.grid(row=0, column=40, padx=10)
     entries["seg_types"] = listbox
 
@@ -469,7 +471,10 @@ class ParameterPage(tk.Frame):
         )
         tool_title.pack()
 
-        tool_information = get_information(plid) + "Please click the help button and view the instructions before proceeding"
+        tool_information = (
+            get_information(plid)
+            + "Please click the help button and view the instructions before proceeding"
+        )
         tool_description_label = tk.Label(self, text=tool_information, wraplength=800)
         tool_description_label.config(font=("Helvetica", text_font_size))
         tool_description_label.pack()
