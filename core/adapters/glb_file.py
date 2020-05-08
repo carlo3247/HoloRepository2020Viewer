@@ -5,7 +5,7 @@ import logging
 import numpy as np
 import trimesh
 from trimesh import repair
-from trimesh.smoothing import filter_laplacian
+from trimesh.smoothing import filter_laplacian,filter_taubin
 
 
 def write_mesh_as_glb(meshes, output_obj_file_path: str, metadata={}) -> None:
@@ -22,7 +22,7 @@ def write_mesh_as_glb(meshes, output_obj_file_path: str, metadata={}) -> None:
 
 
 def write_mesh_as_glb_with_colour(
-    meshes, output_obj_file_path: str, colour=[], metadata={}
+    meshes, output_obj_file_path: str, itterations,colour=[], metadata={}
 ) -> None:
     logging.info(
         "Writing mesh to glb file. Saving here: {}".format(output_obj_file_path)
@@ -35,7 +35,7 @@ def write_mesh_as_glb_with_colour(
         mesh2 = trimesh.Trimesh(
             vertices=mesh[0], faces=mesh[1], vertex_normals=mesh[2],
         )
-        filter_laplacian(mesh2, volume_constraint=False)
+        filter_taubin(mesh2,iterations=itterations[0], volume_constraint=False)
         repair.fix_inversion(mesh2)
         mesh2.visual.material = trimesh.visual.material.SimpleMaterial(
             diffuse=np.asarray(colour[index])

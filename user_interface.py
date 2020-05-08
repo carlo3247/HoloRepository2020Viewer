@@ -51,7 +51,7 @@ def get_information(plid):
     )
 
 
-def generate(entries, plid, ar_view):
+def generate(entries, plid,iterations, ar_view):
     output_path = entries["Output File"].get()
     segment_type = list(entries["seg_types"].curselection())
     segment_type = [s + 1 for s in segment_type]
@@ -88,10 +88,10 @@ def generate(entries, plid, ar_view):
         logging.info("Loading and initializing pipeline dynamically")
         pipeline_module = load_pipeline_dynamically(plid)
         if ar_view:
-            pipeline_module.run(input_dir, output_path, segment_type, False)
+            pipeline_module.run(input_dir, output_path, segment_type,itterations, False)
             holo_registration_wrapper.start_viewer(output_path, plid)
         else:
-            pipeline_module.run(input_dir, output_path, segment_type)
+            pipeline_module.run(input_dir, output_path, segment_type,iterations)
         logging.info("Done.")
 
 
@@ -278,6 +278,27 @@ def create_form(root, plid):
     next_row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
     type_label = tk.Label(
         next_row,
+        text="Use the slider for amount of smoothing",
+        anchor="w",
+        font=("Helvetica", text_font_size, "bold"),
+    )
+    type_label.grid(row=0, column=0, padx=(0, 10))
+    # listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+    scrollbar = tk.Scrollbar(next_row, orient=tk.VERTICAL)
+    listbox = tk.Listbox(
+        next_row,
+        font=("Helvetica", 15),
+        height=min(len(seg_types), 7),
+        selectmode="multiple",
+        yscrollcommand=scrollbar.set,
+    )
+
+
+
+    next_row = tk.Frame(input_form)
+    next_row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
+    type_label = tk.Label(
+        next_row,
         text="Please select one or more types",
         anchor="w",
         font=("Helvetica", text_font_size, "bold"),
@@ -292,6 +313,8 @@ def create_form(root, plid):
         selectmode="multiple",
         yscrollcommand=scrollbar.set,
     )
+
+
     scrollbar.config(command=listbox.yview)
     if len(seg_types) >= 7:
         scrollbar.grid(row=0, column=42, sticky="nse")
@@ -474,13 +497,16 @@ class ParameterPage(tk.Frame):
         tool_description_label.config(font=("Helvetica", text_font_size))
         tool_description_label.pack()
 
+        w = tk.Scale(self, from_=1, to=100, orient=tk.HORIZONTAL)
+        w.pack()
+
         ents = create_form(self, plid)
         buttonFont = tkFont.Font(family="Helvetica", size=form_button_text_size)
         viewer_btn = tk.Button(
             self,
             text="3D View",
             font=buttonFont,
-            command=lambda e=ents: generate(e, plid, False),
+            command=lambda e=ents: generate(e, plid,w.get(), False),
         )
         viewer_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
 
@@ -500,7 +526,7 @@ class ParameterPage(tk.Frame):
             state=tk.NORMAL
             if holo_registration_wrapper.is_supported(plid)
             else tk.DISABLED,
-            command=lambda e=ents: generate(e, plid, True),
+            command=lambda e=ents: generate(e, plid,w.get(), True),
         )
         ar_view_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
 
