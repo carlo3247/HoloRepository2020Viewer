@@ -2,8 +2,8 @@ import os
 import shutil
 import subprocess
 
-UPLOAD_FOLDER = "./models/dense_vnet_abdominal_ct/input"
-OUTPUT_FOLDER = "./models/dense_vnet_abdominal_ct/output"
+UPLOAD_FOLDER = os.path.abspath("./models/dense_vnet_abdominal_ct/input")
+OUTPUT_FOLDER = os.path.abspath("./models/dense_vnet_abdominal_ct/output")
 
 
 class Abdominal_model:
@@ -34,5 +34,5 @@ class Abdominal_model:
         shutil.rmtree(OUTPUT_FOLDER)
 
 
-SAVED_CONFIG_PATH = "./models/dense_vnet_abdominal_ct/config.ini"
+SAVED_CONFIG_PATH = os.path.abspath("./models/dense_vnet_abdominal_ct/config.ini")
 abdominal_model = Abdominal_model(SAVED_CONFIG_PATH)
