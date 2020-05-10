@@ -41,7 +41,7 @@ def run(
         meshes.append(generate_mesh(segmented_airway, hu_threshold))
 
     if len(meshes) == 0:
-        raise Exception(
+        raise ValueError(
             "No valid segmentation specified, segmentation type must be either 1 or 2"
         )
 

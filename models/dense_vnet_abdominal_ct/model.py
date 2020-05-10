@@ -5,6 +5,7 @@ import subprocess
 UPLOAD_FOLDER = "./models/dense_vnet_abdominal_ct/input"
 OUTPUT_FOLDER = "./models/dense_vnet_abdominal_ct/output"
 
+DEBUG = 0
 
 class Abdominal_model:
 
@@ -26,7 +27,10 @@ class Abdominal_model:
         return self.input_path
 
     def predict(self):
-        subprocess.run(["net_segment", "inference", "-c", self.config_path])
+        if DEBUG == 1:
+            subprocess.run(["net_segment", "inference", "-c", self.config_path])
+        else:
+            subprocess.run(["./holopipelinesgpuwin/Scripts/net_segment", "inference", "-c", self.config_path])
         return self.output_path
 
     def cleanup(self):

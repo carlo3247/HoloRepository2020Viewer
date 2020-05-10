@@ -54,11 +54,6 @@ def read_dicom_pixels_as_np_ndarray(input_file_path: str) -> np.ndarray:
     dicom_name = reader.GetGDCMSeriesFileNames(input_file_path)
     reader.SetFileNames(dicom_name)
 
-    # image = reader.Execute()
-    #
-    # numpy_array_image = sitk.GetArrayFromImage(image)
-    # fixed_numpy_array_image = flip_numpy_array_dimensions(numpy_array_image)
-
     p = ThreadPool()
     result = p.map(load_file, dicom_name)
     p.close()
@@ -99,9 +94,9 @@ def extract_dicom_data(input_file_path: str) -> str:
     )
     dicom_sample_slice = dicom_dataset[0]
 
-    stringData = "Patient ID: "+dicom_sample_slice.PatientID+"\n"
-    stringData = stringData+"Modality: "+dicom_sample_slice.Modality+"\n"
-    return stringData
+    string_data = "Patient ID: "+dicom_sample_slice.PatientID+"\n"
+    string_data = string_data+"Modality: "+dicom_sample_slice.Modality+"\n"
+    return string_data
 
 
 def normalise_dicom(dicom_image_array: np.ndarray, input_file_path: str) -> np.ndarray:

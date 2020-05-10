@@ -22,7 +22,7 @@ def read_input_path_as_np_array(input_path: str, normalise: bool = True) -> np.n
         else:
             return read_dicom_pixels_as_np_ndarray(input_path)
     else:
-        raise Exception(
+        raise FileNotFoundError(
             "Can not determine input path. Please specify a folder containing DICOM images or a NIfTI image."
         )
 
@@ -37,7 +37,7 @@ def get_metadata(input_path: str) -> str:
     elif file_extension == "":
         return extract_dicom_data(input_path)
     else:
-        raise Exception(
+        raise FileNotFoundError(
             "Can not determine input path. Please specify a folder containing DICOM images or a NIfTI image."
         )
 

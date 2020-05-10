@@ -56,7 +56,7 @@ def downscale_and_conditionally_crop(
         y = image.shape[1]
         z = image.shape[2]
     else:
-        raise Exception("Invalid array dimension (at least x, y, z)")
+        raise ValueError("Invalid array dimension (at least x, y, z)")
 
     max_side_res = max(x, y, z)
     if max_side_res > resolution_limit:
