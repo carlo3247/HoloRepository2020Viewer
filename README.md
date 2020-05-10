@@ -12,7 +12,7 @@ This repository contains a python tool that incorporates a barebone version of [
 
 Through the GUI interface, one can either process a new medical scan or open an existing hologram. The created objects can be viewed through a proof of concept hologram viewer built on top of [vtkplotter](https://github.com/marcomusy/vtkplotter). The **2D View** will attempt to open the scan using the default program selected for the task. For this, we recommend [mango](http://ric.uthscsa.edu/mango/).
 
-On Windows, the tool also includes an augmented reality (AR) view, which uses the HoloRegistration application. This enables segmented organ models to be overlayed over the human body using the webcam.
+On Windows, the tool also includes an augmented reality (AR) view, which uses the HoloRegistration application. This enables segmented organ models to be overlayed over the human body using the webcam. Currently, HoloRegistration supports the lung, abdomen, and kidney holograms.
 
 Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
 
@@ -20,7 +20,7 @@ Disclaimer: This system is a Proof of Concept, provided as is, and not for redep
 # Getting started with the latest release
 The latest release is the [2020 version](https://github.com/carlo3247/HoloRepository2020Viewer/releases/tag/v1.0). To use this release, download the file called **Holorepository2020Viewer.7z** and uncompress it using [7zip](https://www.7-zip.org/). Then inside the folder, run the viewer by double-clicking **run.bat**. Some examples to try out the tool can be found [here](https://drive.google.com/open?id=1jyGbIbzpcW4JY8BkzAWD0IkBSuhdaxoU).
 
-Note: To accelerate the pipelines through a GPU, please make sure [CUDA](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/) is set up correctly on your machine. More instructions can be found [here](https://www.tensorflow.org/install/gpu).
+Note: To accelerate the pipelines through a GPU, please make sure [CUDA 10.0](https://docs.nvidia.com/cuda/archive/10.0/cuda-installation-guide-microsoft-windows/index.html) is set up correctly on your machine. More general instructions can be found [here](https://www.tensorflow.org/install/gpu).
 
 <br />
 <p align="center">

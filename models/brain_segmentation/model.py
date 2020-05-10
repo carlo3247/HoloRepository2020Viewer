@@ -1,9 +1,10 @@
 import logging
 import numpy as np
 import tensorflow as tf
-
 from .mrbrains.models import cnn_3d_segmentation_1
 from .mrbrains.utils import batch_norm_3d, get_dsc, get_loss, re_arrange_array
+
+tf.logging.set_verbosity(tf.logging.ERROR)
 
 
 class Brain_model:

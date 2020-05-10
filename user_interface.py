@@ -1,6 +1,7 @@
 import logging
 import re
 import os
+import webbrowser
 import tkinter as tk  # python 3
 from PIL import Image, ImageTk
 from tkinter import font as tkfont  # python 3
@@ -73,7 +74,7 @@ def generate(entries, plid,iterations, ar_view):
     ):
         messagebox.showerror(
             "Error",
-            "Please ensure input/s, an output path, and segmentation type is inputted",
+            "Please ensure input/s, an output path, and segmentation type is inputted.",
         )
     else:
         logging.basicConfig(
@@ -83,7 +84,7 @@ def generate(entries, plid,iterations, ar_view):
         )
         messagebox.showinfo(
             "Help",
-            """This may take a while...\n\nPlease click ok to continue and check console output for progress""",
+            """This may take a while...\n\nPlease click 'ok' to continue. and check the console output for progress updates.""",
         )
         logging.info("Loading and initializing pipeline dynamically")
         pipeline_module = load_pipeline_dynamically(plid)
@@ -97,7 +98,7 @@ def generate(entries, plid,iterations, ar_view):
 
 def browsefunc(entry):
     folder_selected = filedialog.askdirectory()
-    entry.delete(0,tk.END)
+    entry.delete(0, tk.END)
     entry.insert(tk.END, folder_selected)
 
 
@@ -105,7 +106,7 @@ def browsefile(entry):
     file_selected = filedialog.askopenfilename(
         filetypes=(("Compressed NifTI", "*.nii.gz"), ("All files", "*"))
     )
-    entry.delete(0,tk.END)
+    entry.delete(0, tk.END)
     entry.insert(tk.END, file_selected)
 
 
@@ -161,6 +162,7 @@ def create_form(root, plid):
             input_row,
             text="Browse DICOM Directory",
             font=form_button_text_size,
+            state=tk.NORMAL if plid != "kidney_segmentation" else tk.DISABLED,
             command=lambda: browsefunc(input_ent),
         )
         browse_button.pack(side=tk.RIGHT, fill=tk.X, padx=20)
@@ -321,6 +323,8 @@ def create_form(root, plid):
 
     for item in seg_types:
         listbox.insert(tk.END, item)
+    if len(seg_types) == 1:  # if only one item pre-select it
+        listbox.selection_set(0, tk.END)
     listbox.grid(row=0, column=40, padx=10)
     entries["seg_types"] = listbox
 
@@ -338,12 +342,21 @@ def help_box(plid):
     if plid != "brain_segmentation":
         messagebox.showinfo(
             "Help",
-            """Input : Select a compressed NifTi file (*.nii.gz) OR directory containing DICOM (*.dcm) scans through the file or folder browser\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated\n\nAR View only suported on Windows OS""",
+            """Input : Select a compressed NifTi file (*.nii.gz) OR directory containing DICOM (*.dcm) scans through the file or folder browser\n
+Ouput Directory: Specify the path to the output. e.g. path/output.glb\n\n
+Type: Specify the segmentation/s to be generated\n\n
+Note: AR View is only suported on Windows OS""",
         )
     else:
         messagebox.showinfo(
             "Help",
-            """Input : Select a compressed NifTi file (*.nii.gz) OR directory containing DICOM (*.dcm) scans through the file or folder browser\n\n Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n\nOuput Directory: Specify the path to the output. e.g. path/output.glb\n\nType: Specify the segmentation/s to be generated\n\nAR View only suported on Windows OS""",
+            """Input : Select a compressed NifTi file (*.nii.gz) OR directory containing DICOM (*.dcm) scans through the file or folder browser\n\n
+Inputs required: T2-Flair, T1, T1-Intermediate Representation scans\n
+For more information on the required modalities for the brain pipeline, please checkout:\n
+https://en.wikipedia.org/wiki/Magnetic_resonance_imaging#Overview_table\n\n
+Ouput Directory: Specify the path to the output. e.g. path/output.glb\n\n
+Type: Specify the segmentation/s to be generated\n\n
+Note: AR View is only suported on Windows OS""",
         )
 
 
@@ -492,7 +505,10 @@ class ParameterPage(tk.Frame):
         )
         tool_title.pack()
 
-        tool_information = get_information(plid) + "Please click the help button and view the instructions before proceeding"
+        tool_information = (
+            get_information(plid)
+            + "Please click the help button and view the instructions before proceeding"
+        )
         tool_description_label = tk.Label(self, text=tool_information, wraplength=800)
         tool_description_label.config(font=("Helvetica", text_font_size))
         tool_description_label.pack()
