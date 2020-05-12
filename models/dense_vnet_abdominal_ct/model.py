@@ -30,7 +30,7 @@ class Abdominal_model:
         if DEBUG == 1:
             subprocess.run(["net_segment", "inference", "-c", self.config_path])
         else:
-            subprocess.run(["./holopipelinesgpuwin/Scripts/net_segment", "inference", "-c", self.config_path])
+            subprocess.run([os.getcwd()+"/holopipelinesgpuwin/Scripts/net_segment", "inference", "-c", self.config_path])
         return self.output_path
 
     def cleanup(self):
