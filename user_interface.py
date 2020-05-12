@@ -52,11 +52,12 @@ def get_information(plid):
     )
 
 
-def generate(entries, plid, iterations, ar_view):
+def generate(entries, plid, ar_view):
     output_path = entries["Output File"].get()
     segment_type = list(entries["seg_types"].curselection())
     segment_type = [s + 1 for s in segment_type]
     quiet = entries["silence_log"].get()
+    iterations = entries["smoothing"].get()
 
     if plid != "brain_segmentation":
         input_dir = entries["Input"].get()
@@ -118,6 +119,7 @@ def openViewer():
     if file_selected != "":
         pipeline_module = load_pipeline_dynamically(plid)
         pipeline_module.run(file_selected)
+
 
 
 def create_form(root, plid):
@@ -337,6 +339,7 @@ def create_form(root, plid):
     )
     silence_button.grid(row=0, column=80, padx=30)
     entries["silence_log"] = silence_log
+    entries["smoothing"] = smoothing_slider
 
     return entries
 
@@ -517,12 +520,13 @@ class ParameterPage(tk.Frame):
         tool_description_label.pack()
 
         ents = create_form(self, plid)
+        global smoothing_slider
         buttonFont = tkFont.Font(family="Helvetica", size=form_button_text_size)
         viewer_btn = tk.Button(
             self,
             text="3D View",
             font=buttonFont,
-            command=lambda e=ents: generate(e, plid, w.get(), False),
+            command=lambda e=ents: generate(e, plid, False),
         )
         viewer_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
 
@@ -542,7 +546,7 @@ class ParameterPage(tk.Frame):
             state=tk.NORMAL
             if holo_registration_wrapper.is_supported(plid)
             else tk.DISABLED,
-            command=lambda e=ents: generate(e, plid, w.get(), True),
+            command=lambda e=ents: generate(e, plid, True),
         )
         ar_view_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
 
