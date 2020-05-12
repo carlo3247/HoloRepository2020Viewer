@@ -52,7 +52,7 @@ def get_information(plid):
     )
 
 
-def generate(entries, plid,iterations, ar_view):
+def generate(entries, plid, iterations, ar_view):
     output_path = entries["Output File"].get()
     segment_type = list(entries["seg_types"].curselection())
     segment_type = [s + 1 for s in segment_type]
@@ -89,10 +89,10 @@ def generate(entries, plid,iterations, ar_view):
         logging.info("Loading and initializing pipeline dynamically")
         pipeline_module = load_pipeline_dynamically(plid)
         if ar_view:
-            pipeline_module.run(input_dir, output_path, segment_type,iterations, False)
+            pipeline_module.run(input_dir, output_path, segment_type, iterations, False)
             holo_registration_wrapper.start_viewer(output_path, plid)
         else:
-            pipeline_module.run(input_dir, output_path, segment_type,iterations)
+            pipeline_module.run(input_dir, output_path, segment_type, iterations)
         logging.info("Done.")
 
 
@@ -276,46 +276,49 @@ def create_form(root, plid):
 
     seg_types = get_seg_types(plid).keys()
 
-    next_row = tk.Frame(input_form)
-    next_row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
+    smoothing_row = tk.Frame(input_form)
+    smoothing_row.pack(side=tk.TOP, fill=tk.X, padx=3, pady=5)
     type_label = tk.Label(
-        next_row,
-        text="Use the slider for the number of smoothing iterations (higher number of iterations results in more smoothing)",
+        smoothing_row,
+        width=15,
+        text="Smoothing level",
         anchor="w",
         font=("Helvetica", text_font_size, "bold"),
     )
-    type_label.grid(row=0, column=0, padx=(0, 10))
+    type_label.pack(side=tk.LEFT, pady=(15, 0))
     # listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
-    scrollbar = tk.Scrollbar(next_row, orient=tk.VERTICAL)
-    listbox = tk.Listbox(
-        next_row,
-        font=("Helvetica", 15),
-        height=min(len(seg_types), 7),
-        selectmode="multiple",
-        yscrollcommand=scrollbar.set,
+    smoothing_slider = tk.Scale(smoothing_row, from_=1, to=100, orient=tk.HORIZONTAL)
+    smoothing_slider.set(10)
+    smoothing_note_label = tk.Label(
+        smoothing_row,
+        text="(higher number of iterations results in more smoothing)",
+        anchor="w",
+        font=("Helvetica", text_font_size - 5),
     )
+    # smoothing_slider.insert(
+    # tk.END, "(higher number of iterations resultls in more smoothing)"
+    # )
+    smoothing_slider.pack(side=tk.LEFT)
+    smoothing_note_label.pack(side=tk.LEFT, pady=(15, 0))
 
-
-
-    next_row = tk.Frame(input_form)
-    next_row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
+    seg_row = tk.Frame(input_form)
+    seg_row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
     type_label = tk.Label(
-        next_row,
+        seg_row,
         text="Please select one or more types",
         anchor="w",
         font=("Helvetica", text_font_size, "bold"),
     )
     type_label.grid(row=0, column=0, padx=(0, 10))
     # listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
-    scrollbar = tk.Scrollbar(next_row, orient=tk.VERTICAL)
+    scrollbar = tk.Scrollbar(seg_row, orient=tk.VERTICAL)
     listbox = tk.Listbox(
-        next_row,
+        seg_row,
         font=("Helvetica", 15),
         height=min(len(seg_types), 7),
         selectmode="multiple",
         yscrollcommand=scrollbar.set,
     )
-
 
     scrollbar.config(command=listbox.yview)
     if len(seg_types) >= 7:
@@ -330,7 +333,7 @@ def create_form(root, plid):
 
     silence_log = tk.IntVar()
     silence_button = tk.Checkbutton(
-        next_row, text="Silence logging ", variable=silence_log
+        seg_row, text="Silence logging ", variable=silence_log
     )
     silence_button.grid(row=0, column=80, padx=30)
     entries["silence_log"] = silence_log
@@ -507,14 +510,11 @@ class ParameterPage(tk.Frame):
 
         tool_information = (
             get_information(plid)
-            + "Please click the help button and view the instructions before proceeding"
+            + "For more instructions please click the help button.\n"
         )
         tool_description_label = tk.Label(self, text=tool_information, wraplength=800)
         tool_description_label.config(font=("Helvetica", text_font_size))
         tool_description_label.pack()
-
-        w = tk.Scale(self, from_=1, to=100, orient=tk.HORIZONTAL)
-        w.pack()
 
         ents = create_form(self, plid)
         buttonFont = tkFont.Font(family="Helvetica", size=form_button_text_size)
@@ -522,7 +522,7 @@ class ParameterPage(tk.Frame):
             self,
             text="3D View",
             font=buttonFont,
-            command=lambda e=ents: generate(e, plid,w.get(), False),
+            command=lambda e=ents: generate(e, plid, w.get(), False),
         )
         viewer_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
 
@@ -542,7 +542,7 @@ class ParameterPage(tk.Frame):
             state=tk.NORMAL
             if holo_registration_wrapper.is_supported(plid)
             else tk.DISABLED,
-            command=lambda e=ents: generate(e, plid,w.get(), True),
+            command=lambda e=ents: generate(e, plid, w.get(), True),
         )
         ar_view_btn.pack(side=tk.LEFT, anchor=tk.SE, padx=20, pady=10)
 
