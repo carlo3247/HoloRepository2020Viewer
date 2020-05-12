@@ -5,7 +5,7 @@ from trimesh.smoothing import filter_laplacian
 import numpy as np
 
 
-def convert_meshes_trimesh(meshes,iterations):
+def convert_meshes_trimesh(meshes, iterations):
     logging.info("Converting meshes to trimesh.")
     trimesh_objects = []
     index = 0
@@ -19,7 +19,7 @@ def convert_meshes_trimesh(meshes,iterations):
         )
         if iterations > 1:
             logging.info("Applying smoothing to meshes.")
-            filter_laplacian(tmp_mesh,iterations=iterations, volume_constraint=False)
+            filter_laplacian(tmp_mesh, iterations=iterations, volume_constraint=False)
         trimesh_objects.append(tmp_mesh)
         index += 1
     logging.info("Done Converting meshes to trimesh.")
