@@ -2,7 +2,7 @@ import os
 import subprocess
 import platform
 
-path_to_ar_viewer = r"path\to\ar_viewer"
+path_to_ar_viewer = r"./Reg/HoloReg2020/HoloRegistration2020"
 
 plid_to_id_dict = {
     "lung_segmentation": "lung",

@@ -89,7 +89,7 @@ def generate(entries, plid,iterations, ar_view):
         logging.info("Loading and initializing pipeline dynamically")
         pipeline_module = load_pipeline_dynamically(plid)
         if ar_view:
-            pipeline_module.run(input_dir, output_path, segment_type,itterations, False)
+            pipeline_module.run(input_dir, output_path, segment_type,iterations, False)
             holo_registration_wrapper.start_viewer(output_path, plid)
         else:
             pipeline_module.run(input_dir, output_path, segment_type,iterations)
@@ -280,7 +280,7 @@ def create_form(root, plid):
     next_row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
     type_label = tk.Label(
         next_row,
-        text="Use the slider for amount of smoothing",
+        text="Use the slider for the number of smoothing iterations (higher number of iterations results in more smoothing)",
         anchor="w",
         font=("Helvetica", text_font_size, "bold"),
     )
