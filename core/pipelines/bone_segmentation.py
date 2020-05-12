@@ -22,7 +22,11 @@ bone_hu_threshold = 300
 
 
 def run(
-    input_path: str, output_path: str, segment_type: list,iterations, open_viewer=True
+    input_path: str,
+    output_path: str,
+    segment_type: list,
+    iterations: int,
+    open_viewer=True,
 ) -> None:
     logging.info("Starting bone pipeline")
     image_data = read_input_path_as_np_array(input_path)
@@ -30,7 +34,7 @@ def run(
     meshes = [generate_mesh(image_data, bone_hu_threshold)]
     if open_viewer:
         metadata = get_metadata(input_path)
-        meshes = convert_meshes_trimesh(meshes,iterations)
+        meshes = convert_meshes_trimesh(meshes, iterations)
         segment_dict = get_seg_types(this_plid)
         logging.info(segment_dict)
         mesh_names = [k for (k, v) in segment_dict.items() if v in segment_type]
@@ -43,5 +47,5 @@ def run(
             scan_path=input_path,
         )
     else:
-        write_mesh_as_glb_with_colour(meshes, output_path,iterations)
+        write_mesh_as_glb_with_colour(meshes, output_path, iterations)
     logging.info("Bone pipeline finished successfully")
