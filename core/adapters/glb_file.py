@@ -22,7 +22,7 @@ def write_mesh_as_glb(meshes, output_obj_file_path: str, metadata={}) -> None:
 
 
 def write_mesh_as_glb_with_colour(
-    meshes, output_obj_file_path: str, itterations,colour=[], metadata={}
+    meshes, output_obj_file_path: str, iterations,colour=[], metadata={}
 ) -> None:
     logging.info(
         "Writing mesh to glb file. Saving here: {}".format(output_obj_file_path)
@@ -35,7 +35,7 @@ def write_mesh_as_glb_with_colour(
         mesh2 = trimesh.Trimesh(
             vertices=mesh[0], faces=mesh[1], vertex_normals=mesh[2],
         )
-        filter_taubin(mesh2,iterations=itterations[0], volume_constraint=False)
+        filter_laplacian(mesh2,iterations=iterations, volume_constraint=False)
         repair.fix_inversion(mesh2)
         mesh2.visual.material = trimesh.visual.material.SimpleMaterial(
             diffuse=np.asarray(colour[index])
