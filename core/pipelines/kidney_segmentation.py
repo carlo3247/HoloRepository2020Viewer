@@ -17,7 +17,7 @@ from core.adapters.trimesh_converter import convert_meshes_trimesh
 from core.client.viewer import view_mesh
 from core.services.marching_cubes import generate_mesh
 from core.services.np_image_manipulation import seperate_segmentation
-from core.adapters.glb_file import write_mesh_as_glb_with_colour
+from core.adapters.glb_file import write_trimesh_as_glb,write_mesh_as_glb_with_colour
 from models.kidney_segmentation.model import kidney_model
 from models.model_controller import get_seg_types
 
@@ -51,8 +51,10 @@ def run(
     if open_viewer:
         metadata = get_metadata(input_path)
         meshes = convert_meshes_trimesh(meshes, iterations)
+        write_trimesh_as_glb(meshes, output_path)
         segment_dict = get_seg_types(this_plid)
         mesh_names = [k for (k, v) in segment_dict.items() if v in segment_type]
+        write_trimesh_as_glb(meshes, output_path)
         view_mesh(
             meshes=meshes,
             mesh_names=mesh_names,
@@ -61,6 +63,7 @@ def run(
             plid=this_plid,
             scan_path=input_path,
         )
+
     else:
         write_mesh_as_glb_with_colour(meshes, output_path, iterations)
 

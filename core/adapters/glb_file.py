@@ -8,6 +8,15 @@ from trimesh import repair
 from trimesh.smoothing import filter_laplacian,filter_taubin
 
 
+def write_trimesh_as_glb(meshes, output_obj_file_path) -> None:
+    logging.info(
+        "Writing mesh to glb file. Saving here: {}".format(output_obj_file_path)
+    )
+    scene = trimesh.Scene()
+    for mesh in meshes:
+        scene.add_geometry(mesh)
+    scene.export(output_obj_file_path)
+
 def write_mesh_as_glb(meshes, output_obj_file_path: str, metadata={}) -> None:
     logging.info(
         "Writing mesh to glb file. Saving here: {}".format(output_obj_file_path)

@@ -2,6 +2,7 @@ import logging
 import trimesh
 from .glb_file import get_random_rgb_colours
 from trimesh.smoothing import filter_laplacian
+from trimesh import repair
 import numpy as np
 
 
@@ -17,6 +18,7 @@ def convert_meshes_trimesh(meshes, iterations):
             vertex_normals=mesh[2],
             vertex_colors=colours[index],
         )
+        repair.fix_inversion(tmp_mesh)
         if iterations > 1:
             logging.info("Applying smoothing to meshes.")
             filter_laplacian(tmp_mesh, iterations=iterations, volume_constraint=False)

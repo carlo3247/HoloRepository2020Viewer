@@ -84,7 +84,7 @@ def view_mesh(
     save_button = vp.addButton(
         save,
         pos=(left_side_x, 0.05),  # x,y fraction from bottom left corner
-        states=["Save"],
+        states=["Update save"],
         font=font_style,  # arial, courier, times
         size=25,
         bold=True,

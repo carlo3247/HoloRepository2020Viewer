@@ -50,6 +50,7 @@ def run(
         )
 
     if open_viewer:
+
         metadata = get_metadata(input_path)
         meshes = convert_meshes_trimesh(meshes, iterations)
         segment_dict = get_seg_types(this_plid)
@@ -62,6 +63,7 @@ def run(
             plid=this_plid,
             scan_path=input_path,
         )
+
     else:
         write_mesh_as_glb_with_colour(meshes, output_path, iterations)
     logging.info("Lung pipeline finished successfully")
