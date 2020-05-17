@@ -13,7 +13,7 @@ from miscnn.neural_network.model import Neural_Network
 from miscnn.neural_network.metrics import dice_soft, dice_crossentropy, tversky_loss
 import shutil
 
-tf.logging.set_verbosity(tf.logging.ERROR)
+# tf.logging.set_verbosity(tf.logging.ERROR)
 
 path_prefix = "./models/kidney_segmentation/"
 
