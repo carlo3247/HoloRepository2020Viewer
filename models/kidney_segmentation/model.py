@@ -13,7 +13,7 @@ from miscnn.neural_network.model import Neural_Network
 from miscnn.neural_network.metrics import dice_soft, dice_crossentropy, tversky_loss
 import shutil
 
-tf.logging.set_verbosity(tf.logging.ERROR)
+# tf.logging.set_verbosity(tf.logging.ERROR)
 
 path_prefix = "./models/kidney_segmentation/"
 
@@ -87,6 +87,9 @@ class Kidney_model:
         logging.info("Cleaning up kidney model temporary files")
         shutil.rmtree(self.input_path)
         shutil.rmtree(os.path.abspath("./predictions/"))
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.sess.close()
 
 
 SAVED_MODEL_PATH = os.path.join(path_prefix, "kidney_model_miscnn")
