@@ -88,9 +88,6 @@ class Kidney_model:
         shutil.rmtree(self.input_path)
         shutil.rmtree(os.path.abspath("./predictions/"))
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.sess.close()
-
 
 SAVED_MODEL_PATH = os.path.join(path_prefix, "kidney_model_miscnn")
 kidney_model = Kidney_model(SAVED_MODEL_PATH)
