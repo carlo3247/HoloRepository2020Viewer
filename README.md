@@ -2,7 +2,7 @@
   <img width="600" alt="HoloPipelinesCLI logo" src="https://user-images.githubusercontent.com/23082383/80860583-6f489c00-8c60-11ea-950c-e27ceb89b410.png">
 </p>
 
-This repository contains a python tool that incorporates a barebone version of [HoloPipelines](https://github.com/AbhinathK/CloudHoloRepository2020-Core/tree/dev/HoloPipelines), wich is part of [HoloRepository](https://github.com/AbhinathK/CloudHoloRepository2020-Core), to segment and generate 3D models of various anatomical stuctures. These include the lungs, brain, kidneys, abdominals and bones.
+This Viewer repository contains a python tool intended for local PC/laptop usage, and does not use any online services or transmit any data. It requires CUDA 10 from Nvidia and is run from run.bat, a script written to launch it.  The tool incorporates a barebone version of [HoloPipelines](https://github.com/AppertaFoundation/HoloRepository-2020/tree/master/CloudHoloRepository2020-Core%20(Untested%20WIP)/HoloPipelines), which is part of [HoloRepository](https://github.com/AppertaFoundation/HoloRepository-2020/tree/master/CloudHoloRepository2020-Core%20(Untested%20WIP)), to segment and generate 3D models of various anatomical stuctures. These include the lungs, brain, kidneys, abdominals and bones.
 
 <p align="center">
   <img width="340" alt="lung scan" src="https://user-images.githubusercontent.com/23082383/81289225-f087a080-905d-11ea-8815-818f9503b2ff.png">
@@ -14,13 +14,19 @@ Through the GUI interface, one can either process a new medical scan or open an 
 
 On Windows, the tool also includes an augmented reality (AR) view, which uses the HoloRegistration application. This enables segmented organ models to be overlayed over the human body using the webcam. Currently, HoloRegistration supports the lung, abdomen, and kidney holograms.
 
-Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
+>Disclaimer: This system is a Proof of Concept, provided as is, and not for redeployment or use in medical scenarios without further development. It does not meet any medical guidelines and is intended to show potential usage and design for future workflows of using Holographics and 3D imaging of CT scans. Use at your own risk.
 
 
 # Getting started with the latest release
-The latest release is the [2020 version](https://github.com/carlo3247/HoloRepository2020Viewer/releases/tag/v1.0). To use this release, download the file called **Holorepository2020Viewer.7z** and uncompress it using [7zip](https://www.7-zip.org/). Then inside the folder, run the viewer by double-clicking **run.bat**. Some example scans to try out the tool can be found [here](https://github.com/carlo3247/HoloRepository2020Viewer/tree/release-1.0/example_scans). Some generated holograms can be found [here](https://github.com/carlo3247/HoloRepository2020Viewer/tree/release-1.0/example_holograms).
+The latest release is the [2020 version](https://github.com/AppertaFoundation/HoloRepository-2020/releases/tag/v1.0). To use this release, download the file called **Holorepository2020Viewer.7z** and uncompress it using [7zip](https://www.7-zip.org/). Then inside the folder, run the viewer by double-clicking **run.bat**. Some example scans to try out the tool can be found [here](https://github.com/AppertaFoundation/HoloRepository-2020/tree/master/HoloRepository2020Viewer/example_scans). Some generated holograms can be found [here](https://github.com/AppertaFoundation/HoloRepository-2020/tree/master/HoloRepository2020Viewer/example_holograms).
 
->Note: At the moment, the release only supports Windows. The tool has been tested extensively on a machine with an Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz with 24GB RAM and an NVIDIA GeForce GTX 1060 with Max-Q Design. As it is a proof of concept, it might not run as expected on other hardware/software. For the brain and kidney pipeline a graphics card is highly recommended. To accelerate the pipelines through a GPU, please make sure [CUDA 10.0](https://docs.nvidia.com/cuda/archive/10.0/cuda-installation-guide-microsoft-windows/index.html) is set up correctly on your machine. More general instructions can be found [here](https://www.tensorflow.org/install/gpu).
+>Note: At the moment, the release only supports Windows. The tool has been tested extensively on a machine with an Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz with 24GB RAM and an NVIDIA GeForce GTX 1060 with Max-Q Design. The tool also works on GTX 980, GTX 1060, GTX 1650, RTX 2060 and RTX 2080. As it is a proof of concept, it might not run as expected on other hardware/software. For the brain and kidney pipeline a graphics card is highly recommended. To accelerate the pipelines through a GPU, please make sure [CUDA 10.0](https://docs.nvidia.com/cuda/archive/10.0/cuda-installation-guide-microsoft-windows/index.html) is set up correctly on your machine. More general instructions can be found [here](https://www.tensorflow.org/install/gpu).
+
+With Cuda 10 installation, please check that the libraries are in the path with **either** of the following:
+* Include the following path folder line (or appropriate folder) in the ***run.bat***:
+<br /> ```set path=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\bin```
+* Type env, and go to environment variables, add to the path variable:
+<br /> ```C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\bin```
 
 <br />
 <p align="center">
